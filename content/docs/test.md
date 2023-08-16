@@ -12,8 +12,7 @@ This is **bold** text, and this is *emphasized* text.
 #### Install Hugo and Create a New Site
 
 ```bash
-brew install hugo
-hugo new site theplaybook -f yml
+hugo new site newsitename -f yml
 ```
 
 
