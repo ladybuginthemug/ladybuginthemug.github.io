@@ -14,7 +14,7 @@
       
       <guid>http://ladybuginthemug.github.io/docs/test/</guid>
       <description>Introduction This is bold text, and this is emphasized text.
-Visit the Hugo website!</description>
+Install Hugo and Create a New Site brew install hugo hugo new site theplaybook -f yml </description>
     </item>
     
   </channel>
