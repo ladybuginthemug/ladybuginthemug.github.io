@@ -2,10 +2,21 @@
 title: "Test"
 date: 2023-08-15T20:46:35-04:00
 draft: false
+tags: power-shell
+categories: analysis
 ---
 
 ## Introduction
 
 This is **bold** text, and this is *emphasized* text.
 
-Visit the [Hugo](https://gohugo.io) website!
+
+#### Install Hugo and Create a New Site
+
+```bash
+brew install hugo
+hugo new site theplaybook -f yml
+```
+
+
+
