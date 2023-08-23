@@ -13,8 +13,9 @@
       <pubDate>Tue, 15 Aug 2023 20:46:35 -0400</pubDate>
       
       <guid>http://ladybuginthemug.github.io/docs/test/</guid>
-      <description>Introduction This is bold text, and this is emphasized text.
-Install Hugo and Create a New Site hugo new site newsitename -f yml </description>
+      <description>Introduction This is bold text, and this is emphasized text. This static blog is still in production
+Install Hugo and Create a New Site hugo new site newsitename -f yml Visit the Hugo website!
+print(&amp;#39;hello world&amp;#39;) </description>
     </item>
     
   </channel>
