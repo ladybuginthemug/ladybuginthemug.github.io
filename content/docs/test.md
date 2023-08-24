@@ -1,7 +1,12 @@
 ---
 title: "Test"
-date: 2023-08-15T20:46:35-04:00
+description: It's a test!
+date: 2023-08-08
 draft: false
+author: ladybuginthemug
+tags: test
+categories: blog
+lightgallery: true
 ---
 
 ## Introduction
