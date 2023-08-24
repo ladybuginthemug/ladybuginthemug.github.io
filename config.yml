@@ -11,8 +11,6 @@ params:
         subtitle: "Hi there"
         ShowBreadCrumbs: true
     menu:
-        - name: "x"
-              url: "/"
         - name: "writings"
               url: "/docs/"
    
