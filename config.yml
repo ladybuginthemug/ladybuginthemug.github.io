@@ -8,7 +8,8 @@ defaultTheme: auto
 params:
     profileMode:
         enabled: true
-        subtitle: "Hi there wave"
+        subtitle: "Hi there"
+        ShowBreadCrumbs: true
 
 
     ShowCodeCopyButtons: true
