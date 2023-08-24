@@ -1,15 +1,13 @@
 ---
 title: "Test"
-<<<<<<< HEAD
 description: It's a test!
 date: 2023-08-08
-=======
-date: 2023-08-8
->>>>>>> ad171bb (update)
 draft: false
 author: ladybuginthemug
 
 ---
+
+
 
 ## Introduction
 
