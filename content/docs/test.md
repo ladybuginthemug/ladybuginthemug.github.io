@@ -6,7 +6,6 @@ draft: false
 author: ladybuginthemug
 tags: test
 categories: blog
-lightgallery: true
 ---
 
 ## Introduction
