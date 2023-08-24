@@ -6,10 +6,11 @@ theme: PaperMod
 defaultTheme: auto
 
 params:
-    homeInfoParams:
-        Title: Hi there wave
+    profileMode:
+        enabled: true
+        subtitle: "Hi there wave"
 
-params:
+
     ShowCodeCopyButtons: true
     ShowToc: true
     ShowReadingTime: true
