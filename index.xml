@@ -6,16 +6,14 @@
     <description>Recent content on pushingbuttons</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 15 Aug 2023 20:46:35 -0400</lastBuildDate><atom:link href="http://ladybuginthemug.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 08 Aug 2023 00:00:00 +0000</lastBuildDate><atom:link href="http://ladybuginthemug.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Test</title>
       <link>http://ladybuginthemug.github.io/docs/test/</link>
-      <pubDate>Tue, 15 Aug 2023 20:46:35 -0400</pubDate>
+      <pubDate>Tue, 08 Aug 2023 00:00:00 +0000</pubDate>
       
       <guid>http://ladybuginthemug.github.io/docs/test/</guid>
-      <description>Introduction This is bold text, and this is emphasized text. This static blog is still in production
-Install Hugo and Create a New Site hugo new site newsitename -f yml Visit the Hugo website!
-print(&amp;#39;hello world&amp;#39;) </description>
+      <description>It&amp;#39;s a test!</description>
     </item>
     
   </channel>
