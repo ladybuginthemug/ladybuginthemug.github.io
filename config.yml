@@ -10,6 +10,14 @@ params:
         enabled: true
         subtitle: "Hi there"
         ShowBreadCrumbs: true
+    menu:
+      main:
+        - name: "x"
+              url: "/"
+        - name: "writings"
+              url: "/docs/"
+   
+
 
 
     ShowCodeCopyButtons: true
