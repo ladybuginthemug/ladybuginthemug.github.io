@@ -1,13 +1,10 @@
 ---
-title: "Test"
+title: "Test Two"
 description: It's a test!
 date: 2023-08-08
 draft: false
 author: ladybuginthemug
-
 ---
-
-
 
 ## Introduction
 

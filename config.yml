@@ -3,21 +3,46 @@ baseURL: http://ladybuginthemug.github.io/
 languageCode: en-us
 title: pushingbuttons 
 theme: PaperMod
-defaultTheme: auto
+defaultTheme: dark
+disableThemeToggle: true
 
+# intro
 params:
-    profileMode:
-        enabled: true
-        subtitle: "Hi there"
-        ShowBreadCrumbs: true
-    menu:
-        - name: "writings"
-              url: "/docs/"
-   
+  homeInfoParams:
+    Content: >
+        defence & automation
+
+# navigation settigs
+menu:
+  main:
+    - identifier: categories
+      name: categories
+      url: /categories/
+      weight: 10
+    - identifier: tags
+      name: tags
+      url: /tags/
+      weight: 20
+  socialIcons:
+    - name: Github
+      url: "https://github.com/ladybuginthemug"
 
 
 
+# Additional Site Settings (add more settings if necessary)
+params:
+    ShowReadingTime: true
+    ShowBreadCrumbs: true
     ShowCodeCopyButtons: true
     ShowToc: true
-    ShowReadingTime: true
-  
+
+# mark up settings 
+markup:
+  highlight:
+    anchorLineNos: true
+    codeFences: true
+    guessSyntax: true
+    lineNos: true
+    #noClasses: false
+    style: monokai
+    linkifyProtocol: https
