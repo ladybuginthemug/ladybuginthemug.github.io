@@ -35,6 +35,8 @@ params:
     ShowBreadCrumbs: true
     ShowCodeCopyButtons: true
     ShowToc: true
+    hideSummary: true
+    
 
 # mark up settings 
 markup:
