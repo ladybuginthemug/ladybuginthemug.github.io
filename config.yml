@@ -39,10 +39,18 @@ params:
 # mark up settings 
 markup:
   highlight:
-    anchorLineNos: true
-    codeFences: true
+    #anchorLineNos: true
     guessSyntax: true
-    lineNos: true
-    #noClasses: false
-    style: monokai
-    linkifyProtocol: https
+    #lineNos: true
+    noClasses: true
+    style: native
+    
+  goldmark:
+    extensions:
+      definitionList: true
+      footnote: true
+      linkify: true
+      linkifyProtocol: https
+      strikethrough: true
+      table: true
+      taskList: true  

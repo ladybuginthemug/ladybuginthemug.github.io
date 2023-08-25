@@ -8,22 +8,57 @@ author: ladybuginthemug
 
 
 
-## Introduction
-
-This is **bold** text, and this is *emphasized* text. <u>This static blog is still in production</u>
 
 
-#### Install Hugo and Create a New Site
+---
 
-```bash
-hugo new site newsitename -f yml
-```
-
-
-Visit the [Hugo](https://gohugo.io) website!
+> *test quotes*
+>>
 
 
 ```python
-print('hello world')
+#!/usr/bin/env python3
+
+import sys
+
+for line in sys.stdin:
+    words = line.strip().split()
+    print(" ".join([word.capitalize() for word in words]))
+
+
+
+
+
 ```
+
+
+`inlinecode`
+
+________
+
+#### link - linkify 
+
+https://ladybuginthemug.github.io/
+
+______
+
+#### Todo
+- [ ] update categories & tags
+- [ ] set main page
+- [ ] add icons
+- [ ] add write-ups
+
+
+---
+#### Table
+
+
+| test | table | works? |
+| ---- | ----- | ------ |
+| yes  | it    | does     |
+| 1    |  0    |  1     |
+
+
+
+---
 

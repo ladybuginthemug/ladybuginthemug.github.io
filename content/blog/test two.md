@@ -6,12 +6,12 @@ draft: false
 author: ladybuginthemug
 ---
 
-## Introduction
+### Introduction
 
 This is **bold** text, and this is *emphasized* text. <u>This static blog is still in production</u>
 
 
-#### Install Hugo and Create a New Site
+##### Install Hugo and Create a New Site
 
 ```bash
 hugo new site newsitename -f yml
