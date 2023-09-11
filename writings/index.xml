@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Writings on Your site title</title>
+    
+    
+    
+    <link>http://ladybuginthemug.github.io/writings/</link>
+    <description>Recent content in Writings on Your site title</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 14 Aug 2023 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://ladybuginthemug.github.io/writings/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>malicious power-shell analysis</title>
+      <link>http://ladybuginthemug.github.io/writings/malicious-power-shell-analysis/</link>
+      <pubDate>Mon, 14 Aug 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://ladybuginthemug.github.io/writings/malicious-power-shell-analysis/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          The challenge provide a file containing obfuscated malicious power-shell code, our job is to de-obfuscate/decode and investigate the goals the bad actor set behind it, answering questions along the way.
+          
+        
+        </description>
+    </item>
+    
+  </channel>
+</rss>

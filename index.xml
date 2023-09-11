@@ -1,19 +1,57 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>pushingbuttons</title>
+    <title>Your site title</title>
+    
+    
+    
     <link>http://ladybuginthemug.github.io/</link>
-    <description>Recent content on pushingbuttons</description>
+    <description>Recent content on Your site title</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 08 Aug 2023 00:00:00 +0000</lastBuildDate><atom:link href="http://ladybuginthemug.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 14 Aug 2023 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://ladybuginthemug.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>malicious power-shell analysis</title>
+      <link>http://ladybuginthemug.github.io/writings/malicious-power-shell-analysis/</link>
+      <pubDate>Mon, 14 Aug 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://ladybuginthemug.github.io/writings/malicious-power-shell-analysis/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          The challenge provide a file containing obfuscated malicious power-shell code, our job is to de-obfuscate/decode and investigate the goals the bad actor set behind it, answering questions along the way.
+          
+        
+        </description>
+    </item>
+    
     <item>
       <title>Test</title>
       <link>http://ladybuginthemug.github.io/blog/test/</link>
       <pubDate>Tue, 08 Aug 2023 00:00:00 +0000</pubDate>
       
       <guid>http://ladybuginthemug.github.io/blog/test/</guid>
-      <description>It&amp;#39;s a test!</description>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          It&#39;s a test!
+          
+        
+        </description>
     </item>
     
     <item>
@@ -22,7 +60,38 @@
       <pubDate>Tue, 08 Aug 2023 00:00:00 +0000</pubDate>
       
       <guid>http://ladybuginthemug.github.io/blog/test-two/</guid>
-      <description>It&amp;#39;s a test!</description>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          It&#39;s a test!
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>spaced repetition</title>
+      <link>http://ladybuginthemug.github.io/projects/spaced-repetition/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://ladybuginthemug.github.io/projects/spaced-repetition/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          
+          
+        
+        </description>
     </item>
     
   </channel>

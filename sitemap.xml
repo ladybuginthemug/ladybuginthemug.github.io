@@ -2,10 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://ladybuginthemug.github.io/blog/</loc>
-    <lastmod>2023-08-08T00:00:00+00:00</lastmod>
+    <loc>http://ladybuginthemug.github.io/writings/malicious-power-shell-analysis/</loc>
+    <lastmod>2023-08-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://ladybuginthemug.github.io/writings/</loc>
+    <lastmod>2023-08-14T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://ladybuginthemug.github.io/</loc>
+    <lastmod>2023-08-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://ladybuginthemug.github.io/blog/</loc>
     <lastmod>2023-08-08T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://ladybuginthemug.github.io/blog/test/</loc>
@@ -15,6 +21,12 @@
     <lastmod>2023-08-08T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://ladybuginthemug.github.io/categories/</loc>
+  </url><url>
+    <loc>http://ladybuginthemug.github.io/categories/django/</loc>
+  </url><url>
+    <loc>http://ladybuginthemug.github.io/projects/</loc>
+  </url><url>
+    <loc>http://ladybuginthemug.github.io/projects/spaced-repetition/</loc>
   </url><url>
     <loc>http://ladybuginthemug.github.io/tags/</loc>
   </url>
