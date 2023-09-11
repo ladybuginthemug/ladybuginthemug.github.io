@@ -2,57 +2,53 @@
 baseURL: http://ladybuginthemug.github.io/
 languageCode: en-us
 title: pushingbuttons 
-theme: PaperMod
-defaultTheme: dark
-disableThemeToggle: true
+theme: hello-friend
+#theme: terminal
 
-# intro
-params:
-  homeInfoParams:
-    Content: >
-        defence & automation
 
+
+
+languages:
+  en:
+    title: Your site title
+    keywords: ''
+    menuMore: Show more
+    writtenBy: by
+    readMore: Read 
+    readOtherPosts: read other posts
+    newerPosts: newer posts
+    olderPosts: older posts
+    dateFormatSingle:  02-Jan-2006
+    dateFormatList: 02-Jan-2006
+    ShowReadingTime: true
+    MinuteReadingTime: min read
+
+    params:
+      logo:
+        logoText: pushingbuttons
+        logoHomeLink: /
+    
 # navigation settigs
 menu:
   main:
+    - identifier: blog
+      name: writings
+      url: /writings/
+      weight: 1
+    - identifier: projects
+      name: projects
+      url: /projects/
+      weight: 2
     - identifier: categories
       name: categories
       url: /categories/
-      weight: 10
-    - identifier: tags
-      name: tags
-      url: /tags/
-      weight: 20
-  socialIcons:
-    - name: Github
-      url: "https://github.com/ladybuginthemug"
+      weight: 3
+    - identifier: git
+      name: git
+      rel: external
+      pre: <i class="fa fa-heart"></i>
+      url: https://github.com/ladybuginthemug
+      weight: 30
 
 
 
-# Additional Site Settings (add more settings if necessary)
-params:
-    ShowReadingTime: true
-    ShowBreadCrumbs: true
-    ShowCodeCopyButtons: true
-    ShowToc: true
-    hideSummary: true
-    
-
-# mark up settings 
-markup:
-  highlight:
-    #anchorLineNos: true
-    guessSyntax: true
-    #lineNos: true
-    noClasses: true
-    style: native
-    
-  goldmark:
-    extensions:
-      definitionList: true
-      footnote: true
-      linkify: true
-      linkifyProtocol: https
-      strikethrough: true
-      table: true
-      taskList: true  
