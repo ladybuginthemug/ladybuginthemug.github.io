@@ -376,7 +376,8 @@ JWE JSON Web Encryption - defines how to encryption/decryption of claims"
   Vulnerabilities
   <a href="#vulnerabilities" class="h-anchor" aria-hidden="true">#</a>
 </h2>
-<p>Like any technology, if you do installment and configuration without a guide or expertise you can do more harm than benefits.</p>
+<p>Like any technology, if you do installment and configuration without a guide or expertise you can do more harm than benefits.
+Below we are going to explore a few common vulnerabilities.</p>
 <ul>
 <li>JWS - Weak signatures and insufficient signature validation:
 <ul>
@@ -401,10 +402,13 @@ JWE JSON Web Encryption - defines how to encryption/decryption of claims"
 </ul>
 <p>I won&rsquo;t go deep into cryptography, which is its own can of worms.</p>
 <ul>
-<li>JWE - Weak symmetric keys
+<li>
+<ul>
+<li>Weak symmetric keys</li>
+</ul>
 <ul>
 <li>HMAC - offline brute-force</li>
-<li>RSA - (don&rsquo;t or prefer hybrid + AES)</li>
+<li>RSA - algorithm confusion</li>
 </ul>
 </li>
 </ul>
