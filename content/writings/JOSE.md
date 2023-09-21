@@ -229,6 +229,7 @@ ________________
 ## Vulnerabilities
 
 Like any technology, if you do installment and configuration without a guide or expertise you can do more harm than benefits. 
+Below we are going to explore a few common vulnerabilities. 
 
 * JWS - Weak signatures and insufficient signature validation:
 	- **JWT 'none' algorithm confusion**
@@ -240,9 +241,9 @@ Like any technology, if you do installment and configuration without a guide or 
 		* jwk SSRF attacks 
 
 I won't go deep into cryptography, which is its own can of worms.
-* JWE - Weak symmetric keys
+*  - Weak symmetric keys
 	* HMAC - offline brute-force
-	* RSA - (don't or prefer hybrid + AES)
+	* RSA - algorithm confusion 
 
 
 
