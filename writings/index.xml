@@ -34,5 +34,25 @@
         </description>
     </item>
     
+    <item>
+      <title>JOSE</title>
+      <link>http://ladybuginthemug.github.io/writings/jose/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://ladybuginthemug.github.io/writings/jose/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          JWT vulnerabilities
+          
+        
+        </description>
+    </item>
+    
   </channel>
 </rss>

