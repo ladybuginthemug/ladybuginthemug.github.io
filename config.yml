@@ -5,7 +5,8 @@ title: pushingbuttons
 theme: hello-friend
 
 
-
+params:
+  contentTypeName : writings
 
 
 languages:
