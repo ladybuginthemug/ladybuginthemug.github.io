@@ -9,10 +9,30 @@
     <description>Recent content on Your site title</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 14 Aug 2023 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 Sep 2023 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://ladybuginthemug.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>JOSE</title>
+      <link>http://ladybuginthemug.github.io/writings/jose/</link>
+      <pubDate>Thu, 28 Sep 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://ladybuginthemug.github.io/writings/jose/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          JWT vulnerabilities
+          
+        
+        </description>
+    </item>
     
     <item>
       <title>malicious power-shell analysis</title>
@@ -29,26 +49,6 @@
         
         
           The challenge provide a file containing obfuscated malicious power-shell code, our job is to de-obfuscate/decode and investigate the goals the bad actor set behind it, answering questions along the way.
-          
-        
-        </description>
-    </item>
-    
-    <item>
-      <title>JOSE</title>
-      <link>http://ladybuginthemug.github.io/writings/jose/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>http://ladybuginthemug.github.io/writings/jose/</guid>
-      <description>
-        
-          
-          
-          
-        
-        
-        
-          JWT vulnerabilities
           
         
         </description>

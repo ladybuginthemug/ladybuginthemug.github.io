@@ -56,8 +56,8 @@ JWE JSON Web Encryption - defines how to encryption/decryption of claims"
 <meta property="og:description" content="JWT vulnerabilities" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://ladybuginthemug.github.io/writings/jose/" /><meta property="article:section" content="writings" />
-
-<meta property="og:site_name" content="Your site title" />
+<meta property="article:published_time" content="2023-09-28T00:00:00+00:00" />
+<meta property="article:modified_time" content="2023-09-28T00:00:00+00:00" /><meta property="og:site_name" content="Your site title" />
 
 
 
@@ -170,6 +170,14 @@ JWE JSON Web Encryption - defines how to encryption/decryption of claims"
     <h1 class="post-title">JOSE</h1>
     <div class="post-meta">
       
+        <time class="post-date">
+          28-Sep-2023
+        </time>
+
+        
+          
+        
+      
 
       
         <span class="post-author"
@@ -218,17 +226,15 @@ JWE JSON Web Encryption - defines how to encryption/decryption of claims"
 </ul>
 <p>For example: SSO ( Single Sign-on)</p>
 <hr>
-<h3 id="how">
-  How?
-  <a href="#how" class="h-anchor" aria-hidden="true">#</a>
+<h3 id="how-does-it-work">
+  How does it work?
+  <a href="#how-does-it-work" class="h-anchor" aria-hidden="true">#</a>
 </h3>
 <p>First. I want  to start with straightening things up between JWT, JWS, and JWE. What is what? Where does JWT end and JWS begin? Is it all the same?</p>
-<hr>
 <h4 id="jwt-vs-jws">
   JWT vs JWS
   <a href="#jwt-vs-jws" class="h-anchor" aria-hidden="true">#</a>
 </h4>
-<hr>
 <h5 id="jwt">
   JWT
   <a href="#jwt" class="h-anchor" aria-hidden="true">#</a>
@@ -322,30 +328,30 @@ JWE JSON Web Encryption - defines how to encryption/decryption of claims"
 [3]BASE64URL(JWE Initialization Vector(IV)) + &#39;.&#39; + 
 [4]BASE64URL(JWE Ciphertext) + &#39;.&#39; +
 [5] BASE64URL(JWE Authentication Tag)
-</code></pre><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;protected&#34;</span>: <span style="color:#e6db74">&#34;&lt;integrity-protected header contents&gt;&#34;</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;unprotected&#34;</span>: <span style="color:#960050;background-color:#1e0010">&lt;non-integrity-protected</span> <span style="color:#960050;background-color:#1e0010">header</span> <span style="color:#960050;background-color:#1e0010">contents&gt;</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;recipients&#34;</span>: [
-</span></span><span style="display:flex;"><span>    {<span style="color:#f92672">&#34;header&#34;</span>: <span style="color:#960050;background-color:#1e0010">&lt;per-recipient</span> <span style="color:#960050;background-color:#1e0010">unprotected</span> <span style="color:#960050;background-color:#1e0010">header</span> <span style="color:#ae81ff">1</span> <span style="color:#960050;background-color:#1e0010">contents&gt;</span>,
-</span></span><span style="display:flex;"><span>     <span style="color:#f92672">&#34;encrypted_key&#34;</span>: <span style="color:#e6db74">&#34;&lt;encrypted key 1 contents&gt;&#34;</span>},
-</span></span><span style="display:flex;"><span>     <span style="color:#960050;background-color:#1e0010">...</span>
-</span></span><span style="display:flex;"><span>    {<span style="color:#f92672">&#34;header&#34;</span>: <span style="color:#960050;background-color:#1e0010">&lt;per-recipient</span> <span style="color:#960050;background-color:#1e0010">unprotected</span> <span style="color:#960050;background-color:#1e0010">header</span> <span style="color:#960050;background-color:#1e0010">N</span> <span style="color:#960050;background-color:#1e0010">contents&gt;</span>,
-</span></span><span style="display:flex;"><span>     <span style="color:#f92672">&#34;encrypted_key&#34;</span>: <span style="color:#e6db74">&#34;&lt;encrypted key N contents&gt;&#34;</span>}],
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;aad&#34;</span>:<span style="color:#e6db74">&#34;&lt;additional authenticated data contents&gt;&#34;</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;iv&#34;</span>:<span style="color:#e6db74">&#34;&lt;initialization vector contents&gt;&#34;</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;ciphertext&#34;</span>:<span style="color:#e6db74">&#34;&lt;ciphertext contents&gt;&#34;</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;tag&#34;</span>:<span style="color:#e6db74">&#34;&lt;authentication tag contents&gt;&#34;</span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-JSON" data-lang="JSON"><span style="display:flex;"><span>{<span style="color:#960050;background-color:#1e0010">&#39;protected&#39;:</span> <span style="color:#960050;background-color:#1e0010">&#39;eyJhbGciOiAiUlNBLU9BRVAiLCAiZW5jIjogIkEyNTZHQ00ifQ==&#39;,</span> 
-</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">&#39;unprotected&#39;:</span> <span style="color:#960050;background-color:#1e0010">{&#39;kid&#39;:</span> <span style="color:#960050;background-color:#1e0010">&#39;12345&#39;</span>}<span style="color:#960050;background-color:#1e0010">,</span> 
-</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">&#39;recipients&#39;:</span> [{
-</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">&#39;header&#39;:</span> <span style="color:#960050;background-color:#1e0010">{&#39;alg&#39;:</span> <span style="color:#960050;background-color:#1e0010">&#39;RSA-OAEP&#39;</span>}, 
-</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">&#39;encrypted_key&#39;:</span> <span style="color:#960050;background-color:#1e0010">&#39;K_wBW</span><span style="color:#ae81ff">14</span><span style="color:#960050;background-color:#1e0010">TwhcvOvRKnCh</span><span style="color:#ae81ff">95</span><span style="color:#960050;background-color:#1e0010">vk</span><span style="color:#ae81ff">0</span><span style="color:#960050;background-color:#1e0010">h</span><span style="color:#ae81ff">942</span><span style="color:#960050;background-color:#1e0010">SRondffpK-_pc_NNa</span><span style="color:#ae81ff">6</span><span style="color:#960050;background-color:#1e0010">TmFbAB</span><span style="color:#ae81ff">6</span><span style="color:#960050;background-color:#1e0010">_GmnD</span><span style="color:#ae81ff">0</span><span style="color:#960050;background-color:#1e0010">x_XlS</span><span style="color:#ae81ff">7</span><span style="color:#960050;background-color:#1e0010">KBy</span><span style="color:#ae81ff">4</span><span style="color:#960050;background-color:#1e0010">NJIIh</span><span style="color:#ae81ff">6</span><span style="color:#960050;background-color:#1e0010">QBdRs</span><span style="color:#ae81ff">1</span><span style="color:#960050;background-color:#1e0010">bU</span><span style="color:#ae81ff">3</span><span style="color:#960050;background-color:#1e0010">IEYv-Rvsqznxid</span><span style="color:#ae81ff">4</span><span style="color:#960050;background-color:#1e0010">f</span><span style="color:#ae81ff">9</span><span style="color:#960050;background-color:#1e0010">kEEN</span><span style="color:#ae81ff">4</span><span style="color:#960050;background-color:#1e0010">S</span><span style="color:#ae81ff">2</span><span style="color:#960050;background-color:#1e0010">GfiVabPp</span><span style="color:#ae81ff">9</span><span style="color:#960050;background-color:#1e0010">UIt</span><span style="color:#ae81ff">9</span><span style="color:#960050;background-color:#1e0010">vqAfZIlIusTssK</span><span style="color:#ae81ff">65</span><span style="color:#960050;background-color:#1e0010">cgcJPCt_Sia</span><span style="color:#ae81ff">4</span><span style="color:#960050;background-color:#1e0010">saKVAlbTFSEJFYc</span><span style="color:#ae81ff">4</span><span style="color:#960050;background-color:#1e0010">McNKg</span><span style="color:#ae81ff">1</span><span style="color:#960050;background-color:#1e0010">dR</span><span style="color:#ae81ff">1</span><span style="color:#960050;background-color:#1e0010">BUYaKRm</span><span style="color:#ae81ff">6</span><span style="color:#960050;background-color:#1e0010">OoJnKohWAv</span><span style="color:#ae81ff">4</span><span style="color:#960050;background-color:#1e0010">ZeCCYcubeeaDEZvFw_l</span><span style="color:#ae81ff">3</span><span style="color:#960050;background-color:#1e0010">J</span><span style="color:#ae81ff">0</span><span style="color:#960050;background-color:#1e0010">sJLztUTIW_NEtTDx</span><span style="color:#ae81ff">4</span><span style="color:#960050;background-color:#1e0010">gMW</span><span style="color:#ae81ff">0</span><span style="color:#960050;background-color:#1e0010">Cvd</span><span style="color:#ae81ff">1</span><span style="color:#960050;background-color:#1e0010">igWozi</span><span style="color:#ae81ff">2</span><span style="color:#960050;background-color:#1e0010">cEzqKRd_EmDfalf_uh</span><span style="color:#ae81ff">5</span><span style="color:#960050;background-color:#1e0010">Czm</span><span style="color:#ae81ff">386</span><span style="color:#960050;background-color:#1e0010">JZ</span><span style="color:#ae81ff">44</span><span style="color:#960050;background-color:#1e0010">FF</span><span style="color:#ae81ff">4</span><span style="color:#960050;background-color:#1e0010">tX</span><span style="color:#ae81ff">929</span><span style="color:#960050;background-color:#1e0010">YowHz</span><span style="color:#ae81ff">2</span><span style="color:#960050;background-color:#1e0010">Wk</span><span style="color:#ae81ff">7</span><span style="color:#960050;background-color:#1e0010">iCz</span><span style="color:#ae81ff">6</span><span style="color:#960050;background-color:#1e0010">tqzMFE</span><span style="color:#ae81ff">128</span><span style="color:#960050;background-color:#1e0010">fpLve-n</span><span style="color:#ae81ff">112</span><span style="color:#960050;background-color:#1e0010">nAcAlBWNolhf</span><span style="color:#ae81ff">390</span><span style="color:#960050;background-color:#1e0010">syIqHVkaPtM</span><span style="color:#ae81ff">3</span><span style="color:#960050;background-color:#1e0010">dUAh</span><span style="color:#ae81ff">0</span><span style="color:#960050;background-color:#1e0010">tZ</span><span style="color:#ae81ff">9</span><span style="color:#960050;background-color:#1e0010">yCvKAdkLQvOuSmtlW</span><span style="color:#ae81ff">8</span><span style="color:#960050;background-color:#1e0010">_</span><span style="color:#ae81ff">2</span><span style="color:#960050;background-color:#1e0010">u</span><span style="color:#ae81ff">1</span><span style="color:#960050;background-color:#1e0010">n</span><span style="color:#ae81ff">7</span><span style="color:#960050;background-color:#1e0010">jC</span><span style="color:#ae81ff">4</span><span style="color:#960050;background-color:#1e0010">X</span><span style="color:#ae81ff">107</span><span style="color:#960050;background-color:#1e0010">O_ffim</span><span style="color:#ae81ff">63</span><span style="color:#960050;background-color:#1e0010">ILLT</span><span style="color:#ae81ff">8</span><span style="color:#960050;background-color:#1e0010">ksLVHTW</span><span style="color:#ae81ff">6</span><span style="color:#960050;background-color:#1e0010">VHyYbf</span><span style="color:#ae81ff">89</span><span style="color:#960050;background-color:#1e0010">rhXf</span><span style="color:#ae81ff">0</span><span style="color:#960050;background-color:#1e0010">Olzp</span><span style="color:#ae81ff">3</span><span style="color:#960050;background-color:#1e0010">Qvyhj</span><span style="color:#ae81ff">49</span><span style="color:#960050;background-color:#1e0010">qAVIYMpE</span><span style="color:#ae81ff">09</span><span style="color:#960050;background-color:#1e0010">RodkryKCZhPHxECOQQIcbGClwMPcob</span><span style="color:#ae81ff">3</span><span style="color:#960050;background-color:#1e0010">lGwrjAYLes</span><span style="color:#ae81ff">5</span><span style="color:#960050;background-color:#1e0010">VyodilT</span><span style="color:#ae81ff">0</span><span style="color:#960050;background-color:#1e0010">pgRNarhf</span><span style="color:#ae81ff">821</span><span style="color:#960050;background-color:#1e0010">wXgGZBOht_ii&#39;}</span>]<span style="color:#960050;background-color:#1e0010">,</span>
-</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">&#39;aad&#39;:</span> <span style="color:#960050;background-color:#1e0010">&#39;QWRkaXRpb</span><span style="color:#ae81ff">25</span><span style="color:#960050;background-color:#1e0010">hbCBBdXRoZW</span><span style="color:#ae81ff">50</span><span style="color:#960050;background-color:#1e0010">aWNhdGVkIERhdGE=&#39;,</span> 
-</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">&#39;iv&#39;:</span> <span style="color:#960050;background-color:#1e0010">&#39;CCiXnNa</span><span style="color:#ae81ff">87</span><span style="color:#960050;background-color:#1e0010">DIaHrNZ&#39;,</span> 
-</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">&#39;ciphertext&#39;:</span> <span style="color:#960050;background-color:#1e0010">&#39;AdTyQEqOWYxuRnoxa</span><span style="color:#ae81ff">4</span><span style="color:#960050;background-color:#1e0010">dwGdeVk-PwiGN</span><span style="color:#ae81ff">5</span><span style="color:#960050;background-color:#1e0010">i-EpeVtTLFKKGGowJv_Hbw==&#39;,</span> 
-</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">&#39;tag&#39;:</span> <span style="color:#960050;background-color:#1e0010">&#39;CjpKjbUZp</span><span style="color:#ae81ff">29</span><span style="color:#960050;background-color:#1e0010">ZQXkwtURkmw==&#39;}</span>
-</span></span></code></pre></div><h4 id="jwa">
+</code></pre><pre tabindex="0"><code>{
+  &#34;protected&#34;: &#34;&lt;integrity-protected header contents&gt;&#34;,
+  &#34;unprotected&#34;: &lt;non-integrity-protected header contents&gt;,
+  &#34;recipients&#34;: [
+    {&#34;header&#34;: &lt;per-recipient unprotected header 1 contents&gt;,
+     &#34;encrypted_key&#34;: &#34;&lt;encrypted key 1 contents&gt;&#34;},
+     ...
+    {&#34;header&#34;: &lt;per-recipient unprotected header N contents&gt;,
+     &#34;encrypted_key&#34;: &#34;&lt;encrypted key N contents&gt;&#34;}],
+  &#34;aad&#34;:&#34;&lt;additional authenticated data contents&gt;&#34;,
+  &#34;iv&#34;:&#34;&lt;initialization vector contents&gt;&#34;,
+  &#34;ciphertext&#34;:&#34;&lt;ciphertext contents&gt;&#34;,
+  &#34;tag&#34;:&#34;&lt;authentication tag contents&gt;&#34;
+}
+</code></pre><pre tabindex="0"><code>{&#39;protected&#39;: &#39;eyJhbGciOiAiUlNBLU9BRVAiLCAiZW5jIjogIkEyNTZHQ00ifQ==&#39;, 
+&#39;unprotected&#39;: {&#39;kid&#39;: &#39;12345&#39;}, 
+&#39;recipients&#39;: [{
+&#39;header&#39;: {&#39;alg&#39;: &#39;RSA-OAEP&#39;}, 
+&#39;encrypted_key&#39;: &#39;K_wBW14TwhcvOvRKnCh95vk0h942SRondffpK-_pc_NNa6TmFbAB6_GmnD0x_XlS7KBy4NJIIh6QBdRs1bU3IEYv-Rvsqznxid4f9kEEN4S2GfiVabPp9UIt9vqAfZIlIusTssK65cgcJPCt_Sia4saKVAlbTFSEJFYc4McNKg1dR1BUYaKRm6OoJnKohWAv4ZeCCYcubeeaDEZvFw_l3J0sJLztUTIW_NEtTDx4gMW0Cvd1igWozi2cEzqKRd_EmDfalf_uh5Czm386JZ44FF4tX929YowHz2Wk7iCz6tqzMFE128fpLve-n112nAcAlBWNolhf390syIqHVkaPtM3dUAh0tZ9yCvKAdkLQvOuSmtlW8_2u1n7jC4X107O_ffim63ILLT8ksLVHTW6VHyYbf89rhXf0Olzp3Qvyhj49qAVIYMpE09RodkryKCZhPHxECOQQIcbGClwMPcob3lGwrjAYLes5VyodilT0pgRNarhf821wXgGZBOht_ii&#39;}],
+&#39;aad&#39;: &#39;QWRkaXRpb25hbCBBdXRoZW50aWNhdGVkIERhdGE=&#39;, 
+&#39;iv&#39;: &#39;CCiXnNa87DIaHrNZ&#39;, 
+&#39;ciphertext&#39;: &#39;AdTyQEqOWYxuRnoxa4dwGdeVk-PwiGN5i-EpeVtTLFKKGGowJv_Hbw==&#39;, 
+&#39;tag&#39;: &#39;CjpKjbUZp29ZQXkwtURkmw==&#39;}
+</code></pre><h4 id="jwa">
   JWA
   <a href="#jwa" class="h-anchor" aria-hidden="true">#</a>
 </h4>
@@ -1017,13 +1023,13 @@ applicable.</p>
           </div>
           <div class="pagination__buttons">
             
-              <span class="button previous">
+            
+              <span class="button next">
                 <a href="http://ladybuginthemug.github.io/writings/malicious-power-shell-analysis/">
-                  <span class="button__icon">←</span>
                   <span class="button__text">malicious power-shell analysis</span>
+                  <span class="button__icon">→</span>
                 </a>
               </span>
-            
             
           </div>
         </div>
