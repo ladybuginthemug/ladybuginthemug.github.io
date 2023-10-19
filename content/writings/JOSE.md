@@ -3,7 +3,7 @@ draft: false
 author: ladybuginthemug
 title: JOSE
 description: JWT vulnerabilities
-date: 
+date: 2023-09-28
 categories: []
 ---
 ### What is JOSE?
@@ -27,13 +27,13 @@ Here are some scenarios where JSON Web Tokens are useful:
 For example: SSO ( Single Sign-on) 
 
 ___
-### How?
+### How does it work?
 
 First. I want  to start with straightening things up between JWT, JWS, and JWE. What is what? Where does JWT end and JWS begin? Is it all the same? 
 
-----
+
 #### JWT vs JWS
----
+
 
 ##### JWT  
 
@@ -165,7 +165,7 @@ JWE does not provide the same guarantees as JWS and, therefore, does not replace
 [5] BASE64URL(JWE Authentication Tag)
 ```
 
-```json
+```
 {
   "protected": "<integrity-protected header contents>",
   "unprotected": <non-integrity-protected header contents>,
@@ -184,7 +184,7 @@ JWE does not provide the same guarantees as JWS and, therefore, does not replace
 ```
 
 
-```JSON
+```
 {'protected': 'eyJhbGciOiAiUlNBLU9BRVAiLCAiZW5jIjogIkEyNTZHQ00ifQ==', 
 'unprotected': {'kid': '12345'}, 
 'recipients': [{
