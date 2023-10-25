@@ -11,9 +11,9 @@ params:
 
 languages:
   en:
-    title: Your site title
+    title: ladybuginthemug
     keywords: ''
-    menuMore: Show more
+    #menuMore: Show more
     writtenBy: by
     readMore: Read 
     readOtherPosts: read other posts
