@@ -35,8 +35,8 @@ By looking up with 'grep' we confirm that two tools been used here `sqlmap` and 
 By confirming tools in log file, we can instantly indicate timeframe of the first attack and malicious ips: `119.241.22.121, 168.22.54.119` 
 
 we can see that `168.22.54.119` starts with many manual probing attempts :
--`xmlrpc.php` - this file enables data to be transmitted with HTTP acting as the transport mechanism and XML as the encoding mechanism
--`wp-content/uploads/' - is the directory where any files uploaded to the platform are stored.
+* `xmlrpc.php` - this file enables data to be transmitted with HTTP acting as the transport mechanism and XML as the encoding mechanism
+* `wp-content/uploads/' - is the directory where any files uploaded to the platform are stored.
 ![ip168](https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/7c327a8f-9572-4de6-9ad3-671fb226446c)
 
 also, there was another attemt to access important files such as `wp-login` and `wp-includes`(that is the dir with the core files are stored): 
@@ -56,7 +56,7 @@ all requests from this ip seems to be unsuccessful so lets move on to next ip `1
 * many attempts to access various paths under `/webadmin` and `/wp-login.php` indicating a probing or scanning behavior searching for common admin or login pages.
 * the request to `/wp-login.php` results in a 302 (Found) status code, indicating a redirection.
 * a subsequent POST request to `/wp-login.php` with the parameter `itsec-hb-token=adminlogin` results in a 200 (OK) status code, suggesting a successful login attempt.
-*  user continues its attempts to log in, but all attempts result in a 403 Forbidden status, suggesting that the server is blocking access to the login page.
+* user continues its attempts to log in, but all attempts result in a 403 Forbidden status, suggesting that the server is blocking access to the login page.
 
 ![admin](https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/d28a775a-4da4-4c6a-9be1-aee3d769d18d)
 
