@@ -9,10 +9,30 @@
     <description>Recent content in Writings on ladybuginthemug</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 Sep 2023 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 18 Dec 2023 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://ladybuginthemug.github.io/writings/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Log Analysis – Compromised WordPress</title>
+      <link>http://ladybuginthemug.github.io/writings/compromisedwordpress/</link>
+      <pubDate>Mon, 18 Dec 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://ladybuginthemug.github.io/writings/compromisedwordpress/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          remote code execution
+          
+        
+        </description>
+    </item>
     
     <item>
       <title>JOSE</title>

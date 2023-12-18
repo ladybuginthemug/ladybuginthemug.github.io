@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>
+        Log Analysis – Compromised WordPress ::
+        ladybuginthemug
+      </title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta
+  name="description"
+  content="Link: Log Analysis – Compromised WordPress
+Scenario:
+One of our WordPress sites has been compromised but we&amp;rsquo;re currently unsure how. The primary hypothesis is that an installed plugin was vulnerable to a remote code execution vulnerability which gave an attacker access to the underlying operating system of the server.
+So for this challenge we have one access.log file.
+To investigate, at first I would lookup general stats with goaccess and than dive into log file if necessary to have a close look at."
+/>
+<meta
+  name="keywords"
+  content=""
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="http://ladybuginthemug.github.io/writings/compromisedwordpress/" />
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/style.css" />
+
+<link rel="stylesheet" href="http://ladybuginthemug.github.io/style.css" />
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://ladybuginthemug.github.io/img/apple-touch-icon-144-precomposed.png" />
+<link rel="shortcut icon" href="http://ladybuginthemug.github.io/img/favicon.png" />
+
+
+<link href="/fonts/Inter-Italic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Regular.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Medium.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-MediumItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Bold.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-BoldItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Log Analysis – Compromised WordPress"/>
+<meta name="twitter:description" content="remote code execution"/>
+
+
+
+<meta property="og:title" content="Log Analysis – Compromised WordPress" />
+<meta property="og:description" content="remote code execution" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://ladybuginthemug.github.io/writings/compromisedwordpress/" /><meta property="article:section" content="writings" />
+<meta property="article:published_time" content="2023-12-18T00:00:00+00:00" />
+<meta property="article:modified_time" content="2023-12-18T00:00:00+00:00" /><meta property="og:site_name" content="ladybuginthemug" />
+
+
+
+
+
+
+  </head>
+  <body >
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >pushingbuttons</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/writings/">writings</a></li>
+        
+      
+        
+          <li><a href="https://github.com/ladybuginthemug">git</a></li>
+        
+      
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/writings/">writings</a></li>
+      
+    
+      
+        <li><a href="https://github.com/ladybuginthemug">git</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg
+  class="theme-toggler"
+  width="24"
+  height="24"
+  viewBox="0 0 48 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"
+  />
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <article class="post">
+    <h1 class="post-title">Log Analysis – Compromised WordPress</h1>
+    <div class="post-meta">
+      
+        <time class="post-date">
+          18-Dec-2023
+        </time>
+
+        
+          
+        
+      
+
+      
+        <span class="post-author"
+          >— by ladybuginthemug</span
+        >
+
+
+      
+        <span class="post-read-time"
+          >— 4 min read</span
+        >
+      
+    </div>
+
+    
+
+    
+
+    <div class="post-content">
+      
+      <p>Link: <a href="https://blueteamlabs.online/home/challenge/log-analysis-compromised-wordpress-ce000f5b59">Log Analysis – Compromised WordPress</a></p>
+<blockquote>
+<p>Scenario:</p>
+<p>One of our WordPress sites has been compromised but we&rsquo;re currently unsure how. The primary hypothesis is that an installed plugin was vulnerable to a remote code execution vulnerability which gave an attacker access to the underlying operating system of the server.</p>
+</blockquote>
+<hr>
+<p>So for this challenge we have one <code>access.log</code> file.</p>
+<p>To investigate, at first I would lookup general stats with <code>goaccess</code> and than dive into log file if necessary to have a close look at.</p>
+<pre tabindex="0"><code>goaccess access.log
+</code></pre><p><img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/3f10c720-4f14-4185-badf-1b85bc52e7d3" alt="1"></p>
+<p>Aha! I can instantly spot <code>Crawlers</code> that is first sign that <code>scanning &amp; enumeration</code> stage took place.</p>
+<p><img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/c633e888-2ab2-4f29-b7a7-26781e2c6206" alt="crawlers"></p>
+<p>By looking up with &lsquo;grep&rsquo; we confirm that two tools been used here <code>sqlmap</code> and <code>wpscan</code>:</p>
+<p><img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/3d19fe31-f266-476a-b240-74295ae96da9" alt="tools"></p>
+<p>By confirming tools in log file, we can instantly indicate timeframe of the first attack and malicious ips: <code>119.241.22.121, 168.22.54.119</code></p>
+<hr>
+<p>we can see that <code>168.22.54.119</code> starts with many manual probing :
+<code>xmlrpc.php</code> - this file enables data to be transmitted with HTTP acting as the transport mechanism and XML as the encoding mechanism
+`wp-content/uploads/&rsquo; - is the directory where any files uploaded to the platform are stored.
+<img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/7c327a8f-9572-4de6-9ad3-671fb226446c" alt="ip168"></p>
+<p>there was attemt to access important files such as <code>wp-login</code> and <code>wp-includes</code>(that is the dir with the core files are stored):
+<img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/ecc28d8b-93eb-45b8-8b96-65eda3600aad" alt="wp-includes"></p>
+<p>worth noting that view plugins was discovered in the process:
+<img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/c5468e4a-02f0-4d1f-9ec9-fd5e953b3177" alt="plugins"></p>
+<p>also file that contains information required by WordPress to connect to the database <code>wp-config.php</code>:
+<img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/47e0c709-7544-448f-9d59-ca910e916748" alt="wp-config"></p>
+<p>up unitl <code>sqlmap</code> scan, which runs sql injections on <code>wp-login.php</code> :
+<img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/fd46150d-cf60-41b9-852a-5b456719758e" alt="sqlmap"></p>
+<p>all requests from this ip seems to be unsuccessful so lets move on to next ip <code>119.241.22.121</code>:</p>
+<ul>
+<li>many attempts to access various paths under <code>/webadmin</code> and <code>/wp-login.php</code> indicating a probing or scanning behavior searching for common admin or login pages.</li>
+<li>the request to <code>/wp-login.php</code> results in a 302 (Found) status code, indicating a redirection.</li>
+<li>a subsequent POST request to <code>/wp-login.php</code> with the parameter <code>itsec-hb-token=adminlogin</code> results in a 200 (OK) status code, suggesting a successful login attempt.</li>
+<li>user continues its attempts to log in, but all attempts result in a 403 Forbidden status, suggesting that the server is blocking access to the login page.</li>
+</ul>
+<p><img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/d28a775a-4da4-4c6a-9be1-aee3d769d18d" alt="admin"></p>
+<p>Taking second look at stats with go-access reveal that there was many hits with plugins in the path in combination of the previous plugins enumeration can suggest of possible plugins exploitation.</p>
+<p><img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/1c86c9bc-8524-4cb0-bfae-50ff76403041" alt="goaccess"></p>
+<p>Next step is to follow the <code>/wp-content/</code> :</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cat access.log |  uniq | grep <span style="color:#e6db74">&#39;/wp-content/&#39;</span> 
+</span></span></code></pre></div><p><img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/9e0b1d11-5f0d-4d14-87eb-17d0431160ef" alt="plugins"></p>
+<p>Malicious user was trying to exploit vulnerability in <code>contact form plugin</code>, by uploading PHP web shell file <code>fr34k.php</code>  unsuccessfully.  Successful upload would load a web shell for remote execution .</p>
+<ul>
+<li>CVE-2020-35489 - The contact-form-7 plugin
+<a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-35489">https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-35489</a>)</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>103.69.55.212 - - <span style="color:#f92672">[</span>14/Jan/2021:06:21:08 +0000<span style="color:#f92672">]</span> <span style="color:#e6db74">&#34;GET /wp-content/plugins/contact-form-7/uploads/fr34k.png HTTP/1.1&#34;</span> <span style="color:#ae81ff">404</span> <span style="color:#ae81ff">29045</span> <span style="color:#e6db74">&#34;-&#34;</span> <span style="color:#e6db74">&#34;Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.1; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; Tablet PC 2.0)&#34;</span>
+</span></span></code></pre></div><p>Later we can see another similar attempt to upload with different plugin <code>simple-file-list</code>, this time with success.</p>
+<ul>
+<li>WordPress Plugin Simple File List 4.2.2 - Arbitrary File Upload
+<a href="https://www.exploit-db.com/exploits/48979">https://www.exploit-db.com/exploits/48979</a></li>
+</ul>
+<p>Following script exploits WP in following steps:</p>
+<ul>
+<li>The script defines the target URL, upload directory path, upload file path, and move file path.</li>
+<li>It generates a random PNG file containing PHP code to achieve remote code execution.</li>
+<li>The script then uploads the generated file to the target system using a POST request to the upload endpoint.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>119.241.22.121 - - <span style="color:#f92672">[</span>14/Jan/2021:06:26:53 +0000<span style="color:#f92672">]</span> <span style="color:#e6db74">&#34;POST /wp-content/plugins/simple-file-list/ee-upload-engine.php HTTP/1.1&#34;</span> <span style="color:#ae81ff">200</span> <span style="color:#ae81ff">236</span> <span style="color:#e6db74">&#34;-&#34;</span> <span style="color:#e6db74">&#34;python-requests/2.24.0&#34;</span>
+</span></span><span style="display:flex;"><span>119.241.22.121 - - <span style="color:#f92672">[</span>14/Jan/2021:06:26:53 +0000<span style="color:#f92672">]</span> <span style="color:#e6db74">&#34;GET /wp-content/uploads/simple-file-list/fr34k.png HTTP/1.1&#34;</span> <span style="color:#ae81ff">200</span> <span style="color:#ae81ff">84690</span> <span style="color:#e6db74">&#34;-&#34;</span> <span style="color:#e6db74">&#34;python-requests/2.24.0&#34;</span>
+</span></span><span style="display:flex;"><span>119.241.22.121 - - <span style="color:#f92672">[</span>14/Jan/2021:06:26:53 +0000<span style="color:#f92672">]</span> <span style="color:#e6db74">&#34;POST /wp-content/plugins/simple-file-list/ee-file-engine.php HTTP/1.1&#34;</span> <span style="color:#ae81ff">200</span> <span style="color:#ae81ff">236</span> <span style="color:#e6db74">&#34;http://172.21.0.3/wp-admin/admin.php?page=ee-simple-file-list&amp;tab=file_list&amp;eeListID=1&#34;</span> <span style="color:#e6db74">&#34;python-requests/2.24.0&#34;</span>
+</span></span></code></pre></div><ul>
+<li>After successful upload, it sends a GET request to the uploaded file to confirm the upload.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>103.69.55.212 - - <span style="color:#f92672">[</span>14/Jan/2021:06:27:04 +0000<span style="color:#f92672">]</span> <span style="color:#e6db74">&#34;GET /wp-content/uploads/simple-file-list/fr34k.php HTTP/1.1&#34;</span> <span style="color:#ae81ff">200</span> <span style="color:#ae81ff">1295</span> <span style="color:#e6db74">&#34;-&#34;</span> <span style="color:#e6db74">&#34;Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.1; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; Tablet PC 2.0)&#34;</span>
+</span></span></code></pre></div><ul>
+<li>The script then moves the uploaded file to change its extension to &ldquo;.php&rdquo; using a POST request to the move endpoint.</li>
+<li>Finally, it sends a POST request to the moved PHP file with a payload to execute the &ldquo;phpinfo();&rdquo; command.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>103.69.55.212 - - <span style="color:#f92672">[</span>14/Jan/2021:06:27:06 +0000<span style="color:#f92672">]</span> <span style="color:#e6db74">&#34;POST /wp-content/uploads/simple-file-list/fr34k.php HTTP/1.1&#34;</span> <span style="color:#ae81ff">200</span> <span style="color:#ae81ff">1213</span> <span style="color:#e6db74">&#34;http://172.21.0.3/wp-content/uploads/simple-file-list/fr34k.php&#34;</span> <span style="color:#e6db74">&#34;Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.1; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; Tablet PC 2.0)&#34;</span>
+</span></span></code></pre></div><p>we can confirm that exploit worked:
+<img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/0c79ddc1-4344-4cfa-a4ee-b47ee120b01f" alt="connected"></p>
+<p>the last activity:
+<img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/30115c3b-9536-4d99-ba64-a3747d37a611" alt="end"></p>
+
+    </div>
+    
+      
+        <div class="pagination">
+          <div class="pagination__title">
+            <span class="pagination__title-h"
+              >read other posts</span
+            >
+            <hr />
+          </div>
+          <div class="pagination__buttons">
+            
+            
+              <span class="button next">
+                <a href="http://ladybuginthemug.github.io/writings/jose/">
+                  <span class="button__text">JOSE</span>
+                  <span class="button__icon">→</span>
+                </a>
+              </span>
+            
+          </div>
+        </div>
+      
+    
+
+    
+      
+        
+
+      
+    
+  </article>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >pushingbuttons</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2023 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span><a href="https://github.com/panr/hugo-theme-hello-friend" target="_blank">Theme</a> made by <a href="https://github.com/panr" target="_blank">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+
+
+
+
+<script type="text/javascript" src="/bundle.min.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>
