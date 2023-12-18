@@ -198,10 +198,12 @@ To investigate, at first I would lookup general stats with goaccess and than div
 <p>By looking up with &lsquo;grep&rsquo; we confirm that two tools been used here <code>sqlmap</code> and <code>wpscan</code>:</p>
 <p><img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/3d19fe31-f266-476a-b240-74295ae96da9" alt="tools"></p>
 <p>By confirming tools in log file, we can instantly indicate timeframe of the first attack and malicious ips: <code>119.241.22.121, 168.22.54.119</code></p>
-<p>we can see that <code>168.22.54.119</code> starts with many manual probing attempts :
--<code>xmlrpc.php</code> - this file enables data to be transmitted with HTTP acting as the transport mechanism and XML as the encoding mechanism
--`wp-content/uploads/&rsquo; - is the directory where any files uploaded to the platform are stored.
-<img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/7c327a8f-9572-4de6-9ad3-671fb226446c" alt="ip168"></p>
+<p>we can see that <code>168.22.54.119</code> starts with many manual probing attempts :</p>
+<ul>
+<li><code>xmlrpc.php</code> - this file enables data to be transmitted with HTTP acting as the transport mechanism and XML as the encoding mechanism</li>
+<li>`wp-content/uploads/&rsquo; - is the directory where any files uploaded to the platform are stored.
+<img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/7c327a8f-9572-4de6-9ad3-671fb226446c" alt="ip168"></li>
+</ul>
 <p>also, there was another attemt to access important files such as <code>wp-login</code> and <code>wp-includes</code>(that is the dir with the core files are stored):
 <img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/ecc28d8b-93eb-45b8-8b96-65eda3600aad" alt="wp-includes"></p>
 <p>worth noting that view plugins was discovered in the process:
