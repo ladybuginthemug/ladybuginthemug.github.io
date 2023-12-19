@@ -37,12 +37,13 @@ By confirming tools in log file, we can instantly indicate timeframe of the firs
 we can see that `168.22.54.119` starts with many manual probing attempts :
 * `xmlrpc.php` - this file enables data to be transmitted with HTTP acting as the transport mechanism and XML as the encoding mechanism
 * `wp-content/uploads/' - is the directory where any files uploaded to the platform are stored.
+  
 ![ip168](https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/7c327a8f-9572-4de6-9ad3-671fb226446c)
 
 also, there was another attemt to access important files such as `wp-login` and `wp-includes`(that is the dir with the core files are stored): 
 ![wp-includes](https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/ecc28d8b-93eb-45b8-8b96-65eda3600aad)
 
-worth noting that view plugins was discovered in the process:
+worth noting that a few plugins was discovered in the process: `kadence`, `contact-form-7`,`simple-file-list`, `wordpress-seo`.
 ![plugins](https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/c5468e4a-02f0-4d1f-9ec9-fd5e953b3177)
 
 also file that contains information required by WordPress to connect to the database `wp-config.php`:
