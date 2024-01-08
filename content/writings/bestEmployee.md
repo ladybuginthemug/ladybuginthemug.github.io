@@ -22,7 +22,7 @@ The `mmls` command provides details about the disk image structure, indicating t
 - it has a DOS partition table with one partition. 
 - the partition starts at sector 2048 and contains an Ext4 file system with a Linux operating system.
 
-```
+```bash
 └─$ mmls recoverfiles.dd 
 DOS Partition Table
 Offset Sector: 0
@@ -35,7 +35,7 @@ Units are in 512-byte sectors
 ```                  
 
 The `fsstat` command with the correct offset `2048` provides additional file system information, such as the file system type `Ext4`, volume name, volume ID, and other details.
-```
+```bash
 └─$ fsstat -o 2048 recoverfiles.dd 
 
 FILE SYSTEM INFORMATION
@@ -52,7 +52,7 @@ Volume ID: 619b3a18aabdc1a6a44a07e931710220
 
 `fls` lists the files and directories and with that, we learned original file names and clues for future investigation. 
 
-```
+```bash
 └─$ fls -o 2048 recoverfiles.dd
 d/d 11: lost+found
 r/r * 12:       Vanilla.gif
@@ -63,35 +63,11 @@ r/r * 16:       Flag1.png
 V/V 2305:       $OrphanFiles
 ```
 
-Inspecting files with `istat` using their inode number suggests that all the files were deleted.
-
-```
-└─$  istat -o 2048 recoverfiles.dd 13
-
-inode: 13
-Not Allocated
-Group: 0
-Generation Id: 1002569430
-uid / gid: 0 / 0
-mode: rrwxrwx---
-Flags: Extents, 
-size: 0
-num of links: 0
-
-Inode Times:
-Accessed:  2021-02-12 23:25:02 (EST)
-File Modified: 2021-02-12 23:25:18 (EST)
-Inode Modified: 2021-02-12 23:25:18 (EST)
-Deleted:   2021-02-12 23:25:18 (EST)
-
-Direct Blocks:
-```
-
 ---
 
 It's time to recover files, with the use of `photorec`. This interactive tool allows you to select the correct file system, partition, and the specific files you want to recover. :
 
-```
+```bash
 └─$ photorec recoverfiles.dd
 
 PhotoRec 7.1, Data Recovery Utility, July 2019
@@ -124,7 +100,7 @@ Exploring `pdf` file makes us realize that `flag3` is probably hiding within the
 
 Using `exiftool` on that pdf file will reveal the answer
 
-```
+```bash
 ExifTool Version Number         : 12.67
 File Name                       : f0009040.pdf
 Directory                       : .
@@ -146,7 +122,7 @@ Page Count                      : 1
 
 using `strings` works too. 
 
-```
+```bash
 └─$ strings f0009040.pdf | grep 'FLAG'  
 /Author (FLAG3%3A%40BLU3T3AM%240LDI3R)
 
@@ -154,7 +130,7 @@ using `strings` works too.
 
 The string is slightly obfuscated or `URL-encoded`. You can decode it with CyberChef or go fancy: 
 
-```
+```bash
 └─$ python3 -c "import urllib.parse; print(urllib.parse.unquote('FLAG3%3A%40BLU3T3AM%240LDI3R'))"
 FLAG3:@BLU3T3AM$0LDI3R
 
@@ -167,7 +143,7 @@ There are a few ways it's possible to retrieve a hidden string from that documen
 
 1. you can use the `docx2txt` tool. This command will create a text file containing the extracted text content from the DOCX file.: 
 
-```
+```bash
 └─$ docx2txt f0009072.docx | cat f0009072.txt 
 
 RkxBRzI6QVNPTElEREVGRU5ERVI=
@@ -175,7 +151,7 @@ RkxBRzI6QVNPTElEREVGRU5ERVI=
 ```
 
 2. Since **docx** **files** **are** **zipped** collections of XML files, the unzip command will help:
-```
+```bash
 └─$ unzip f0009072.docx 
 Archive:  f0009072.docx
   inflating: word/numbering.xml      
@@ -196,14 +172,14 @@ Then you can search manually XML documents and find the flag in document.xml. Wh
 
 or use strings piped with grep in combination with regex.
 
-```
+```bash
 └─$ strings f0009072.docx word/*.xml | grep -E '>[^<>]+<'
 ```
 ![grep](https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/f5e0fa2b-54b5-4abc-81da-bce12bfd29ed)
 
 This flag is also obfuscated in the most common way `base65`:
 
-```
+```bash
 └─$ echo -n 'RkxBRzI6QVNPTElEREVGRU5ERVI=' | base64 -d
 
 FLAG2:ASOLIDDEFENDER   
