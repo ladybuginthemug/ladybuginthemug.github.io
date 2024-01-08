@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>
+        malicious power-shell analysis ::
+        ladybuginthemug
+      </title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta
+  name="description"
+  content="#blueteamlabs
+This is my first write-up on https://blueteamlabs.online challenge “Malicious power-shell analysis“.
+The challenge provide a file containing obfuscated malicious power-shell code, our job is to de-obfuscate/decode and investigate the goals the bad actor set behind it, answering questions along the way.
+Examination # First thing first, we open the file with any preferred text editor(Sublime, Notepad, etc.).
+The ‘POwersheLL -w hidden -ENCOD’ at the beginning. Despite odd capitalization, — when you type in PowerShell, you don’t have to worry about whether letters are big or small."
+/>
+<meta
+  name="keywords"
+  content=""
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="http://ladybuginthemug.github.io/writings/powershell/" />
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/style.css" />
+
+<link rel="stylesheet" href="http://ladybuginthemug.github.io/style.css" />
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://ladybuginthemug.github.io/img/apple-touch-icon-144-precomposed.png" />
+<link rel="shortcut icon" href="http://ladybuginthemug.github.io/img/favicon.png" />
+
+
+<link href="/fonts/Inter-Italic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Regular.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Medium.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-MediumItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Bold.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-BoldItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="malicious power-shell analysis"/>
+<meta name="twitter:description" content="The challenge provide a file containing obfuscated malicious power-shell code, our job is to de-obfuscate/decode and investigate the goals the bad actor set behind it, answering questions along the way."/>
+
+
+
+<meta property="og:title" content="malicious power-shell analysis" />
+<meta property="og:description" content="The challenge provide a file containing obfuscated malicious power-shell code, our job is to de-obfuscate/decode and investigate the goals the bad actor set behind it, answering questions along the way." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://ladybuginthemug.github.io/writings/powershell/" /><meta property="article:section" content="writings" />
+<meta property="article:published_time" content="2023-08-14T00:00:00+00:00" />
+<meta property="article:modified_time" content="2023-08-14T00:00:00+00:00" /><meta property="og:site_name" content="ladybuginthemug" />
+
+
+
+
+
+
+  </head>
+  <body >
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >pushingbuttons</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/writings/">writings</a></li>
+        
+      
+        
+          <li><a href="https://github.com/ladybuginthemug">git</a></li>
+        
+      
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/writings/">writings</a></li>
+      
+    
+      
+        <li><a href="https://github.com/ladybuginthemug">git</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg
+  class="theme-toggler"
+  width="24"
+  height="24"
+  viewBox="0 0 48 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"
+  />
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <article class="post">
+    <h1 class="post-title">malicious power-shell analysis</h1>
+    <div class="post-meta">
+      
+        <time class="post-date">
+          14-Aug-2023
+        </time>
+
+        
+          
+        
+      
+
+      
+        <span class="post-author"
+          >— by ladybuginthemug</span
+        >
+
+
+      
+        <span class="post-read-time"
+          >— 8 min read</span
+        >
+      
+    </div>
+
+    
+
+    
+
+    <div class="post-content">
+      
+      <p>#blueteamlabs</p>
+<p>This is my first write-up on <a href="https://blueteamlabs.online">https://blueteamlabs.online</a> challenge “<strong>Malicious power-shell analysis“.</strong></p>
+<p>The challenge provide a file containing obfuscated malicious power-shell code, our job is to de-obfuscate/decode and investigate the goals the bad actor set behind it, answering questions along the way.</p>
+<h2 id="examination">
+  Examination
+  <a href="#examination" class="h-anchor" aria-hidden="true">#</a>
+</h2>
+<p>First thing first, we open the file with any preferred text editor(Sublime, Notepad, etc.).</p>
+<p>The ‘POwersheLL -w hidden -ENCOD’ at the beginning. Despite odd capitalization, — when you type in PowerShell, you don’t have to worry about whether letters are big or small. What’s more important are the instructions it gives. When it says ‘-w hidden’, it tells PowerShell to open up a hidden window. And that ‘-ENCOD’ part is just a quick way to say “encoded.” The rest of it is a pretty long obfuscated code that needs to be decoded.</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/1*ILU5_HTaYpPt0n2obKeqRg.png" alt=""></p>
+<p>By looking up close at provided obfuscated code, we can pretty easily spot that the first layer is encoded with <code>base64</code></p>
+<hr>
+<blockquote>
+<p>What is <code>base64</code>? <em>Base64</em> is a binary-to-text encoding scheme. It&rsquo;s represented as ASCII characters where each Base64 character contains 6 bits of binary information.</p>
+<p>In Base64, as the name suggests, there are 64 characters used to encode binary data. These characters are:</p>
+<p>26 Capital letters [A-Z]</p>
+<p>26 lower letters [a-z]</p>
+<p>10 digits [0–9]</p>
+<p>2 special characters [+ , /]</p>
+<p><strong>Note:</strong> If the length of the data is not a multiple of three, some extra handling is needed to encode the remaining bytes. There is 65th character (<code>=</code>) to ensure that the encoded data is properly aligned and can be decoded correctly. It&rsquo;s called a <em>padding character</em> used to indicate that no further bits are needed to fully encode the input.</p>
+</blockquote>
+<hr>
+<p>We can decode it using Power shell or CyberChef ( <a href="https://github.com/gchq/CyberChef">git link here</a> ).</p>
+<p>I will go with Power shell here.</p>
+<h3 id="decode-base64">
+  Decode base64
+  <a href="#decode-base64" class="h-anchor" aria-hidden="true">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;encoded data&#34;</span> | base64 --decode &gt;&gt; decoded_from_base64.txt
+</span></span></code></pre></div><p>Run the command and open a new file for further investigations. ( Or copy results in your preferred location )</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/1*24WZA3oXl3OD3dF7vOA-1A.png" alt=""></p>
+<p>Now things start looking much more code-like. But let’s make it even better.</p>
+<p>If you stare long enough you start to see patterns. Seems to me that everything after <code>;</code> char we could treat as a new line and we can clean up a bunch of unnecessary characters like backticks <code>`</code>.</p>
+<p>To filter that we would use <code>regex</code> ( regular expressions ). You can do that using CyberChef too.</p>
+<p>But I will go with python here. That script will do just that and create a new <code>txt</code> file with output.</p>
+<hr>
+<h2 id="using-regex-expressions-to-parse-strings-out-of-text">
+  Using regex expressions to parse strings out of text
+  <a href="#using-regex-expressions-to-parse-strings-out-of-text" class="h-anchor" aria-hidden="true">#</a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env python  </span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> sys  
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> re  
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Check if the input file is provided as a command-line argument  </span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> len(sys<span style="color:#f92672">.</span>argv) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">2</span>:  
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;Usage: python script.py &lt;input_file&gt;&#34;</span>)  
+</span></span><span style="display:flex;"><span>    sys<span style="color:#f92672">.</span>exit(<span style="color:#ae81ff">1</span>)  
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Get the input file path from the command-line argument  </span>
+</span></span><span style="display:flex;"><span>input_file_path <span style="color:#f92672">=</span> sys<span style="color:#f92672">.</span>argv[<span style="color:#ae81ff">1</span>]  
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Read the input file  </span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">with</span> open(input_file_path, <span style="color:#e6db74">&#39;r&#39;</span>) <span style="color:#66d9ef">as</span> file:  
+</span></span><span style="display:flex;"><span>    input_text <span style="color:#f92672">=</span> file<span style="color:#f92672">.</span>read()  
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Find all matches of the pattern in the input text  </span>
+</span></span><span style="display:flex;"><span>first_matches <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>sub(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;[`]&#34;</span>, <span style="color:#e6db74">&#39;&#39;</span>, input_text)  
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Join the matches into a single string  </span>
+</span></span><span style="display:flex;"><span>text <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">.</span>join(first_matches)  
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># We replacing all &#34;;&#34; to make code format more readable   </span>
+</span></span><span style="display:flex;"><span>matches <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>sub(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;[;]&#34;</span>, <span style="color:#e6db74">&#39;;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>, text)  
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Join the matches again  </span>
+</span></span><span style="display:flex;"><span>output_text <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">.</span>join(matches)  
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Derive the output file path from the input file path  </span>
+</span></span><span style="display:flex;"><span>output_file_path <span style="color:#f92672">=</span> input_file_path<span style="color:#f92672">.</span>replace(<span style="color:#e6db74">&#39;.txt&#39;</span>, <span style="color:#e6db74">&#39;_output.txt&#39;</span>)  
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Write the output to a file  </span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">with</span> open(output_file_path, <span style="color:#e6db74">&#39;w&#39;</span>) <span style="color:#66d9ef">as</span> file:  
+</span></span><span style="display:flex;"><span>    file<span style="color:#f92672">.</span>write(output_text)  
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;Output written to &#34;</span> <span style="color:#f92672">+</span> output_file_path)
+</span></span></code></pre></div><p>Now, that looks better !</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/1*4k-h0rasjjZiggiuqT4Dnw.png" alt=""></p>
+<p>The first lines of code that are starting with <code>‘set Mku’</code> and <code>‘Set-Item’</code> are setting some variables that are obfuscated by splitting them and reordering their positions . Provided <code>{0}{1}{2}{4}{3}</code> and <code>{6}{8}{0}{3}{4}{5}{2}{7}{1}</code> are the instructions (mappings) of how to build them back together.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>echo <span style="color:#f92672">(</span><span style="color:#e6db74">&#34;{0}{1}{2}{4}{3}&#34;</span> -f <span style="color:#e6db74">&#39;syst&#39;</span>,<span style="color:#e6db74">&#39;em.&#39;</span>,<span style="color:#e6db74">&#39;io.di&#39;</span>,<span style="color:#e6db74">&#39;ory&#39;</span>,<span style="color:#e6db74">&#39;rect&#39;</span><span style="color:#f92672">)</span> | out-string  
+</span></span><span style="display:flex;"><span>system.io.directory  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>echo <span style="color:#f92672">(</span><span style="color:#e6db74">&#34;{6}{8}{0}{3}{4}{5}{2}{7}{1}&#34;</span> -f<span style="color:#e6db74">&#39;stem&#39;</span>,<span style="color:#e6db74">&#39;ger&#39;</span>,<span style="color:#e6db74">&#39;ma&#39;</span>,<span style="color:#e6db74">&#39;.n&#39;</span>,<span style="color:#e6db74">&#39;et.servicepoi&#39;</span>,<span style="color:#e6db74">&#39;nt&#39;</span>,<span style="color:#e6db74">&#39;s&#39;</span>,<span style="color:#e6db74">&#39;na&#39;</span>,<span style="color:#e6db74">&#39;y&#39;</span><span style="color:#f92672">)</span>  
+</span></span><span style="display:flex;"><span>system.net.servicepointmanager
+</span></span></code></pre></div><p>Next line setting <code>ErrorActionPreference</code> to pretty readable<code>‘Silently Continue’.</code> It sets code in stealthy mode, suppressing any errors if they pop up.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ErrorActionPreference <span style="color:#f92672">=</span> <span style="color:#f92672">((</span><span style="color:#e6db74">&#39;S&#39;</span>+<span style="color:#e6db74">&#39;il&#39;</span><span style="color:#f92672">)</span>+<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;en&#39;</span>+<span style="color:#e6db74">&#39;t&#39;</span><span style="color:#f92672">)</span>+<span style="color:#e6db74">&#39;ly&#39;</span>+<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;Cont&#39;</span>+<span style="color:#e6db74">&#39;i&#39;</span>+<span style="color:#e6db74">&#39;nue&#39;</span><span style="color:#f92672">))</span>;
+</span></span></code></pre></div><hr>
+<h3 id="what-directory-does-the-obfuscated-powershell-create-starting-from-home">
+  What directory does the obfuscated PowerShell create? (Starting from \HOME)
+  <a href="#what-directory-does-the-obfuscated-powershell-create-starting-from-home" class="h-anchor" aria-hidden="true">#</a>
+</h3>
+<p>We are lucky, we can finally spot variables with exactly what we looking for. <code>( DIr VariabLE:Mku ).VaLUe::”cREAtedIRECTORy”.</code>We can see the beginning of the path $HOME, while everything after that looks like gibberish, it is not quite is. The path has been obfuscated using concatenation <code>+</code> and character obfuscation. At the end, there is a hint <code>-F [char]92</code> which indicates that something was encoded with ASCII character 92. We can look up the character in ASCII table and it is <code>\</code>. We know that this is a path so we can safely assume that symbol <code>\</code> is obfuscated with <code>{0}</code>.</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:217/1*G04jk6cTA0OKBeNhCJm7ig.png" alt=""></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>{<span style="color:#ae81ff">0</span>} <span style="color:#f92672">=</span> [chAR]<span style="color:#ae81ff">92</span> <span style="color:#f92672">=</span> \
+</span></span></code></pre></div><p>Now once we learned what the deal is. You can do reversing manually or you can throw the command below in power-shell and get the answer.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>echo <span style="color:#f92672">((</span><span style="color:#e6db74">&#39;{&#39;</span>+<span style="color:#e6db74">&#39;0}Db_bh&#39;</span>+<span style="color:#e6db74">&#39;30&#39;</span>+<span style="color:#e6db74">&#39;{0}&#39;</span>+<span style="color:#e6db74">&#39;Yf&#39;</span>+<span style="color:#e6db74">&#39;5be5g{0}&#39;</span><span style="color:#f92672">)</span> -F <span style="color:#f92672">[</span>chAR<span style="color:#f92672">]</span>92<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p><code>Answer</code> \Db_bh30\Yf5be5g\</p>
+<hr>
+<h3 id="what-security-protocol-is-being-used-for-the-communication-with-a-malicious-domain">
+  What security protocol is being used for the communication with a malicious domain?
+  <a href="#what-security-protocol-is-being-used-for-the-communication-with-a-malicious-domain" class="h-anchor" aria-hidden="true">#</a>
+</h3>
+<p>We can spot our answer on <code>line 8</code>. No extravaganza is needed here. We can visually concatenate the value of <code>security protocol = TLS 1.2.</code></p>
+<p>Transport Layer Security (TLS) is designed to provide communications security by encrypting data between two endpoints.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#e6db74">&#34;sEcuRITYproTocol&#34;</span> <span style="color:#f92672">=</span> <span style="color:#f92672">(</span><span style="color:#e6db74">&#39;T&#39;</span>+<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;ls&#39;</span>+<span style="color:#e6db74">&#39;12&#39;</span><span style="color:#f92672">))</span>
+</span></span></code></pre></div><p><code>Answer</code> <strong>TLS 1.2</strong></p>
+<hr>
+<h3 id="what-file-is-being-downloaded-full-name">
+  What file is being downloaded (full name)?
+  <a href="#what-file-is-being-downloaded-full-name" class="h-anchor" aria-hidden="true">#</a>
+</h3>
+<p>Well, again we are dealing with path. We can found begging of it again by spotting <code>$HOME</code> at <code>line 12</code> . We need to replace <code>UOH</code> with <code>char[92]</code>which we learned by now is <code>\</code> and concatenate.</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/1*TZ83Tk9KEgnFe0Y0Vkhk-w.png" alt=""></p>
+<p>$Imd1yck = $HOME + &ldquo;\Db_bh30\Yf5be5g&quot; + $Swrp6tc + ((&rsquo;.&rsquo;+&lsquo;dl&rsquo;)+&lsquo;l&rsquo;)</p>
+<p>At the end of the string is variable <code>$Swrp6tc</code> is assigned to <code>A69S (line 10)</code> with apparent file extension <code>+(('.'+'dl')+'l')= dll</code>.</p>
+<p>A malicious DLLs , short for Dynamic Link Library, can be used in many ways to provide unauthorized access and corruption of the victim’s system.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$Swrp6tc <span style="color:#f92672">=</span> <span style="color:#f92672">((</span><span style="color:#e6db74">&#39;A6&#39;</span>+<span style="color:#e6db74">&#39;9&#39;</span><span style="color:#f92672">)</span>+<span style="color:#e6db74">&#39;S&#39;</span><span style="color:#f92672">)</span>   
+</span></span><span style="display:flex;"><span>$Swrp6tc +<span style="color:#f92672">=</span> <span style="color:#f92672">((</span><span style="color:#e6db74">&#39;.&#39;</span>+<span style="color:#e6db74">&#39;dl&#39;</span><span style="color:#f92672">)</span>+<span style="color:#e6db74">&#39;l&#39;</span><span style="color:#f92672">)</span>
+</span></span></code></pre></div><p><img src="https://miro.medium.com/v2/resize:fit:1000/1*lDTNc8IErB0i02zwOVJuqg.png" alt=""></p>
+<p><code>Answer</code> A69S.dll</p>
+<hr>
+<h3 id="what-is-the-domain-name-of-the-uri-ending-in-6f2gd-">
+  What is the domain name of the URI ending in ‘/6F2gd/’ ?
+  <a href="#what-is-the-domain-name-of-the-uri-ending-in-6f2gd-" class="h-anchor" aria-hidden="true">#</a>
+</h3>
+<p>We can see that there are some signs that assignments to variable <code>$B9fhbyv</code> are URLs. To decode we need to look up instructions and we can spot one - <code>‘Replace ’</code>.</p>
+<p>It is direct us to replace <code>']anw[3'</code> with <code>array[1]</code> which is <code>'http'</code> and concatenate.</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:1000/1*XvzH3A1YDLVT1oV7lzAobA.png" alt=""></p>
+<p>We can do that manually or we can echo encoded value into Powershell and have the results.</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/1*Zcoot4i4kg6QZyA1mtizJw.png" alt=""></p>
+<p>The malware attempts to connect to and obtain additional content, probably malicious DLLs. The domains are found to be malicious, which is why they have been defanged .</p>
+<p><code>Answer:</code> wm[.]mcdevelop[.]net</p>
+<hr>
+<h3 id="what-is-used-to-execute-the-downloaded-file">
+  What is used to execute the downloaded file?
+  <a href="#what-is-used-to-execute-the-downloaded-file" class="h-anchor" aria-hidden="true">#</a>
+</h3>
+<p>And…We continue to concatenate.</p>
+<p>After it goes through each web address in the list and tries to download <code>dlls files</code> from that address to the specified location (<code>$Imd1yck</code>). The code evaluates if the size of the downloaded file is larger than or equal to 35698 bytes. if true it runs the file as a command and it uses rundll32, which loads and runs 32-bit dynamic-link libraries (DLLs)</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/1*kHJEpVqetSyaO6DST2DryA.png" alt=""></p>
+<p><img src="https://miro.medium.com/v2/resize:fit:596/1*ne2V3DWlQQD_jSxcymf7_A.png" alt=""></p>
+<p>{&amp;(&lsquo;r&rsquo;+&lsquo;undl&rsquo;+&lsquo;l32&rsquo;)</p>
+<p><code>Answer</code> rundll32</p>
+<hr>
+<h3 id="based-on-the-analysis-of-the-obfuscated-code-what-is-the-name-of-the-malware">
+  Based on the analysis of the obfuscated code, what is the name of the malware?
+  <a href="#based-on-the-analysis-of-the-obfuscated-code-what-is-the-name-of-the-malware" class="h-anchor" aria-hidden="true">#</a>
+</h3>
+<p>By investigating URLs used for downloading malicious droppers with a site like <strong>Virus Total or MalwareBazaar</strong> we can conclude that this is <code>emotet.</code> Emotet is a trojan that is typically spread through spam emails. The trojan module is capable of loading and installing additional malware, stealing online credentials and personal sensitive information.</p>
+<p><code>Answer</code>: <strong>👾 emotet</strong></p>
+<hr>
+<h2 id="updated-python-code">
+  Updated python code
+  <a href="#updated-python-code" class="h-anchor" aria-hidden="true">#</a>
+</h2>
+<p>Once we learned about techniques used in the obfuscation of the code we can ease the pain of manual extraction of the code with an updated python script.</p>
+<p>Some cleaning will still be needed, though. ( I would use the script with updated first two lines of code since script will break that part)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env python  </span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> sys  
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> re  
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Check if the input file is provided as a command-line argument  </span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> len(sys<span style="color:#f92672">.</span>argv) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">2</span>:  
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;Usage: python script.py &lt;input_file&gt;&#34;</span>)  
+</span></span><span style="display:flex;"><span>    sys<span style="color:#f92672">.</span>exit(<span style="color:#ae81ff">1</span>)  
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Get the input file path from the command-line argument  </span>
+</span></span><span style="display:flex;"><span>input_file_path <span style="color:#f92672">=</span> sys<span style="color:#f92672">.</span>argv[<span style="color:#ae81ff">1</span>]  
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Read the input file  </span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">with</span> open(input_file_path, <span style="color:#e6db74">&#39;r&#39;</span>) <span style="color:#66d9ef">as</span> file:  
+</span></span><span style="display:flex;"><span>    input_text <span style="color:#f92672">=</span> file<span style="color:#f92672">.</span>read()  
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Concatenating the strings together and cleaning unnecessary symbols  </span>
+</span></span><span style="display:flex;"><span>first_matches <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>sub(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;(?:\&#39;\)\+\(\&#39;)|(?:\&#39;\+\&#39;)|(?:\&#39;\)\+\&#39;)|(?:\&#39;\+\(\&#39;)|(?:\`|\&#39;\,\&#39;)|(?:</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">\+</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">)|\)|\(&#34;</span>, <span style="color:#e6db74">&#39;&#39;</span>, input_text)  
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Join the matches into a single string  </span>
+</span></span><span style="display:flex;"><span>text <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">.</span>join(first_matches)  
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Inserting new line after &#39;;&#39; and &#39;@&#39;.  </span>
+</span></span><span style="display:flex;"><span>second_matches <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>sub(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;[;|@]&#34;</span>, <span style="color:#e6db74">&#39;;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>, text)  
+</span></span><span style="display:flex;"><span>text <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">.</span>join(second_matches)  
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># replacing ]anw\[3 with de-fanged http since the links are malicious.  </span>
+</span></span><span style="display:flex;"><span>third_matches <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>sub(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;(?:\]anw\[3)&#34;</span>, <span style="color:#e6db74">&#39;hxxp&#39;</span>, text)  
+</span></span><span style="display:flex;"><span>text<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">.</span>join(third_matches)  
+</span></span><span style="display:flex;"><span>fourth_matches <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>sub(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;(?:w</span><span style="color:#e6db74">{3}</span><span style="color:#e6db74">)&#34;</span>, <span style="color:#e6db74">&#39;[www]&#39;</span>, text)  
+</span></span><span style="display:flex;"><span>text<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">.</span>join(fourth_matches)  
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#replacing &#39;{0}&#39; and &#39;UOH&#39; with &#39;/&#39;  </span>
+</span></span><span style="display:flex;"><span>fifth_matches <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>sub(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;(?:\{0\})|(?:UOH)&#34;</span>, <span style="color:#e6db74">&#39;/&#39;</span>, text)  
+</span></span><span style="display:flex;"><span>text<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">.</span>join(fifth_matches)  
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Derive the output file path from the input file path  </span>
+</span></span><span style="display:flex;"><span>output_file_path <span style="color:#f92672">=</span> input_file_path<span style="color:#f92672">.</span>replace(<span style="color:#e6db74">&#39;.txt&#39;</span>, <span style="color:#e6db74">&#39;_output.txt&#39;</span>)  
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Write the output to a file  </span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">with</span> open(output_file_path, <span style="color:#e6db74">&#39;w&#39;</span>) <span style="color:#66d9ef">as</span> file:  
+</span></span><span style="display:flex;"><span>    file<span style="color:#f92672">.</span>write(text)  
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;Output written to &#34;</span> <span style="color:#f92672">+</span> output_file_path)
+</span></span></code></pre></div><p><img src="https://miro.medium.com/v2/resize:fit:700/1*3agw8WpEaOHTwhuvfxXjRA.png" alt=""></p>
+<p>I went further to investigate/clean-up as far as I could the rest of it.</p>
+<p>De-obfuscated code looks like that:</p>
+<p><img src="https://miro.medium.com/v2/resize:fit:700/1*UWmcjYAyZfTEYLHXYMmj-Q.png" alt=""></p>
+<h1 id="summary">
+  Summary:
+  <a href="#summary" class="h-anchor" aria-hidden="true">#</a>
+</h1>
+<ol>
+<li>It sets up some variables and configurations for later use, also setting <code>ErrorActionPrefence</code> to <code>silently continue</code> making any execution errors pass in stealthy mode.</li>
+<li>It creates a directory (folder) using the <code>$Home</code> variable as the base path and adds a specific folder structure.</li>
+<li>It sets a security protocol for communication to ensure it’s secure.</li>
+<li>It defines a list of web addresses (<code>$B9fhbyv</code>).</li>
+<li>It goes through each web address in the list and tries to download <code>DLLs files</code> from that address to the specified location (<code>$Imd1yck</code>).</li>
+<li>If the downloaded file’s size is larger than or equal to 35698 bytes, it runs the file as a command.</li>
+<li>If the file execution is successful, it breaks out of the loop.</li>
+<li>Finally, the code ends, and the script is completed.</li>
+</ol>
+
+    </div>
+    
+      
+        <div class="pagination">
+          <div class="pagination__title">
+            <span class="pagination__title-h"
+              >read other posts</span
+            >
+            <hr />
+          </div>
+          <div class="pagination__buttons">
+            
+              <span class="button previous">
+                <a href="http://ladybuginthemug.github.io/writings/compromisedwordpress/">
+                  <span class="button__icon">←</span>
+                  <span class="button__text">Log Analysis – Compromised WordPress</span>
+                </a>
+              </span>
+            
+            
+              <span class="button next">
+                <a href="http://ladybuginthemug.github.io/writings/bestemployee/">
+                  <span class="button__text">BTLO File Carving</span>
+                  <span class="button__icon">→</span>
+                </a>
+              </span>
+            
+          </div>
+        </div>
+      
+    
+
+    
+      
+        
+
+      
+    
+  </article>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >pushingbuttons</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2024 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span><a href="https://github.com/panr/hugo-theme-hello-friend" target="_blank">Theme</a> made by <a href="https://github.com/panr" target="_blank">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+
+
+
+
+<script type="text/javascript" src="/bundle.min.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>
