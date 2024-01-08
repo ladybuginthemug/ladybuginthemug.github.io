@@ -1,12 +1,15 @@
 ---
 draft: false
 author: ladybuginthemug
-title: Web shell - network analysis 
+title: Network Analysis – Web Shell
 description: The SOC received an alert in their SIEM for ‘Local to Local Port Scanning’ where an internal private IP began scanning another internal system. 
 date: 2024-01-06
 category:
   - blueteamlabs
 ---
+
+[Network Analysis – Web Shell
+](https://blueteamlabs.online/home/challenge/network-analysis-web-shell-d4d3a2821b)
 
 >Scenario
 >
