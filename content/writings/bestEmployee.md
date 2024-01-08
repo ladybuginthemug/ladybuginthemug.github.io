@@ -1,8 +1,8 @@
 ---
 draft: false
 author: ladybuginthemug
-title: Data Carving - Best Employee - BTLO
-description: data recovery 
+title: BTLO File Carving
+description: John received the 'Best Employee of the Year' award for his hard work at FakeCompany Ltd. Unfortunately, today John deleted some important files (typical John!). It’s your job to recover the deleted files and capture all the flags contained within!
 date: 2024-1-05
 category:
   - blueteamlabs
@@ -29,8 +29,8 @@ Units are in 512-byte sectors
 
       Slot      Start        End          Length       Description
 000:  Meta      0000000000   0000000000   0000000001   Primary Table (#0)
-001:  -------   0000000000   0000002047   00000**02048 **  Unallocated
-002:  000:000   0000002048   0000020479   0000018432  ** Linux (0x83)**
+001:  -------   0000000000   0000002047   00000**02048 Unallocated
+002:  000:000   0000002048   0000020479   0000018432   Linux (0x83)
 ```                  
 
 The `fsstat` command with currect offest `2048` provides additional file system information, such as the file system type `Ext4`, volume name, volume ID, and other details.
