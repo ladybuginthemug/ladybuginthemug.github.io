@@ -33,7 +33,7 @@ Units are in 512-byte sectors
 002:  000:000   0000002048   0000020479   0000018432   Linux (0x83)
 ```                  
 
-The `fsstat` command with currect offest `2048` provides additional file system information, such as the file system type `Ext4`, volume name, volume ID, and other details.
+The `fsstat` command with the correct offset `2048` provides additional file system information, such as the file system type `Ext4`, volume name, volume ID, and other details.
 ```
 └─$ fsstat -o 2048 recoverfiles.dd 
 
@@ -49,7 +49,7 @@ Volume ID: 619b3a18aabdc1a6a44a07e931710220
 
 ```
 
-`fls` list the files and directories and with that we learnt original files names. 
+`fls` list the files and directories and with that we learned original file names. 
 
 ```
 └─$ fls -o 2048 recoverfiles.dd
@@ -85,13 +85,13 @@ It is easy to search for the first flag, which is simply displayed in the recove
 ![first](https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/5dc8c1db-99a3-4c19-afc8-9c3c37a1b1fc)
 
 
-The next flag is also hiding in the plain sight in the recovered `png`:
+The next flag is also hiding in plain sight in the recovered `png`:
 
 ![second](https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/83f2d8d2-b8a0-4f50-9342-b08e4ab83259)
 
 ---
 
-Exploring `pdf` file give  us the clue that `flag3` is probably hiding withing file itself. 
+Exploring `pdf` file makes us realize that `flag3` is probably hiding within the file itself. 
 
 ![pdf](https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/9c4dc63e-f195-447a-9610-af8e1fc77f91)
 
@@ -118,7 +118,7 @@ Page Count                      : 1
                                           
 ```
 
-using `strings` works to. 
+using `strings` works too. 
 
 ```
 └─$ strings f0009040.pdf | grep 'FLAG'  
@@ -137,7 +137,7 @@ FLAG3:@BLU3T3AM$0LDI3R
 
 Okay, move on to the `FLAG2` that is in `f0009072.docx` file, according to the original names of the files. 
 
-There are a few way it's possible to retrieve a hidden string from that document the easiest way to extract the text content from a DOCX file:
+There are a few ways it's possible to retrieve a hidden string from that document the easiest way to extract the text content from a DOCX file:
 
 1. you can use the `docx2txt` tool. This command will create a text file containing the extracted text content from the DOCX file.: 
 
@@ -148,7 +148,7 @@ RkxBRzI6QVNPTElEREVGRU5ERVI=
 
 ```
 
-2. Since **docx** **files** **are** **zipped** collections of xml file, the unzip command will help:
+2. Since **docx** **files** **are** **zipped** collections of XML files, the unzip command will help:
 ```
 └─$ unzip f0009072.docx 
 Archive:  f0009072.docx
@@ -163,12 +163,12 @@ Archive:  f0009072.docx
   inflating: [Content_Types].xml 
 ```
 
-Then search manually xml documents and will found it in document.xml. Which is boring. 
+Then you can search manually XML documents and find the flag in document.xml. Which is boring. 
 
 ![xml](https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/800af69d-407f-480a-8662-ffaf29ab62de)
 
 
-or use strings piped with grep in combination with regex .
+or use strings piped with grep in combination with regex.
 
 ```
 └─$ strings f0009072.docx word/*.xml | grep -E '>[^<>]+<'
