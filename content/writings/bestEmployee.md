@@ -8,6 +8,7 @@ category:
   - blueteamlabs
 ---
 
+[Employee of the Year](https://blueteamlabs.online/home/challenge/employee-of-the-year-df16bc36f3)
 
 > Scenario
 >
@@ -49,7 +50,7 @@ Volume ID: 619b3a18aabdc1a6a44a07e931710220
 
 ```
 
-`fls` lists the files and directories and with that, we learned original file names. 
+`fls` lists the files and directories and with that, we learned original file names and clues for future investigation. 
 
 ```
 └─$ fls -o 2048 recoverfiles.dd
@@ -61,7 +62,8 @@ r/r * 15:       Flag2.docx
 r/r * 16:       Flag1.png
 V/V 2305:       $OrphanFiles
 ```
-inspecting files with `istat` using their inode number suggests that all the files were deleted so we need to recover them.
+
+Inspecting files with `istat` using their inode number suggests that all the files were deleted.
 
 ```
 └─$  istat -o 2048 recoverfiles.dd 13
