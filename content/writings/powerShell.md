@@ -1,7 +1,7 @@
 ---
 draft: false
 author: ladybuginthemug
-title: malicious power-shell analysis
+title: Malicious power-shell analysis
 description: The challenge provide a file containing obfuscated malicious power-shell code, our job is to de-obfuscate/decode and investigate the goals the bad actor set behind it, answering questions along the way.
 date: 2023-08-14
 category:
@@ -40,9 +40,9 @@ ___
 
 _________________________________
 
-We can decode it using Power shell or CyberChef ( [git link here](https://github.com/gchq/CyberChef) ).
+We can decode it using PowerShell or CyberChef ( [git link here](https://github.com/gchq/CyberChef) ).
 
-I will go with Power shell here.
+I will go with Powershell here.
 
 
 ### Decode base64
@@ -109,7 +109,7 @@ Now, that looks better !
 
 
 
-The first lines of code that are starting with `‘set Mku’` and `‘Set-Item’` are setting some variables that are obfuscated by splitting them and reordering their positions . Provided `{0}{1}{2}{4}{3}` and `{6}{8}{0}{3}{4}{5}{2}{7}{1}` are the instructions (mappings) of how to build them back together.
+The first lines of code that start with `‘set Mku’` and `‘Set-Item’` are setting some variables that are obfuscated by splitting them and reordering their positions. Provided `{0}{1}{2}{4}{3}` and `{6}{8}{0}{3}{4}{5}{2}{7}{1}` are the instructions (mappings) of how to build them back together.
 
 
 ```Shell
@@ -172,7 +172,7 @@ Transport Layer Security (TLS) is designed to provide communications security by
 ______________
 ### What file is being downloaded (full name)?
 
-Well, again we are dealing with path. We can found begging of it again by spotting `$HOME` at `line 12` . We need to replace `UOH` with `char[92]`which we learned by now is `\` and concatenate.
+Well, again we are dealing with path. We can find the beginning of it again by spotting `$HOME` at `line 12`. We need to replace `UOH` with `char[92]` which we learned by now is `\` and concatenate.
 
 ![](https://miro.medium.com/v2/resize:fit:700/1*TZ83Tk9KEgnFe0Y0Vkhk-w.png)
 
@@ -280,7 +280,7 @@ print("Output written to " + output_file_path)
 
 I went further to investigate/clean-up as far as I could the rest of it.
 
-De-obfuscated code looks like that:
+De-obfuscated code looks like this:
 
 ![](https://miro.medium.com/v2/resize:fit:700/1*UWmcjYAyZfTEYLHXYMmj-Q.png)
 
