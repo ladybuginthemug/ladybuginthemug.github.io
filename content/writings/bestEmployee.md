@@ -29,7 +29,7 @@ Units are in 512-byte sectors
 
       Slot      Start        End          Length       Description
 000:  Meta      0000000000   0000000000   0000000001   Primary Table (#0)
-001:  -------   0000000000   0000002047   00000**02048 Unallocated
+001:  -------   0000000000   0000002047   0000002048 Unallocated
 002:  000:000   0000002048   0000020479   0000018432   Linux (0x83)
 ```                  
 
@@ -61,9 +61,33 @@ r/r * 15:       Flag2.docx
 r/r * 16:       Flag1.png
 V/V 2305:       $OrphanFiles
 ```
+inspecting files with `istat` using their inode number suggests that all the files were deleted so we need to recover them.
+
+```
+└─$  istat -o 2048 recoverfiles.dd 13
+
+inode: 13
+Not Allocated
+Group: 0
+Generation Id: 1002569430
+uid / gid: 0 / 0
+mode: rrwxrwx---
+Flags: Extents, 
+size: 0
+num of links: 0
+
+Inode Times:
+Accessed:  2021-02-12 23:25:02 (EST)
+File Modified: 2021-02-12 23:25:18 (EST)
+Inode Modified: 2021-02-12 23:25:18 (EST)
+Deleted:   2021-02-12 23:25:18 (EST)
+
+Direct Blocks:
+```
+
 ---
 
-It's time to recover files with use of `photorec`. This interactive tool allows you to select the correct file system, partition, and the specific files you want to recover. :
+It's time to recover files, with the use of `photorec`. This interactive tool allows you to select the correct file system, partition, and the specific files you want to recover. :
 
 ```
 └─$ photorec recoverfiles.dd
