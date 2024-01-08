@@ -3,7 +3,7 @@
   <head>
     
       <title>
-        malicious power-shell analysis ::
+        Malicious power-shell analysis ::
         ladybuginthemug
       </title>
     
@@ -48,12 +48,12 @@ The ‘POwersheLL -w hidden -ENCOD’ at the beginning. Despite odd capitalizati
 
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="malicious power-shell analysis"/>
+<meta name="twitter:title" content="Malicious power-shell analysis"/>
 <meta name="twitter:description" content="The challenge provide a file containing obfuscated malicious power-shell code, our job is to de-obfuscate/decode and investigate the goals the bad actor set behind it, answering questions along the way."/>
 
 
 
-<meta property="og:title" content="malicious power-shell analysis" />
+<meta property="og:title" content="Malicious power-shell analysis" />
 <meta property="og:description" content="The challenge provide a file containing obfuscated malicious power-shell code, our job is to de-obfuscate/decode and investigate the goals the bad actor set behind it, answering questions along the way." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://ladybuginthemug.github.io/writings/powershell/" /><meta property="article:section" content="writings" />
@@ -152,7 +152,7 @@ The ‘POwersheLL -w hidden -ENCOD’ at the beginning. Despite odd capitalizati
   
 
   <article class="post">
-    <h1 class="post-title">malicious power-shell analysis</h1>
+    <h1 class="post-title">Malicious power-shell analysis</h1>
     <div class="post-meta">
       
         <time class="post-date">
@@ -205,8 +205,8 @@ The ‘POwersheLL -w hidden -ENCOD’ at the beginning. Despite odd capitalizati
 <p><strong>Note:</strong> If the length of the data is not a multiple of three, some extra handling is needed to encode the remaining bytes. There is 65th character (<code>=</code>) to ensure that the encoded data is properly aligned and can be decoded correctly. It&rsquo;s called a <em>padding character</em> used to indicate that no further bits are needed to fully encode the input.</p>
 </blockquote>
 <hr>
-<p>We can decode it using Power shell or CyberChef ( <a href="https://github.com/gchq/CyberChef">git link here</a> ).</p>
-<p>I will go with Power shell here.</p>
+<p>We can decode it using PowerShell or CyberChef ( <a href="https://github.com/gchq/CyberChef">git link here</a> ).</p>
+<p>I will go with Powershell here.</p>
 <h3 id="decode-base64">
   Decode base64
   <a href="#decode-base64" class="h-anchor" aria-hidden="true">#</a>
@@ -252,7 +252,7 @@ The ‘POwersheLL -w hidden -ENCOD’ at the beginning. Despite odd capitalizati
 </span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;Output written to &#34;</span> <span style="color:#f92672">+</span> output_file_path)
 </span></span></code></pre></div><p>Now, that looks better !</p>
 <p><img src="https://miro.medium.com/v2/resize:fit:700/1*4k-h0rasjjZiggiuqT4Dnw.png" alt=""></p>
-<p>The first lines of code that are starting with <code>‘set Mku’</code> and <code>‘Set-Item’</code> are setting some variables that are obfuscated by splitting them and reordering their positions . Provided <code>{0}{1}{2}{4}{3}</code> and <code>{6}{8}{0}{3}{4}{5}{2}{7}{1}</code> are the instructions (mappings) of how to build them back together.</p>
+<p>The first lines of code that start with <code>‘set Mku’</code> and <code>‘Set-Item’</code> are setting some variables that are obfuscated by splitting them and reordering their positions. Provided <code>{0}{1}{2}{4}{3}</code> and <code>{6}{8}{0}{3}{4}{5}{2}{7}{1}</code> are the instructions (mappings) of how to build them back together.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Shell" data-lang="Shell"><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>echo <span style="color:#f92672">(</span><span style="color:#e6db74">&#34;{0}{1}{2}{4}{3}&#34;</span> -f <span style="color:#e6db74">&#39;syst&#39;</span>,<span style="color:#e6db74">&#39;em.&#39;</span>,<span style="color:#e6db74">&#39;io.di&#39;</span>,<span style="color:#e6db74">&#39;ory&#39;</span>,<span style="color:#e6db74">&#39;rect&#39;</span><span style="color:#f92672">)</span> | out-string  
 </span></span><span style="display:flex;"><span>system.io.directory  
@@ -286,7 +286,7 @@ The ‘POwersheLL -w hidden -ENCOD’ at the beginning. Despite odd capitalizati
   What file is being downloaded (full name)?
   <a href="#what-file-is-being-downloaded-full-name" class="h-anchor" aria-hidden="true">#</a>
 </h3>
-<p>Well, again we are dealing with path. We can found begging of it again by spotting <code>$HOME</code> at <code>line 12</code> . We need to replace <code>UOH</code> with <code>char[92]</code>which we learned by now is <code>\</code> and concatenate.</p>
+<p>Well, again we are dealing with path. We can find the beginning of it again by spotting <code>$HOME</code> at <code>line 12</code>. We need to replace <code>UOH</code> with <code>char[92]</code> which we learned by now is <code>\</code> and concatenate.</p>
 <p><img src="https://miro.medium.com/v2/resize:fit:700/1*TZ83Tk9KEgnFe0Y0Vkhk-w.png" alt=""></p>
 <p>$Imd1yck = $HOME + &ldquo;\Db_bh30\Yf5be5g&quot; + $Swrp6tc + ((&rsquo;.&rsquo;+&lsquo;dl&rsquo;)+&lsquo;l&rsquo;)</p>
 <p>At the end of the string is variable <code>$Swrp6tc</code> is assigned to <code>A69S (line 10)</code> with apparent file extension <code>+(('.'+'dl')+'l')= dll</code>.</p>
@@ -369,7 +369,7 @@ The ‘POwersheLL -w hidden -ENCOD’ at the beginning. Despite odd capitalizati
 </span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;Output written to &#34;</span> <span style="color:#f92672">+</span> output_file_path)
 </span></span></code></pre></div><p><img src="https://miro.medium.com/v2/resize:fit:700/1*3agw8WpEaOHTwhuvfxXjRA.png" alt=""></p>
 <p>I went further to investigate/clean-up as far as I could the rest of it.</p>
-<p>De-obfuscated code looks like that:</p>
+<p>De-obfuscated code looks like this:</p>
 <p><img src="https://miro.medium.com/v2/resize:fit:700/1*UWmcjYAyZfTEYLHXYMmj-Q.png" alt=""></p>
 <h1 id="summary">
   Summary:
