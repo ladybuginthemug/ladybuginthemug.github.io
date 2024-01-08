@@ -266,7 +266,7 @@ Apache/2.4.29 (Ubuntu) Server at 10.251.96.5 Port 80
 <p>Following tcp stream on port 4422, we can confirm that the reverse shell connection is established.</p>
 <p>The attempts to escalate privileges appear to have been made by executing commands such as <code>python -c 'import pty; pty.spawn(&quot;/bin/bash&quot;)'</code> and <code>bash -i</code>. These commands are commonly used to attempt to gain a more interactive shell or elevate privileges.
 However, there is no explicit indication in the log that these privilege escalation attempts were successful. The user continues to operate with the same username <code>www-data</code> and there are no indications of a change in privileges or access to restricted areas of the file system.
-Not only that but also a malicious actor was not even able to clean up traits he left behind in the form of <code>dbfuncs.php</code>:</p>
+Not only that but also a malicious actor was not even able to clean up trails he left behind in the form of <code>dbfuncs.php</code>:</p>
 <pre tabindex="0"><code>addcart.php  common.php     consts.php	 editprofile.php  info.php   upload.php
 browse.php   complaint.php  dbfuncs.php  index.php	  login.php  uploads
 www-data@bob-appserver:/var/www/html$ rrmm  ddbb	funcs.php 
