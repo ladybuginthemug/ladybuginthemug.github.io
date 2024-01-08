@@ -31,8 +31,9 @@ The stream reveals that `10.251.96.4` is the IP responsible for conducting the `
 
 Surly enough we would be able to find more automation tools around. Simple search for user agents with `tshark` :
 
-```
+```bash
 └─$ tshark -r BTLOPortScan.pcap -Y "http.user_agent" -T fields -e http.user_agent | sort -u
+
 Apache/2.4.29 (Ubuntu) (internal dummy connection)
 gobuster/3.0.1
 Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.146 Safari/537.36
