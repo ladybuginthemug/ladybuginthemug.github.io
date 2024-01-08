@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>
+        Data Carving - Best Employee - BTLO ::
+        ladybuginthemug
+      </title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta
+  name="description"
+  content="Scenario
+John received the &amp;lsquo;Best Employee of the Year&amp;rsquo; award for his hard work at FakeCompany Ltd. Unfortunately, today John deleted some important files (typical John!). It’s your job to recover the deleted files and capture all the flags contained within!
+The file given is recoverfiles.dd. To begin, you need to gain an understanding of the structure of the disk image and the file system it contains.
+The mmls command provides details about the disk image structure, indicating that:"
+/>
+<meta
+  name="keywords"
+  content=""
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="http://ladybuginthemug.github.io/writings/bestemployee/" />
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/style.css" />
+
+<link rel="stylesheet" href="http://ladybuginthemug.github.io/style.css" />
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://ladybuginthemug.github.io/img/apple-touch-icon-144-precomposed.png" />
+<link rel="shortcut icon" href="http://ladybuginthemug.github.io/img/favicon.png" />
+
+
+<link href="/fonts/Inter-Italic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Regular.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Medium.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-MediumItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-Bold.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/fonts/Inter-BoldItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Data Carving - Best Employee - BTLO"/>
+<meta name="twitter:description" content="data recovery"/>
+
+
+
+<meta property="og:title" content="Data Carving - Best Employee - BTLO" />
+<meta property="og:description" content="data recovery" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://ladybuginthemug.github.io/writings/bestemployee/" /><meta property="article:section" content="writings" />
+
+<meta property="og:site_name" content="ladybuginthemug" />
+
+
+
+
+
+
+  </head>
+  <body >
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >pushingbuttons</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/writings/">writings</a></li>
+        
+      
+        
+          <li><a href="https://github.com/ladybuginthemug">git</a></li>
+        
+      
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/writings/">writings</a></li>
+      
+    
+      
+        <li><a href="https://github.com/ladybuginthemug">git</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg
+  class="theme-toggler"
+  width="24"
+  height="24"
+  viewBox="0 0 48 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"
+  />
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <article class="post">
+    <h1 class="post-title">Data Carving - Best Employee - BTLO</h1>
+    <div class="post-meta">
+      
+
+      
+        <span class="post-author"
+          >— by ladybuginthemug</span
+        >
+
+
+      
+        <span class="post-read-time"
+          >— 3 min read</span
+        >
+      
+    </div>
+
+    
+
+    
+
+    <div class="post-content">
+      
+      <blockquote>
+<p>Scenario</p>
+<p>John received the &lsquo;Best Employee of the Year&rsquo; award for his hard work at FakeCompany Ltd. Unfortunately, today John deleted some important files (typical John!). It’s your job to recover the deleted files and capture all the flags contained within!</p>
+</blockquote>
+<p>The file given is <code>recoverfiles.dd</code>. To begin, you need to gain an understanding of the structure of the disk image and the file system it contains.</p>
+<p>The <code>mmls</code> command provides details about the disk image structure, indicating that:</p>
+<ul>
+<li>it has a DOS partition table with one partition.</li>
+<li>the partition starts at sector 2048 and contains an Ext4 file system with a Linux operating system.</li>
+</ul>
+<pre tabindex="0"><code>└─$ mmls recoverfiles.dd 
+DOS Partition Table
+Offset Sector: 0
+Units are in 512-byte sectors
+
+      Slot      Start        End          Length       Description
+000:  Meta      0000000000   0000000000   0000000001   Primary Table (#0)
+001:  -------   0000000000   0000002047   00000**02048 **  Unallocated
+002:  000:000   0000002048   0000020479   0000018432  ** Linux (0x83)**
+</code></pre><p>The <code>fsstat</code> command with currect offest <code>2048</code> provides additional file system information, such as the file system type <code>Ext4</code>, volume name, volume ID, and other details.</p>
+<pre tabindex="0"><code>└─$ fsstat -o 2048 recoverfiles.dd 
+
+FILE SYSTEM INFORMATION
+--------------------------------------------
+File System Type: Ext4
+Volume Name: 
+Volume ID: 619b3a18aabdc1a6a44a07e931710220
+
+....
+....
+....
+</code></pre><p><code>fls</code> list the files and directories and with that we learnt original files names.</p>
+<pre tabindex="0"><code>└─$ fls -o 2048 recoverfiles.dd
+d/d 11: lost+found
+r/r * 12:       Vanilla.gif
+r/r * 13:       SBTCertifications.mp4
+r/r * 14:       Flag3.pdf
+r/r * 15:       Flag2.docx
+r/r * 16:       Flag1.png
+V/V 2305:       $OrphanFiles
+</code></pre><hr>
+<p>It&rsquo;s time to recover files with use of <code>photorec</code>. This interactive tool allows you to select the correct file system, partition, and the specific files you want to recover. :</p>
+<pre tabindex="0"><code>└─$ photorec recoverfiles.dd
+
+PhotoRec 7.1, Data Recovery Utility, July 2019
+Christophe GRENIER &lt;grenier@cgsecurity.org&gt;
+https://www.cgsecurity.org
+</code></pre><p><img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/580a238b-d606-4d9e-b4fc-24239987915d" alt="photorec"></p>
+<p>Then it will attempt to recover files and output them in your chosen location. And just like that the files are recovered.</p>
+<p><img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/5942a645-9c1f-4769-a0b7-1edc6a1e6ca7" alt="files_rec"></p>
+<hr>
+<p>It is easy to search for the first flag, which is simply displayed in the recovered <code>gif</code> image :
+<img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/5dc8c1db-99a3-4c19-afc8-9c3c37a1b1fc" alt="first"></p>
+<p>The next flag is also hiding in the plain sight in the recovered <code>png</code>:</p>
+<p><img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/83f2d8d2-b8a0-4f50-9342-b08e4ab83259" alt="second"></p>
+<hr>
+<p>Exploring <code>pdf</code> file give  us the clue that <code>flag3</code> is probably hiding withing file itself.</p>
+<p><img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/9c4dc63e-f195-447a-9610-af8e1fc77f91" alt="pdf"></p>
+<p>Using <code>exiftool</code> on that pdf file will reveal the answer</p>
+<pre tabindex="0"><code>ExifTool Version Number         : 12.67
+File Name                       : f0009040.pdf
+Directory                       : .
+File Size                       : 13 kB
+File Modification Date/Time     : 2024:01:05 19:14:09-05:00
+File Access Date/Time           : 2024:01:07 17:38:13-05:00
+File Inode Change Date/Time     : 2024:01:05 19:14:09-05:00
+File Permissions                : -rw-r--r--
+File Type                       : PDF
+File Type Extension             : pdf
+MIME Type                       : application/pdf
+PDF Version                     : 1.5
+Linearized                      : No
+Author                          : FLAG3%3A%40BLU3T3AM%240LDI3R
+Producer                        : Skia/PDF m90
+Page Count                      : 1
+                                          
+</code></pre><p>using <code>strings</code> works to.</p>
+<pre tabindex="0"><code>└─$ strings f0009040.pdf | grep &#39;FLAG&#39;  
+/Author (FLAG3%3A%40BLU3T3AM%240LDI3R)
+</code></pre><p>The string is slightly obfuscated or <code>URL-encoded</code>. You can decode it with CyberChef or go fancy:</p>
+<pre tabindex="0"><code>└─$ python3 -c &#34;import urllib.parse; print(urllib.parse.unquote(&#39;FLAG3%3A%40BLU3T3AM%240LDI3R&#39;))&#34;
+FLAG3:@BLU3T3AM$0LDI3R
+</code></pre><hr>
+<p>Okay, move on to the <code>FLAG2</code> that is in <code>f0009072.docx</code> file, according to the original names of the files.</p>
+<p>There are a few way it&rsquo;s possible to retrieve a hidden string from that document the easiest way to extract the text content from a DOCX file:</p>
+<ol>
+<li>you can use the <code>docx2txt</code> tool. This command will create a text file containing the extracted text content from the DOCX file.:</li>
+</ol>
+<pre tabindex="0"><code>└─$ docx2txt f0009072.docx | cat f0009072.txt 
+
+RkxBRzI6QVNPTElEREVGRU5ERVI=
+</code></pre><ol start="2">
+<li>Since <strong>docx</strong> <strong>files</strong> <strong>are</strong> <strong>zipped</strong> collections of xml file, the unzip command will help:</li>
+</ol>
+<pre tabindex="0"><code>└─$ unzip f0009072.docx 
+Archive:  f0009072.docx
+  inflating: word/numbering.xml      
+  inflating: word/settings.xml       
+  inflating: word/fontTable.xml      
+  inflating: word/styles.xml         
+  inflating: word/document.xml       
+  inflating: word/_rels/document.xml.rels  
+  inflating: _rels/.rels             
+  inflating: word/theme/theme1.xml   
+  inflating: [Content_Types].xml 
+</code></pre><p>Then search manually xml documents and will found it in document.xml. Which is boring.</p>
+<p><img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/800af69d-407f-480a-8662-ffaf29ab62de" alt="xml"></p>
+<p>or use strings piped with grep in combination with regex .</p>
+<pre tabindex="0"><code>└─$ strings f0009072.docx word/*.xml | grep -E &#39;&gt;[^&lt;&gt;]+&lt;&#39;
+</code></pre><p><img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/f5e0fa2b-54b5-4abc-81da-bce12bfd29ed" alt="grep"></p>
+<p>This flag is also obfuscated in the most common way <code>base65</code>:</p>
+<pre tabindex="0"><code>└─$ echo -n &#39;RkxBRzI6QVNPTElEREVGRU5ERVI=&#39; | base64 -d
+
+FLAG2:ASOLIDDEFENDER   
+</code></pre>
+    </div>
+    
+      
+        <div class="pagination">
+          <div class="pagination__title">
+            <span class="pagination__title-h"
+              >read other posts</span
+            >
+            <hr />
+          </div>
+          <div class="pagination__buttons">
+            
+              <span class="button previous">
+                <a href="http://ladybuginthemug.github.io/writings/malicious-power-shell-analysis/">
+                  <span class="button__icon">←</span>
+                  <span class="button__text">malicious power-shell analysis</span>
+                </a>
+              </span>
+            
+            
+          </div>
+        </div>
+      
+    
+
+    
+      
+        
+
+      
+    
+  </article>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >pushingbuttons</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2024 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span><a href="https://github.com/panr/hugo-theme-hello-friend" target="_blank">Theme</a> made by <a href="https://github.com/panr" target="_blank">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+
+
+
+
+<script type="text/javascript" src="/bundle.min.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>
