@@ -11,10 +11,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta
   name="description"
-  content="Scenario
+  content="Employee of the Year
+Scenario
 John received the &amp;lsquo;Best Employee of the Year&amp;rsquo; award for his hard work at FakeCompany Ltd. Unfortunately, today John deleted some important files (typical John!). It’s your job to recover the deleted files and capture all the flags contained within!
-The file given is recoverfiles.dd. To begin, you need to gain an understanding of the structure of the disk image and the file system it contains.
-The mmls command provides details about the disk image structure, indicating that:"
+The file given is recoverfiles.dd. To begin, you need to gain an understanding of the structure of the disk image and the file system it contains."
 />
 <meta
   name="keywords"
@@ -182,7 +182,8 @@ The mmls command provides details about the disk image structure, indicating tha
 
     <div class="post-content">
       
-      <blockquote>
+      <p><a href="https://blueteamlabs.online/home/challenge/employee-of-the-year-df16bc36f3">Employee of the Year</a></p>
+<blockquote>
 <p>Scenario</p>
 <p>John received the &lsquo;Best Employee of the Year&rsquo; award for his hard work at FakeCompany Ltd. Unfortunately, today John deleted some important files (typical John!). It’s your job to recover the deleted files and capture all the flags contained within!</p>
 </blockquote>
@@ -213,7 +214,7 @@ Volume ID: 619b3a18aabdc1a6a44a07e931710220
 ....
 ....
 ....
-</code></pre><p><code>fls</code> lists the files and directories and with that, we learned original file names.</p>
+</code></pre><p><code>fls</code> lists the files and directories and with that, we learned original file names and clues for future investigation.</p>
 <pre tabindex="0"><code>└─$ fls -o 2048 recoverfiles.dd
 d/d 11: lost+found
 r/r * 12:       Vanilla.gif
@@ -222,7 +223,7 @@ r/r * 14:       Flag3.pdf
 r/r * 15:       Flag2.docx
 r/r * 16:       Flag1.png
 V/V 2305:       $OrphanFiles
-</code></pre><p>inspecting files with <code>istat</code> using their inode number suggests that all the files were deleted so we need to recover them.</p>
+</code></pre><p>Inspecting files with <code>istat</code> using their inode number suggests that all the files were deleted.</p>
 <pre tabindex="0"><code>└─$  istat -o 2048 recoverfiles.dd 13
 
 inode: 13
