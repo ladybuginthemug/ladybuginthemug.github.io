@@ -129,7 +129,7 @@ Following tcp stream on port 4422, we can confirm that the reverse shell connect
 
 The attempts to escalate privileges appear to have been made by executing commands such as `python -c 'import pty; pty.spawn("/bin/bash")'` and `bash -i`. These commands are commonly used to attempt to gain a more interactive shell or elevate privileges.
 However, there is no explicit indication in the log that these privilege escalation attempts were successful. The user continues to operate with the same username `www-data` and there are no indications of a change in privileges or access to restricted areas of the file system.
-Not only that but also a malicious actor was not even able to clean up traits he left behind in the form of `dbfuncs.php`:
+Not only that but also a malicious actor was not even able to clean up trails he left behind in the form of `dbfuncs.php`:
 
 ```
 addcart.php  common.php     consts.php	 editprofile.php  info.php   upload.php
