@@ -197,13 +197,14 @@ My usual approach is to move back and forth from general statistics to a close-u
 <p>The stream reveals that <code>10.251.96.4</code> is the IP responsible for conducting the <code>TCP SYN</code> port scan activity in the port range of <code>1-1024</code></p>
 <p><img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/5c3f9638-fb2e-40e2-af00-aaf537610f87" alt="TCPSYNscan"></p>
 <p>Surly enough we would be able to find more automation tools around. Simple search for user agents with <code>tshark</code> :</p>
-<pre tabindex="0"><code>└─$ tshark -r BTLOPortScan.pcap -Y &#34;http.user_agent&#34; -T fields -e http.user_agent | sort -u
-Apache/2.4.29 (Ubuntu) (internal dummy connection)
-gobuster/3.0.1
-Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.146 Safari/537.36
-Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0
-sqlmap/1.4.7#stable (http://sqlmap.org)
-</code></pre><p>It will reveal the tools used which are <code>Gobuster 3.0.1</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>└─$ tshark -r BTLOPortScan.pcap -Y <span style="color:#e6db74">&#34;http.user_agent&#34;</span> -T fields -e http.user_agent | sort -u
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Apache/2.4.29 <span style="color:#f92672">(</span>Ubuntu<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>internal dummy connection<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>gobuster/3.0.1
+</span></span><span style="display:flex;"><span>Mozilla/5.0 <span style="color:#f92672">(</span>Windows NT 10.0; Win64; x64<span style="color:#f92672">)</span> AppleWebKit/537.36 <span style="color:#f92672">(</span>KHTML, like Gecko<span style="color:#f92672">)</span> Chrome/88.0.4324.146 Safari/537.36
+</span></span><span style="display:flex;"><span>Mozilla/5.0 <span style="color:#f92672">(</span>X11; Linux x86_64; rv:68.0<span style="color:#f92672">)</span> Gecko/20100101 Firefox/68.0
+</span></span><span style="display:flex;"><span>sqlmap/1.4.7#stable <span style="color:#f92672">(</span>http://sqlmap.org<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>It will reveal the tools used which are <code>Gobuster 3.0.1</code></p>
 <p><img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/c2578128-05ad-4ecb-be9d-5fc636077665" alt="gobuster"></p>
 <p>and <code>sqlmap 1.4.7</code></p>
 <p><img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/12fab041-a8b6-46f6-a133-08a75a89bd0b" alt="sql"></p>
