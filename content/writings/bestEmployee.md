@@ -49,7 +49,7 @@ Volume ID: 619b3a18aabdc1a6a44a07e931710220
 
 ```
 
-`fls` list the files and directories and with that we learned original file names. 
+`fls` lists the files and directories and with that, we learned original file names. 
 
 ```
 └─$ fls -o 2048 recoverfiles.dd
