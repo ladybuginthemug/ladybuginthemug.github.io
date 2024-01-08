@@ -3,7 +3,7 @@ draft: false
 author: ladybuginthemug
 title: BTLO File Carving
 description: John received the 'Best Employee of the Year' award for his hard work at FakeCompany Ltd. Unfortunately, today John deleted some important files (typical John!). It’s your job to recover the deleted files and capture all the flags contained within!
-date: 2024-1-05
+date: 2024-1-5
 category:
   - blueteamlabs
 ---
