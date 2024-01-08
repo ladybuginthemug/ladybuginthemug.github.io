@@ -193,64 +193,44 @@ The file given is recoverfiles.dd. To begin, you need to gain an understanding o
 <li>it has a DOS partition table with one partition.</li>
 <li>the partition starts at sector 2048 and contains an Ext4 file system with a Linux operating system.</li>
 </ul>
-<pre tabindex="0"><code>└─$ mmls recoverfiles.dd 
-DOS Partition Table
-Offset Sector: 0
-Units are in 512-byte sectors
-
-      Slot      Start        End          Length       Description
-000:  Meta      0000000000   0000000000   0000000001   Primary Table (#0)
-001:  -------   0000000000   0000002047   0000002048 Unallocated
-002:  000:000   0000002048   0000020479   0000018432   Linux (0x83)
-</code></pre><p>The <code>fsstat</code> command with the correct offset <code>2048</code> provides additional file system information, such as the file system type <code>Ext4</code>, volume name, volume ID, and other details.</p>
-<pre tabindex="0"><code>└─$ fsstat -o 2048 recoverfiles.dd 
-
-FILE SYSTEM INFORMATION
---------------------------------------------
-File System Type: Ext4
-Volume Name: 
-Volume ID: 619b3a18aabdc1a6a44a07e931710220
-
-....
-....
-....
-</code></pre><p><code>fls</code> lists the files and directories and with that, we learned original file names and clues for future investigation.</p>
-<pre tabindex="0"><code>└─$ fls -o 2048 recoverfiles.dd
-d/d 11: lost+found
-r/r * 12:       Vanilla.gif
-r/r * 13:       SBTCertifications.mp4
-r/r * 14:       Flag3.pdf
-r/r * 15:       Flag2.docx
-r/r * 16:       Flag1.png
-V/V 2305:       $OrphanFiles
-</code></pre><p>Inspecting files with <code>istat</code> using their inode number suggests that all the files were deleted.</p>
-<pre tabindex="0"><code>└─$  istat -o 2048 recoverfiles.dd 13
-
-inode: 13
-Not Allocated
-Group: 0
-Generation Id: 1002569430
-uid / gid: 0 / 0
-mode: rrwxrwx---
-Flags: Extents, 
-size: 0
-num of links: 0
-
-Inode Times:
-Accessed:  2021-02-12 23:25:02 (EST)
-File Modified: 2021-02-12 23:25:18 (EST)
-Inode Modified: 2021-02-12 23:25:18 (EST)
-Deleted:   2021-02-12 23:25:18 (EST)
-
-Direct Blocks:
-</code></pre><hr>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>└─$ mmls recoverfiles.dd 
+</span></span><span style="display:flex;"><span>DOS Partition Table
+</span></span><span style="display:flex;"><span>Offset Sector: <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>Units are in 512-byte sectors
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      Slot      Start        End          Length       Description
+</span></span><span style="display:flex;"><span>000:  Meta      <span style="color:#ae81ff">0000000000</span>   <span style="color:#ae81ff">0000000000</span>   <span style="color:#ae81ff">0000000001</span>   Primary Table <span style="color:#f92672">(</span><span style="color:#75715e">#0)</span>
+</span></span><span style="display:flex;"><span>001:  -------   <span style="color:#ae81ff">0000000000</span>   <span style="color:#ae81ff">0000002047</span>   <span style="color:#ae81ff">0000002048</span> Unallocated
+</span></span><span style="display:flex;"><span>002:  000:000   <span style="color:#ae81ff">0000002048</span>   <span style="color:#ae81ff">0000020479</span>   <span style="color:#ae81ff">0000018432</span>   Linux <span style="color:#f92672">(</span>0x83<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>The <code>fsstat</code> command with the correct offset <code>2048</code> provides additional file system information, such as the file system type <code>Ext4</code>, volume name, volume ID, and other details.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>└─$ fsstat -o <span style="color:#ae81ff">2048</span> recoverfiles.dd 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>FILE SYSTEM INFORMATION
+</span></span><span style="display:flex;"><span>--------------------------------------------
+</span></span><span style="display:flex;"><span>File System Type: Ext4
+</span></span><span style="display:flex;"><span>Volume Name: 
+</span></span><span style="display:flex;"><span>Volume ID: 619b3a18aabdc1a6a44a07e931710220
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>....
+</span></span><span style="display:flex;"><span>....
+</span></span><span style="display:flex;"><span>....
+</span></span></code></pre></div><p><code>fls</code> lists the files and directories and with that, we learned original file names and clues for future investigation.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>└─$ fls -o <span style="color:#ae81ff">2048</span> recoverfiles.dd
+</span></span><span style="display:flex;"><span>d/d 11: lost+found
+</span></span><span style="display:flex;"><span>r/r * 12:       Vanilla.gif
+</span></span><span style="display:flex;"><span>r/r * 13:       SBTCertifications.mp4
+</span></span><span style="display:flex;"><span>r/r * 14:       Flag3.pdf
+</span></span><span style="display:flex;"><span>r/r * 15:       Flag2.docx
+</span></span><span style="display:flex;"><span>r/r * 16:       Flag1.png
+</span></span><span style="display:flex;"><span>V/V 2305:       $OrphanFiles
+</span></span></code></pre></div><hr>
 <p>It&rsquo;s time to recover files, with the use of <code>photorec</code>. This interactive tool allows you to select the correct file system, partition, and the specific files you want to recover. :</p>
-<pre tabindex="0"><code>└─$ photorec recoverfiles.dd
-
-PhotoRec 7.1, Data Recovery Utility, July 2019
-Christophe GRENIER &lt;grenier@cgsecurity.org&gt;
-https://www.cgsecurity.org
-</code></pre><p><img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/580a238b-d606-4d9e-b4fc-24239987915d" alt="photorec"></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>└─$ photorec recoverfiles.dd
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>PhotoRec 7.1, Data Recovery Utility, July <span style="color:#ae81ff">2019</span>
+</span></span><span style="display:flex;"><span>Christophe GRENIER &lt;grenier@cgsecurity.org&gt;
+</span></span><span style="display:flex;"><span>https://www.cgsecurity.org
+</span></span></code></pre></div><p><img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/580a238b-d606-4d9e-b4fc-24239987915d" alt="photorec"></p>
 <p>Then it will attempt to recover files and output them in your chosen location. And just like that the files are recovered.</p>
 <p><img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/5942a645-9c1f-4769-a0b7-1edc6a1e6ca7" alt="files_rec"></p>
 <hr>
@@ -262,62 +242,62 @@ https://www.cgsecurity.org
 <p>Exploring <code>pdf</code> file makes us realize that <code>flag3</code> is probably hiding within the file itself.</p>
 <p><img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/9c4dc63e-f195-447a-9610-af8e1fc77f91" alt="pdf"></p>
 <p>Using <code>exiftool</code> on that pdf file will reveal the answer</p>
-<pre tabindex="0"><code>ExifTool Version Number         : 12.67
-File Name                       : f0009040.pdf
-Directory                       : .
-File Size                       : 13 kB
-File Modification Date/Time     : 2024:01:05 19:14:09-05:00
-File Access Date/Time           : 2024:01:07 17:38:13-05:00
-File Inode Change Date/Time     : 2024:01:05 19:14:09-05:00
-File Permissions                : -rw-r--r--
-File Type                       : PDF
-File Type Extension             : pdf
-MIME Type                       : application/pdf
-PDF Version                     : 1.5
-Linearized                      : No
-Author                          : FLAG3%3A%40BLU3T3AM%240LDI3R
-Producer                        : Skia/PDF m90
-Page Count                      : 1
-                                          
-</code></pre><p>using <code>strings</code> works too.</p>
-<pre tabindex="0"><code>└─$ strings f0009040.pdf | grep &#39;FLAG&#39;  
-/Author (FLAG3%3A%40BLU3T3AM%240LDI3R)
-</code></pre><p>The string is slightly obfuscated or <code>URL-encoded</code>. You can decode it with CyberChef or go fancy:</p>
-<pre tabindex="0"><code>└─$ python3 -c &#34;import urllib.parse; print(urllib.parse.unquote(&#39;FLAG3%3A%40BLU3T3AM%240LDI3R&#39;))&#34;
-FLAG3:@BLU3T3AM$0LDI3R
-</code></pre><hr>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ExifTool Version Number         : 12.67
+</span></span><span style="display:flex;"><span>File Name                       : f0009040.pdf
+</span></span><span style="display:flex;"><span>Directory                       : .
+</span></span><span style="display:flex;"><span>File Size                       : <span style="color:#ae81ff">13</span> kB
+</span></span><span style="display:flex;"><span>File Modification Date/Time     : 2024:01:05 19:14:09-05:00
+</span></span><span style="display:flex;"><span>File Access Date/Time           : 2024:01:07 17:38:13-05:00
+</span></span><span style="display:flex;"><span>File Inode Change Date/Time     : 2024:01:05 19:14:09-05:00
+</span></span><span style="display:flex;"><span>File Permissions                : -rw-r--r--
+</span></span><span style="display:flex;"><span>File Type                       : PDF
+</span></span><span style="display:flex;"><span>File Type Extension             : pdf
+</span></span><span style="display:flex;"><span>MIME Type                       : application/pdf
+</span></span><span style="display:flex;"><span>PDF Version                     : 1.5
+</span></span><span style="display:flex;"><span>Linearized                      : No
+</span></span><span style="display:flex;"><span>Author                          : FLAG3%3A%40BLU3T3AM%240LDI3R
+</span></span><span style="display:flex;"><span>Producer                        : Skia/PDF m90
+</span></span><span style="display:flex;"><span>Page Count                      : <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>                                          
+</span></span></code></pre></div><p>using <code>strings</code> works too.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>└─$ strings f0009040.pdf | grep <span style="color:#e6db74">&#39;FLAG&#39;</span>  
+</span></span><span style="display:flex;"><span>/Author <span style="color:#f92672">(</span>FLAG3%3A%40BLU3T3AM%240LDI3R<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>The string is slightly obfuscated or <code>URL-encoded</code>. You can decode it with CyberChef or go fancy:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>└─$ python3 -c <span style="color:#e6db74">&#34;import urllib.parse; print(urllib.parse.unquote(&#39;FLAG3%3A%40BLU3T3AM%240LDI3R&#39;))&#34;</span>
+</span></span><span style="display:flex;"><span>FLAG3:@BLU3T3AM$0LDI3R
+</span></span></code></pre></div><hr>
 <p>Okay, move on to the <code>FLAG2</code> that is in <code>f0009072.docx</code> file, according to the original names of the files.</p>
 <p>There are a few ways it&rsquo;s possible to retrieve a hidden string from that document the easiest way to extract the text content from a DOCX file:</p>
 <ol>
 <li>you can use the <code>docx2txt</code> tool. This command will create a text file containing the extracted text content from the DOCX file.:</li>
 </ol>
-<pre tabindex="0"><code>└─$ docx2txt f0009072.docx | cat f0009072.txt 
-
-RkxBRzI6QVNPTElEREVGRU5ERVI=
-</code></pre><ol start="2">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>└─$ docx2txt f0009072.docx | cat f0009072.txt 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>RkxBRzI6QVNPTElEREVGRU5ERVI<span style="color:#f92672">=</span>
+</span></span></code></pre></div><ol start="2">
 <li>Since <strong>docx</strong> <strong>files</strong> <strong>are</strong> <strong>zipped</strong> collections of XML files, the unzip command will help:</li>
 </ol>
-<pre tabindex="0"><code>└─$ unzip f0009072.docx 
-Archive:  f0009072.docx
-  inflating: word/numbering.xml      
-  inflating: word/settings.xml       
-  inflating: word/fontTable.xml      
-  inflating: word/styles.xml         
-  inflating: word/document.xml       
-  inflating: word/_rels/document.xml.rels  
-  inflating: _rels/.rels             
-  inflating: word/theme/theme1.xml   
-  inflating: [Content_Types].xml 
-</code></pre><p>Then you can search manually XML documents and find the flag in document.xml. Which is boring.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>└─$ unzip f0009072.docx 
+</span></span><span style="display:flex;"><span>Archive:  f0009072.docx
+</span></span><span style="display:flex;"><span>  inflating: word/numbering.xml      
+</span></span><span style="display:flex;"><span>  inflating: word/settings.xml       
+</span></span><span style="display:flex;"><span>  inflating: word/fontTable.xml      
+</span></span><span style="display:flex;"><span>  inflating: word/styles.xml         
+</span></span><span style="display:flex;"><span>  inflating: word/document.xml       
+</span></span><span style="display:flex;"><span>  inflating: word/_rels/document.xml.rels  
+</span></span><span style="display:flex;"><span>  inflating: _rels/.rels             
+</span></span><span style="display:flex;"><span>  inflating: word/theme/theme1.xml   
+</span></span><span style="display:flex;"><span>  inflating: <span style="color:#f92672">[</span>Content_Types<span style="color:#f92672">]</span>.xml 
+</span></span></code></pre></div><p>Then you can search manually XML documents and find the flag in document.xml. Which is boring.</p>
 <p><img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/800af69d-407f-480a-8662-ffaf29ab62de" alt="xml"></p>
 <p>or use strings piped with grep in combination with regex.</p>
-<pre tabindex="0"><code>└─$ strings f0009072.docx word/*.xml | grep -E &#39;&gt;[^&lt;&gt;]+&lt;&#39;
-</code></pre><p><img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/f5e0fa2b-54b5-4abc-81da-bce12bfd29ed" alt="grep"></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>└─$ strings f0009072.docx word/*.xml | grep -E <span style="color:#e6db74">&#39;&gt;[^&lt;&gt;]+&lt;&#39;</span>
+</span></span></code></pre></div><p><img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/f5e0fa2b-54b5-4abc-81da-bce12bfd29ed" alt="grep"></p>
 <p>This flag is also obfuscated in the most common way <code>base65</code>:</p>
-<pre tabindex="0"><code>└─$ echo -n &#39;RkxBRzI6QVNPTElEREVGRU5ERVI=&#39; | base64 -d
-
-FLAG2:ASOLIDDEFENDER   
-</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>└─$ echo -n <span style="color:#e6db74">&#39;RkxBRzI6QVNPTElEREVGRU5ERVI=&#39;</span> | base64 -d
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>FLAG2:ASOLIDDEFENDER   
+</span></span></code></pre></div>
     </div>
     
       
