@@ -55,7 +55,7 @@
     </item>
     
     <item>
-      <title>Data Carving - Best Employee - BTLO</title>
+      <title>BTLO File Carving</title>
       <link>http://ladybuginthemug.github.io/writings/bestemployee/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
@@ -68,7 +68,7 @@
         
         
         
-          data recovery
+          John received the &#39;Best Employee of the Year&#39; award for his hard work at FakeCompany Ltd. Unfortunately, today John deleted some important files (typical John!). It’s your job to recover the deleted files and capture all the flags contained within!
           
         
         </description>

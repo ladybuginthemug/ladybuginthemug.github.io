@@ -3,7 +3,7 @@
   <head>
     
       <title>
-        Data Carving - Best Employee - BTLO ::
+        BTLO File Carving ::
         ladybuginthemug
       </title>
     
@@ -47,13 +47,13 @@ The mmls command provides details about the disk image structure, indicating tha
 
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Data Carving - Best Employee - BTLO"/>
-<meta name="twitter:description" content="data recovery"/>
+<meta name="twitter:title" content="BTLO File Carving"/>
+<meta name="twitter:description" content="John received the &#39;Best Employee of the Year&#39; award for his hard work at FakeCompany Ltd. Unfortunately, today John deleted some important files (typical John!). It’s your job to recover the deleted files and capture all the flags contained within!"/>
 
 
 
-<meta property="og:title" content="Data Carving - Best Employee - BTLO" />
-<meta property="og:description" content="data recovery" />
+<meta property="og:title" content="BTLO File Carving" />
+<meta property="og:description" content="John received the &#39;Best Employee of the Year&#39; award for his hard work at FakeCompany Ltd. Unfortunately, today John deleted some important files (typical John!). It’s your job to recover the deleted files and capture all the flags contained within!" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://ladybuginthemug.github.io/writings/bestemployee/" /><meta property="article:section" content="writings" />
 
@@ -151,7 +151,7 @@ The mmls command provides details about the disk image structure, indicating tha
   
 
   <article class="post">
-    <h1 class="post-title">Data Carving - Best Employee - BTLO</h1>
+    <h1 class="post-title">BTLO File Carving</h1>
     <div class="post-meta">
       
 
@@ -191,8 +191,8 @@ Units are in 512-byte sectors
 
       Slot      Start        End          Length       Description
 000:  Meta      0000000000   0000000000   0000000001   Primary Table (#0)
-001:  -------   0000000000   0000002047   00000**02048 **  Unallocated
-002:  000:000   0000002048   0000020479   0000018432  ** Linux (0x83)**
+001:  -------   0000000000   0000002047   00000**02048 Unallocated
+002:  000:000   0000002048   0000020479   0000018432   Linux (0x83)
 </code></pre><p>The <code>fsstat</code> command with currect offest <code>2048</code> provides additional file system information, such as the file system type <code>Ext4</code>, volume name, volume ID, and other details.</p>
 <pre tabindex="0"><code>└─$ fsstat -o 2048 recoverfiles.dd 
 
