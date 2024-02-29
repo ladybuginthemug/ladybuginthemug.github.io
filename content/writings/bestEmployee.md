@@ -12,15 +12,14 @@ category:
 
 > Scenario
 >
->John received the 'Best Employee of the Year' award for his hard work at FakeCompany Ltd. Unfortunately, today John deleted some important files (typical John!). It’s your job to recover the deleted files and capture all the flags contained within!
+>John received the 'Best Employee of the Year' award for his hard work at FakeCompany Ltd. Unfortunately, today John deleted some important files (typical John!). It’s your job to recover the deleted files and capture all the flags within!
 
 
-The file given is `recoverfiles.dd`. To begin, you need to gain an understanding of the structure of the disk image and the file system it contains. 
+The file given is `recoverfiles.dd`. The first thing I needed to do was understand what's inside this disk image and its file system.
 
-The `mmls` command provides details about the disk image structure, indicating that:
-
-- it has a DOS partition table with one partition. 
-- the partition starts at sector 2048 and contains an Ext4 file system with a Linux operating system.
+I used the `mmls` command to look at the structure of the disk image. Here’s what I found:
+- The disk image uses a DOS partition table and has one partition.
+- This partition starts at sector `2048` and it's where the Linux operating system is located.
 
 ```bash
 └─$ mmls recoverfiles.dd 
@@ -35,6 +34,7 @@ Units are in 512-byte sectors
 ```                  
 
 The `fsstat` command with the correct offset `2048` provides additional file system information, such as the file system type `Ext4`, volume name, volume ID, and other details.
+
 ```bash
 └─$ fsstat -o 2048 recoverfiles.dd 
 
@@ -83,7 +83,8 @@ Then it will attempt to recover files and output them in your chosen location. A
 
 ---
 
-It is easy to search for the first flag, which is simply displayed in the recovered `gif` image :
+The first flag was easy to find, just by looking at the `gif` image I got back:
+
 ![first](https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/5dc8c1db-99a3-4c19-afc8-9c3c37a1b1fc)
 
 
@@ -93,12 +94,11 @@ The next flag is also hiding in plain sight in the recovered `png`:
 
 ---
 
-Exploring `pdf` file makes us realize that `flag3` is probably hiding within the file itself. 
-
+For the third flag, I had to dig into the `pdf` file. It seemed like the flag was hidden inside it.
 ![pdf](https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/9c4dc63e-f195-447a-9610-af8e1fc77f91)
 
 
-Using `exiftool` on that pdf file will reveal the answer
+ Using `exiftool` on the pdf revealed the hidden info.
 
 ```bash
 ExifTool Version Number         : 12.67
@@ -177,7 +177,7 @@ or use strings piped with grep in combination with regex.
 ```
 ![grep](https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/f5e0fa2b-54b5-4abc-81da-bce12bfd29ed)
 
-This flag is also obfuscated in the most common way `base65`:
+This flag is also obfuscated:
 
 ```bash
 └─$ echo -n 'RkxBRzI6QVNPTElEREVGRU5ERVI=' | base64 -d
