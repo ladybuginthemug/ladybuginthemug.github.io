@@ -13,8 +13,9 @@
   name="description"
   content="Employee of the Year
 Scenario
-John received the &amp;lsquo;Best Employee of the Year&amp;rsquo; award for his hard work at FakeCompany Ltd. Unfortunately, today John deleted some important files (typical John!). It’s your job to recover the deleted files and capture all the flags contained within!
-The file given is recoverfiles.dd. To begin, you need to gain an understanding of the structure of the disk image and the file system it contains."
+John received the &amp;lsquo;Best Employee of the Year&amp;rsquo; award for his hard work at FakeCompany Ltd. Unfortunately, today John deleted some important files (typical John!). It’s your job to recover the deleted files and capture all the flags within!
+The file given is recoverfiles.dd. The first thing I needed to do was understand what&amp;rsquo;s inside this disk image and its file system.
+I used the mmls command to look at the structure of the disk image."
 />
 <meta
   name="keywords"
@@ -185,13 +186,13 @@ The file given is recoverfiles.dd. To begin, you need to gain an understanding o
       <p><a href="https://blueteamlabs.online/home/challenge/employee-of-the-year-df16bc36f3">Employee of the Year</a></p>
 <blockquote>
 <p>Scenario</p>
-<p>John received the &lsquo;Best Employee of the Year&rsquo; award for his hard work at FakeCompany Ltd. Unfortunately, today John deleted some important files (typical John!). It’s your job to recover the deleted files and capture all the flags contained within!</p>
+<p>John received the &lsquo;Best Employee of the Year&rsquo; award for his hard work at FakeCompany Ltd. Unfortunately, today John deleted some important files (typical John!). It’s your job to recover the deleted files and capture all the flags within!</p>
 </blockquote>
-<p>The file given is <code>recoverfiles.dd</code>. To begin, you need to gain an understanding of the structure of the disk image and the file system it contains.</p>
-<p>The <code>mmls</code> command provides details about the disk image structure, indicating that:</p>
+<p>The file given is <code>recoverfiles.dd</code>. The first thing I needed to do was understand what&rsquo;s inside this disk image and its file system.</p>
+<p>I used the <code>mmls</code> command to look at the structure of the disk image. Here’s what I found:</p>
 <ul>
-<li>it has a DOS partition table with one partition.</li>
-<li>the partition starts at sector 2048 and contains an Ext4 file system with a Linux operating system.</li>
+<li>The disk image uses a DOS partition table and has one partition.</li>
+<li>This partition starts at sector <code>2048</code> and it&rsquo;s where the Linux operating system is located.</li>
 </ul>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>└─$ mmls recoverfiles.dd 
 </span></span><span style="display:flex;"><span>DOS Partition Table
@@ -234,14 +235,14 @@ The file given is recoverfiles.dd. To begin, you need to gain an understanding o
 <p>Then it will attempt to recover files and output them in your chosen location. And just like that the files are recovered.</p>
 <p><img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/5942a645-9c1f-4769-a0b7-1edc6a1e6ca7" alt="files_rec"></p>
 <hr>
-<p>It is easy to search for the first flag, which is simply displayed in the recovered <code>gif</code> image :
-<img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/5dc8c1db-99a3-4c19-afc8-9c3c37a1b1fc" alt="first"></p>
+<p>The first flag was easy to find, just by looking at the <code>gif</code> image I got back:</p>
+<p><img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/5dc8c1db-99a3-4c19-afc8-9c3c37a1b1fc" alt="first"></p>
 <p>The next flag is also hiding in plain sight in the recovered <code>png</code>:</p>
 <p><img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/83f2d8d2-b8a0-4f50-9342-b08e4ab83259" alt="second"></p>
 <hr>
-<p>Exploring <code>pdf</code> file makes us realize that <code>flag3</code> is probably hiding within the file itself.</p>
-<p><img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/9c4dc63e-f195-447a-9610-af8e1fc77f91" alt="pdf"></p>
-<p>Using <code>exiftool</code> on that pdf file will reveal the answer</p>
+<p>For the third flag, I had to dig into the <code>pdf</code> file. It seemed like the flag was hidden inside it.
+<img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/9c4dc63e-f195-447a-9610-af8e1fc77f91" alt="pdf"></p>
+<p>Using <code>exiftool</code> on the pdf revealed the hidden info.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ExifTool Version Number         : 12.67
 </span></span><span style="display:flex;"><span>File Name                       : f0009040.pdf
 </span></span><span style="display:flex;"><span>Directory                       : .
@@ -293,7 +294,7 @@ The file given is recoverfiles.dd. To begin, you need to gain an understanding o
 <p>or use strings piped with grep in combination with regex.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>└─$ strings f0009072.docx word/*.xml | grep -E <span style="color:#e6db74">&#39;&gt;[^&lt;&gt;]+&lt;&#39;</span>
 </span></span></code></pre></div><p><img src="https://github.com/ladybuginthemug/ladybuginthemug.github.io/assets/88084724/f5e0fa2b-54b5-4abc-81da-bce12bfd29ed" alt="grep"></p>
-<p>This flag is also obfuscated in the most common way <code>base65</code>:</p>
+<p>This flag is also obfuscated:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>└─$ echo -n <span style="color:#e6db74">&#39;RkxBRzI6QVNPTElEREVGRU5ERVI=&#39;</span> | base64 -d
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>FLAG2:ASOLIDDEFENDER   
